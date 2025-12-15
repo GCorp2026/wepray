@@ -17,6 +17,7 @@ struct AdminView: View {
             Form {
                 apiConfigurationSection
                 featuredPrayersSection
+                featuredArticlesSection
                 languageManagementSection
                 denominationManagementSection
                 saveSection
@@ -36,52 +37,23 @@ struct AdminView: View {
 
     private var apiConfigurationSection: some View {
         Section {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Written Chat Prayer Tutor")
-                    .font(.subheadline)
-                    .foregroundColor(AppColors.subtext)
-
-                Picker("Chat API", selection: $chatAPIService) {
-                    ForEach(AIServiceType.allCases, id: \.self) { service in
-                        Text(service.displayName).tag(service)
-                    }
-                }
-                .pickerStyle(.segmented)
-            }
-            .padding(.vertical, 4)
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Voice Prayer (Audio)")
-                    .font(.subheadline)
-                    .foregroundColor(AppColors.subtext)
-
-                Picker("Voice API", selection: $voiceAPIService) {
-                    ForEach(AIServiceType.allCases, id: \.self) { service in
-                        Text(service.displayName).tag(service)
-                    }
-                }
-                .pickerStyle(.segmented)
-            }
-            .padding(.vertical, 4)
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Prayer Tutor Responses")
-                    .font(.subheadline)
-                    .foregroundColor(AppColors.subtext)
-
-                Picker("Tutor API", selection: $prayerTutorAPIService) {
-                    ForEach(AIServiceType.allCases, id: \.self) { service in
-                        Text(service.displayName).tag(service)
-                    }
-                }
-                .pickerStyle(.segmented)
-            }
-            .padding(.vertical, 4)
+            apiPickerRow("Written Chat Prayer Tutor", selection: $chatAPIService)
+            apiPickerRow("Voice Prayer (Audio)", selection: $voiceAPIService)
+            apiPickerRow("Prayer Tutor Responses", selection: $prayerTutorAPIService)
         } header: {
             Text("AI API Configuration")
         } footer: {
-            Text("Select which AI service to use for each feature. Claude is recommended for written chat, OpenAI for voice prayers.")
+            Text("Select which AI service to use for each feature.")
         }
+    }
+
+    private func apiPickerRow(_ title: String, selection: Binding<AIServiceType>) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title).font(.subheadline).foregroundColor(AppColors.subtext)
+            Picker(title, selection: selection) {
+                ForEach(AIServiceType.allCases, id: \.self) { Text($0.displayName).tag($0) }
+            }.pickerStyle(.segmented)
+        }.padding(.vertical, 4)
     }
 
     private var featuredPrayersSection: some View {
@@ -109,6 +81,34 @@ struct AdminView: View {
             Text("Landing Page Carousel")
         } footer: {
             Text("Manage the featured prayers carousel on the app landing page.")
+        }
+    }
+
+    private var featuredArticlesSection: some View {
+        Section {
+            NavigationLink(destination: FeaturedArticlesAdminView()) {
+                HStack {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(LinearGradient(colors: [AppColors.secondary, AppColors.success], startPoint: .topLeading, endPoint: .bottomTrailing))
+                            .frame(width: 36, height: 36)
+                        Image(systemName: "newspaper.fill")
+                            .foregroundColor(.white)
+                    }
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Featured Articles")
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                        Text("\(appState.adminSettings.featuredArticles.filter { $0.isActive }.count) active")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+        } header: {
+            Text("Articles Carousel")
+        } footer: {
+            Text("Manage the featured articles carousel on the home page.")
         }
     }
 

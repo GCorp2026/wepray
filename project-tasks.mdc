@@ -72,13 +72,16 @@ WePray is a Christian prayer tutoring app built with SwiftUI for iOS. It provide
 
 ```
 wepray/
-├── SharedTypes.swift (220 lines) - Core types, colors, models, FeaturedPrayer
+├── SharedTypes.swift (244 lines) - Core types, colors, models, 10 featured articles
 ├── WePrayApp.swift (112 lines) - Main app entry, AppState
 ├── ContentView.swift (79 lines) - Root view, tab navigation
 ├── AuthView.swift (235 lines) - Login/signup UI
-├── LandingPageView.swift (230 lines) - Cinematic landing page
-├── FeaturedPrayersCarousel.swift (175 lines) - Prayer cards carousel
-├── FeaturedPrayersAdminView.swift (290 lines) - Admin management for carousel
+├── LandingPageView.swift (271 lines) - Cinematic landing page
+├── BenefitsSection.swift (145 lines) - Cinematic benefits with animations
+├── FeaturedPrayersCarousel.swift (252 lines) - Mobile-optimized prayer carousel
+├── FeaturedPrayersAdminView.swift (290 lines) - Admin management for prayers
+├── FeaturedArticlesCarousel.swift (193 lines) - Mobile-optimized articles carousel
+├── FeaturedArticlesAdminView.swift (324 lines) - Admin management for articles
 ├── PrayerChatView.swift (250 lines) - Chat interface
 ├── PrayerChatViewModel.swift (225 lines) - Chat logic, API calls
 ├── VoicePrayerView.swift (266 lines) - Voice prayer interface
@@ -88,7 +91,7 @@ wepray/
 ├── SpeakingPracticeViewModel.swift (255 lines) - Speaking practice with GPT-4o
 ├── ListeningPracticeView.swift (285 lines) - Listening practice UI
 ├── ListeningPracticeViewModel.swift (250 lines) - Listening practice with GPT-4o
-├── AdminView.swift (335 lines) - Admin panel with featured prayers link
+├── AdminView.swift (335 lines) - Admin panel with featured articles link
 ├── SettingsView.swift (210 lines) - User settings
 ├── Info.plist - App configuration
 └── project-tasks.mdc - This file
@@ -237,6 +240,38 @@ From LangTutor project-tasks.mdc:
 - [x] Update ContentView to show LandingPageView first
 - [x] AuthView accessible via Sign In button
 - [x] Guest mode bypasses authentication
+
+---
+
+## Phase 13: Cinematic Home Screen Enhancement (COMPLETED)
+
+### Cinematic BenefitsSection
+- [x] Enhanced with staggered card entrance animations
+- [x] Added gradient title with shadow effects
+- [x] Horizontal scrolling cards for mobile optimization
+- [x] Scale animations on tap with haptic feedback
+- [x] Glow shadow effects on benefit cards
+
+### Featured Articles Carousel
+- [x] Expanded from 5 to 10 default articles
+- [x] Added haptic feedback on swipe and navigation
+- [x] Improved swipe sensitivity with predictedEndTranslation
+- [x] Tappable indicators with haptic response
+- [x] Navigation arrows optimized for mobile
+
+### Featured Prayers Carousel
+- [x] Added navigation arrows for mobile
+- [x] Haptic feedback on swipe gestures
+- [x] Tappable indicators for direct navigation
+- [x] Improved swipe gesture sensitivity
+- [x] Timer management with proper cleanup
+
+### Admin Panel Enhancement
+- [x] Featured Articles tab in admin panel
+- [x] Add/Edit/Delete featured articles
+- [x] Toggle article visibility (active/inactive)
+- [x] Drag to reorder articles
+- [x] Color picker and icon selection
 
 ---
 

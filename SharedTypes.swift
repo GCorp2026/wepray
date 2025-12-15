@@ -198,12 +198,38 @@ struct FeaturedPrayer: Identifiable, Codable, Equatable {
     ]
 }
 
+// MARK: - Featured Article Model
+struct Article: Identifiable, Codable, Equatable {
+    var id: UUID = UUID()
+    var title: String
+    var description: String
+    var iconName: String
+    var gradientColors: [String]
+    var link: String
+    var isActive: Bool = true
+    var order: Int
+
+    static let defaultArticles: [Article] = [
+        Article(title: "The Power of Morning Prayer", description: "Discover how starting your day with prayer can transform your mindset and productivity.", iconName: "sunrise.fill", gradientColors: ["#6B4EFF", "#8B73FF"], link: "", order: 1),
+        Article(title: "Building a Prayer Habit", description: "Learn practical tips for making prayer a consistent part of your daily routine.", iconName: "calendar.badge.clock", gradientColors: ["#D4AF37", "#FFD700"], link: "", order: 2),
+        Article(title: "Prayers for Peace", description: "Find comfort and tranquility through these powerful prayers for inner peace.", iconName: "leaf.fill", gradientColors: ["#00C9A7", "#00B894"], link: "", order: 3),
+        Article(title: "Understanding Contemplative Prayer", description: "Explore the ancient practice of contemplative prayer and its modern applications.", iconName: "brain.head.profile", gradientColors: ["#4169E1", "#1E90FF"], link: "", order: 4),
+        Article(title: "Family Prayer Traditions", description: "Create meaningful prayer traditions that bring your family closer together.", iconName: "figure.2.and.child.holdinghands", gradientColors: ["#9B59B6", "#8E44AD"], link: "", order: 5),
+        Article(title: "Gratitude Prayers", description: "Express thankfulness to God for all blessings. Reflect on His goodness and provision.", iconName: "sun.max.fill", gradientColors: ["#FFDA63", "#FFB830"], link: "", order: 6),
+        Article(title: "Prayers for Healing", description: "Seek God's healing touch for yourself or loved ones. Believe in His power to restore.", iconName: "heart.circle.fill", gradientColors: ["#FF70A6", "#FF9770"], link: "", order: 7),
+        Article(title: "Intercessory Prayer", description: "Lift up the needs of others to God. Pray for healing, comfort, and guidance.", iconName: "person.2.fill", gradientColors: ["#64B5F6", "#90CAF9"], link: "", order: 8),
+        Article(title: "Scripture Meditation", description: "Reflect on Bible verses and allow God's Word to speak to your heart.", iconName: "book.circle.fill", gradientColors: ["#81C784", "#A5D6A7"], link: "", order: 9),
+        Article(title: "Evening Prayers", description: "End your day with prayer, seeking God's peace and protection.", iconName: "moon.stars.fill", gradientColors: ["#9575CD", "#B39DDB"], link: "", order: 10)
+    ]
+}
+
 // MARK: - Admin Settings
 struct AdminSettings: Codable {
     var chatAPIService: AIServiceType = .claude
     var voiceAPIService: AIServiceType = .openai
     var prayerTutorAPIService: AIServiceType = .claude
     var featuredPrayers: [FeaturedPrayer] = FeaturedPrayer.defaultPrayers
+    var featuredArticles: [Article] = Article.defaultArticles
 
     static let `default` = AdminSettings()
 }

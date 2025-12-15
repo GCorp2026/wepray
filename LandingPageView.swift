@@ -10,21 +10,24 @@ struct LandingPageView: View {
     @EnvironmentObject var appState: AppState
     @State private var showAuth = false
     @State private var currentPrayerIndex = 0
+    @State private var currentArticleIndex = 0
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         ZStack {
             CinematicPrayerBackground()
 
-            VStack(spacing: 0) {
-                headerSection
-                Spacer()
-                carouselSection
-                Spacer()
-                actionButtons
-                footerText
+            ScrollView {
+                VStack(spacing: 24) {
+                    headerSection
+                    BenefitsSection()
+                    prayersCarouselSection
+                    articlesCarouselSection
+                    actionButtons
+                    footerText
+                }
+                .padding()
             }
-            .padding()
         }
         .fullScreenCover(isPresented: $showAuth) {
             AuthView()
@@ -91,8 +94,8 @@ struct LandingPageView: View {
         )
     }
 
-    // MARK: - Carousel Section
-    private var carouselSection: some View {
+    // MARK: - Prayers Carousel Section
+    private var prayersCarouselSection: some View {
         VStack(spacing: 16) {
             Text("Featured Prayers")
                 .font(.headline)
@@ -104,11 +107,11 @@ struct LandingPageView: View {
             )
             .frame(height: 280)
 
-            carouselIndicators
+            prayersCarouselIndicators
         }
     }
 
-    private var carouselIndicators: some View {
+    private var prayersCarouselIndicators: some View {
         HStack(spacing: 8) {
             let activePrayers = appState.adminSettings.featuredPrayers.filter { $0.isActive }
             ForEach(0..<activePrayers.count, id: \.self) { index in
@@ -117,6 +120,21 @@ struct LandingPageView: View {
                     .frame(width: 8, height: 8)
                     .animation(.easeInOut, value: currentPrayerIndex)
             }
+        }
+    }
+
+    // MARK: - Articles Carousel Section
+    private var articlesCarouselSection: some View {
+        VStack(spacing: 16) {
+            Text("Featured Articles")
+                .font(.headline)
+                .foregroundColor(.secondary)
+
+            FeaturedArticlesCarousel(
+                articles: appState.adminSettings.featuredArticles.filter { $0.isActive },
+                currentIndex: $currentArticleIndex
+            )
+            .frame(height: 320)
         }
     }
 
