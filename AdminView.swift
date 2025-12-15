@@ -16,6 +16,7 @@ struct AdminView: View {
         NavigationView {
             Form {
                 apiConfigurationSection
+                featuredPrayersSection
                 languageManagementSection
                 denominationManagementSection
                 saveSection
@@ -80,6 +81,34 @@ struct AdminView: View {
             Text("AI API Configuration")
         } footer: {
             Text("Select which AI service to use for each feature. Claude is recommended for written chat, OpenAI for voice prayers.")
+        }
+    }
+
+    private var featuredPrayersSection: some View {
+        Section {
+            NavigationLink(destination: FeaturedPrayersAdminView()) {
+                HStack {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(LinearGradient(colors: [AppColors.primary, AppColors.primaryLight], startPoint: .topLeading, endPoint: .bottomTrailing))
+                            .frame(width: 36, height: 36)
+                        Image(systemName: "rectangle.stack.fill")
+                            .foregroundColor(.white)
+                    }
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Featured Prayers")
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                        Text("\(appState.adminSettings.featuredPrayers.filter { $0.isActive }.count) active")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+        } header: {
+            Text("Landing Page Carousel")
+        } footer: {
+            Text("Manage the featured prayers carousel on the app landing page.")
         }
     }
 

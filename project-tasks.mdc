@@ -72,10 +72,13 @@ WePray is a Christian prayer tutoring app built with SwiftUI for iOS. It provide
 
 ```
 wepray/
-├── SharedTypes.swift (166 lines) - Core types, colors, models
+├── SharedTypes.swift (220 lines) - Core types, colors, models, FeaturedPrayer
 ├── WePrayApp.swift (112 lines) - Main app entry, AppState
-├── ContentView.swift (78 lines) - Root view, tab navigation
+├── ContentView.swift (79 lines) - Root view, tab navigation
 ├── AuthView.swift (235 lines) - Login/signup UI
+├── LandingPageView.swift (230 lines) - Cinematic landing page
+├── FeaturedPrayersCarousel.swift (175 lines) - Prayer cards carousel
+├── FeaturedPrayersAdminView.swift (290 lines) - Admin management for carousel
 ├── PrayerChatView.swift (250 lines) - Chat interface
 ├── PrayerChatViewModel.swift (225 lines) - Chat logic, API calls
 ├── VoicePrayerView.swift (266 lines) - Voice prayer interface
@@ -85,7 +88,7 @@ wepray/
 ├── SpeakingPracticeViewModel.swift (255 lines) - Speaking practice with GPT-4o
 ├── ListeningPracticeView.swift (285 lines) - Listening practice UI
 ├── ListeningPracticeViewModel.swift (250 lines) - Listening practice with GPT-4o
-├── AdminView.swift (275 lines) - Admin panel
+├── AdminView.swift (335 lines) - Admin panel with featured prayers link
 ├── SettingsView.swift (210 lines) - User settings
 ├── Info.plist - App configuration
 └── project-tasks.mdc - This file
@@ -199,7 +202,45 @@ From LangTutor project-tasks.mdc:
 
 ---
 
-## Phase 11: Social Features from Prayer Repository (PLANNED)
+## Phase 11: Cinematic Landing Page with Featured Prayers Carousel (COMPLETED)
+
+### Landing Page Implementation
+- [x] Create LandingPageView.swift with cinematic design (adapted from LangTutor)
+- [x] Implement CinematicPrayerBackground with animated orbs
+- [x] Add floating religious symbols background
+- [x] Create logo and title section with gradient styling
+- [x] Add Sign In / Sign Up button
+- [x] Add Continue as Guest option
+
+### Featured Prayers Carousel
+- [x] Create FeaturedPrayersCarousel.swift component
+- [x] Implement PrayerCard with gradient backgrounds
+- [x] Add swipe gesture navigation
+- [x] Auto-scroll timer (5 seconds)
+- [x] Carousel indicators
+- [x] 5 default featured prayers for different denominations
+
+### Admin Panel - Featured Prayers Management
+- [x] Create FeaturedPrayersAdminView.swift
+- [x] Add/Edit/Delete featured prayers
+- [x] Toggle prayer visibility (active/inactive)
+- [x] Drag to reorder prayers
+- [x] Color picker for gradient customization
+- [x] Icon selection for prayer cards
+
+### Data Models
+- [x] Add FeaturedPrayer model to SharedTypes.swift
+- [x] Include default prayers (Lord's Prayer, Jesus Prayer, Hail Mary, etc.)
+- [x] Store featured prayers in AdminSettings
+
+### Navigation Flow
+- [x] Update ContentView to show LandingPageView first
+- [x] AuthView accessible via Sign In button
+- [x] Guest mode bypasses authentication
+
+---
+
+## Phase 12: Social Features from Prayer Repository (PLANNED)
 
 ### User Feed
 - [ ] Create FeedView.swift for prayer sharing

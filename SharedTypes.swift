@@ -149,11 +149,61 @@ struct ChatMessage: Identifiable, Codable {
     }
 }
 
+// MARK: - Featured Prayer Model
+struct FeaturedPrayer: Identifiable, Codable, Equatable {
+    var id: UUID = UUID()
+    var title: String
+    var prayerText: String
+    var denomination: String
+    var iconName: String
+    var gradientColors: [String]
+    var isActive: Bool = true
+
+    static let defaultPrayers: [FeaturedPrayer] = [
+        FeaturedPrayer(
+            title: "The Lord's Prayer",
+            prayerText: "Our Father, who art in heaven, hallowed be thy name. Thy kingdom come, thy will be done, on earth as it is in heaven.",
+            denomination: "Universal",
+            iconName: "hands.sparkles.fill",
+            gradientColors: ["#6B4EFF", "#8B73FF"]
+        ),
+        FeaturedPrayer(
+            title: "Orthodox Jesus Prayer",
+            prayerText: "Lord Jesus Christ, Son of God, have mercy on me, a sinner.",
+            denomination: "Orthodox",
+            iconName: "cross.fill",
+            gradientColors: ["#D4AF37", "#FFD700"]
+        ),
+        FeaturedPrayer(
+            title: "Hail Mary",
+            prayerText: "Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus.",
+            denomination: "Catholic",
+            iconName: "star.fill",
+            gradientColors: ["#4169E1", "#1E90FF"]
+        ),
+        FeaturedPrayer(
+            title: "Prayer of Jabez",
+            prayerText: "Oh, that you would bless me and enlarge my territory! Let your hand be with me, and keep me from harm.",
+            denomination: "Protestant",
+            iconName: "sun.max.fill",
+            gradientColors: ["#00C9A7", "#00B894"]
+        ),
+        FeaturedPrayer(
+            title: "Serenity Prayer",
+            prayerText: "God, grant me the serenity to accept the things I cannot change, courage to change the things I can, and wisdom to know the difference.",
+            denomination: "Non-denominational",
+            iconName: "leaf.fill",
+            gradientColors: ["#9B59B6", "#8E44AD"]
+        )
+    ]
+}
+
 // MARK: - Admin Settings
 struct AdminSettings: Codable {
     var chatAPIService: AIServiceType = .claude
     var voiceAPIService: AIServiceType = .openai
     var prayerTutorAPIService: AIServiceType = .claude
+    var featuredPrayers: [FeaturedPrayer] = FeaturedPrayer.defaultPrayers
 
     static let `default` = AdminSettings()
 }
