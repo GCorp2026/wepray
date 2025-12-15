@@ -1,0 +1,232 @@
+# WePray - Prayer Tutoring App
+
+## Project Overview
+WePray is a Christian prayer tutoring app built with SwiftUI for iOS. It provides AI-powered prayer guidance using Claude API for written chat and OpenAI API for voice prayers.
+
+## Implementation Checklist
+
+### Phase 1: Core Setup (COMPLETED)
+- [x] Create SharedTypes.swift with core models
+- [x] Create WePrayApp.swift main entry point
+- [x] Create ContentView.swift with navigation
+- [x] Set up AppState for global state management
+
+### Phase 2: Authentication (COMPLETED)
+- [x] Create AuthView.swift with login/signup
+- [x] Implement language selection on auth screen
+- [x] Implement denomination selection on auth screen
+- [x] Auto-redirect to chat after successful login
+
+### Phase 3: Language Selection (COMPLETED)
+- [x] Default languages: Brazilian Portuguese, Chinese, English, French, Russian, Spanish (alphabetized)
+- [x] Language model with code, name, nativeName, flag
+- [x] Custom language addition with permanent storage
+- [x] Languages sorted alphabetically in all dropdowns
+
+### Phase 4: Christian Denomination (COMPLETED)
+- [x] Default denominations: Anglican, Baptist, Catholic, Lutheran, Methodist, Non-denominational, Orthodox, Pentecostal, Presbyterian, Protestant (alphabetized)
+- [x] Duplicate prevention (case-insensitive)
+- [x] Custom denomination addition with permanent storage
+- [x] Denominations sorted alphabetically in all dropdowns
+
+### Phase 5: Prayer Chat (COMPLETED)
+- [x] Create PrayerChatView.swift with chat interface
+- [x] Create PrayerChatViewModel.swift with Claude API integration
+- [x] Language dropdown on chat page
+- [x] Denomination dropdown on chat page
+- [x] AI responds in user's native language
+- [x] AI responds with cheerful and helpful attitude
+- [x] Prayers conform to user's selected denomination
+
+### Phase 6: Voice Prayer (COMPLETED)
+- [x] Create VoicePrayerView.swift with voice interface
+- [x] Create VoicePrayerViewModel.swift with OpenAI API integration
+- [x] Language dropdown on voice page
+- [x] Denomination dropdown on voice page
+- [x] Voice prayers in user's native language
+- [x] Text-to-speech for AI prayer responses
+
+### Phase 7: Admin Panel (COMPLETED)
+- [x] Create AdminView.swift with admin interface
+- [x] AI API selection for written chat prayers
+- [x] AI API selection for voice/audio prayers
+- [x] AI API selection for prayer tutor responses
+- [x] Language management (view all, add custom)
+- [x] Denomination management (view all, add custom)
+
+### Phase 8: Settings (COMPLETED)
+- [x] Create SettingsView.swift with user settings
+- [x] Language selection in settings
+- [x] Denomination selection in settings
+- [x] Add custom language option
+- [x] Add custom denomination option
+- [x] Logout functionality
+
+### Phase 9: Responsive Design (COMPLETED)
+- [x] GeometryReader for adaptive layouts
+- [x] Auto-sizing to fit user's device screen
+- [x] Support for iPhone and iPad
+- [x] Portrait and landscape orientations
+
+## File Structure (All under 350 lines)
+
+```
+wepray/
+├── SharedTypes.swift (166 lines) - Core types, colors, models
+├── WePrayApp.swift (112 lines) - Main app entry, AppState
+├── ContentView.swift (78 lines) - Root view, tab navigation
+├── AuthView.swift (235 lines) - Login/signup UI
+├── PrayerChatView.swift (250 lines) - Chat interface
+├── PrayerChatViewModel.swift (225 lines) - Chat logic, API calls
+├── VoicePrayerView.swift (266 lines) - Voice prayer interface
+├── VoicePrayerViewModel.swift (241 lines) - Voice logic with GPT-4o & TTS
+├── OpenAIService.swift (310 lines) - Centralized OpenAI API (GPT-4o, Whisper, TTS)
+├── SpeakingPracticeView.swift (280 lines) - Speaking practice UI
+├── SpeakingPracticeViewModel.swift (255 lines) - Speaking practice with GPT-4o
+├── ListeningPracticeView.swift (285 lines) - Listening practice UI
+├── ListeningPracticeViewModel.swift (250 lines) - Listening practice with GPT-4o
+├── AdminView.swift (275 lines) - Admin panel
+├── SettingsView.swift (210 lines) - User settings
+├── Info.plist - App configuration
+└── project-tasks.mdc - This file
+```
+
+## Features
+
+### Language Selection
+- 6 default languages (alphabetized): Brazilian Portuguese, Chinese, English, French, Russian, Spanish
+- Custom languages stored permanently via UserDefaults
+- All dropdowns show languages in alphabetical order
+
+### Christian Denomination Selection
+- 10 default denominations (alphabetized)
+- No duplicates allowed (case-insensitive check)
+- Custom denominations stored permanently
+- All dropdowns show denominations in alphabetical order
+
+### AI Integration
+- Claude API for written chat prayer tutoring (cheerful, helpful attitude)
+- OpenAI GPT-4o for voice prayer tutoring (denomination-conforming prayers)
+- OpenAI Whisper for speech-to-text transcription
+- OpenAI TTS (tts-1-hd) for high-quality voice responses
+- 6 voice options: alloy, echo, fable, onyx, nova, shimmer
+- Admin can change AI API for each feature:
+  - Written chat prayers
+  - Voice/audio prayers
+  - Prayer tutor responses
+
+### Advanced Voice Mode (GPT-4o)
+- **Speaking Practice**: Practice pronouncing prayers with real-time GPT-4o feedback
+  - Difficulty levels: Beginner, Intermediate, Advanced
+  - Pronunciation scoring (0-100%)
+  - Prayer phrases generated by denomination
+  - Progress tracking and history
+- **Listening Practice**: Comprehension exercises with OpenAI TTS
+  - Multiple choice questions
+  - Variable playback speeds (0.5x - 1.5x)
+  - Accuracy tracking
+  - High-quality voice synthesis
+
+### Responsive Design
+- Uses GeometryReader for adaptive layouts
+- Auto-sizes to fit any device screen
+- Supports iPhone and iPad
+- Works in portrait and landscape
+
+### Login Flow
+- Login/signup with email and password
+- Language and denomination selection during auth
+- Automatic redirect to chat screen after successful login
+- Admin users detected by email pattern
+
+## API Configuration
+
+Set environment variables:
+- `OPENAI_API_KEY` - OpenAI API key for voice prayers
+- `CLAUDE_API_KEY` - Claude/Anthropic API key for chat
+- `DEEPSEEK_API_KEY` - DeepSeek API key (optional)
+- `SUPABASE_URL` - Supabase project URL (optional)
+- `SUPABASE_ANON_KEY` - Supabase anon key (optional)
+
+## Previous Solutions Applied
+
+From LangTutor project-tasks.mdc:
+- Modular component approach (under 350 lines)
+- Duplicate prevention patterns (Steps 75-81)
+- Type-safe API integration (Steps 72-77)
+- Responsive SwiftUI layouts (Steps 78-79)
+- UserDefaults for permanent storage
+
+---
+
+## Phase 10: Advanced Voice Mode with GPT-4o (COMPLETED)
+
+### OpenAI Service Integration
+- [x] Create OpenAIService.swift - Centralized API module
+- [x] Implement Whisper API transcription (speech-to-text)
+- [x] Implement OpenAI TTS API (text-to-speech with high-quality voices)
+- [x] Implement GPT-4o chat completions for voice responses
+- [x] Add audio file caching and management
+
+### Speaking Practice Feature
+- [x] Create SpeakingPracticeView.swift - UI for prayer speaking practice
+- [x] Create SpeakingPracticeViewModel.swift - Logic with GPT-4o
+- [x] Implement real-time pronunciation feedback
+- [x] Add prayer phrase suggestions by denomination
+- [x] Score and track speaking progress
+- [x] Support all 6 languages for speaking practice
+
+### Listening Practice Feature
+- [x] Create ListeningPracticeView.swift - UI for listening practice
+- [x] Create ListeningPracticeViewModel.swift - Logic with GPT-4o
+- [x] Generate prayer audio clips using OpenAI TTS
+- [x] Implement comprehension questions
+- [x] Track listening progress and scores
+- [x] Variable playback speeds
+
+### Voice Prayer Enhancements
+- [x] Upgrade VoicePrayerViewModel to use GPT-4o model
+- [x] Replace AVSpeechSynthesizer with OpenAI TTS
+- [x] Implement real Whisper transcription
+- [x] Add voice selection (alloy, echo, fable, onyx, nova, shimmer)
+- [ ] Add real-time audio streaming support (future enhancement)
+
+### Navigation Updates
+- [x] Update ContentView with Speaking Practice tab
+- [x] Update ContentView with Listening Practice tab
+- [ ] Add Advanced Voice Mode section in Admin Panel (future enhancement)
+- [ ] Add voice settings in Settings view (future enhancement)
+
+---
+
+## Phase 11: Social Features from Prayer Repository (PLANNED)
+
+### User Feed
+- [ ] Create FeedView.swift for prayer sharing
+- [ ] Implement post creation and display
+- [ ] Add like/repost functionality
+- [ ] Implement follow/unfollow system
+
+### Prayer Groups
+- [ ] Create GroupsView.swift for community groups
+- [ ] Implement group creation and management
+- [ ] Add group membership features
+- [ ] Group-specific prayer posts
+
+### Subscription System
+- [ ] Integrate Stripe for payments
+- [ ] Create SubscriptionView.swift
+- [ ] Implement tier-based features (Free/Standard/Premium)
+- [ ] Add subscription management
+
+---
+
+## Build Instructions
+
+1. Open wepray folder in Xcode
+2. Create new iOS App project named "WePray"
+3. Replace generated files with these Swift files
+4. Set deployment target to iOS 17+
+5. Add microphone and speech recognition permissions
+6. Set API keys in environment variables or update AppConfig
+7. Build and run
