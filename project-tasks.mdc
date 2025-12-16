@@ -297,7 +297,7 @@ From LangTutor project-tasks.mdc:
 
 ---
 
-## Phase 12: Social Features from Prayer Repository (IN PROGRESS)
+## Phase 12: Social Features from Prayer Repository (MOSTLY COMPLETE)
 
 ### User Feed
 - [x] Create FeedView.swift for prayer sharing (195 lines)
@@ -324,7 +324,7 @@ From LangTutor project-tasks.mdc:
 - [x] Post prayers within groups
 
 ### Subscription System
-- [ ] Integrate Stripe for payments
+- [ ] Integrate Stripe for payments (future enhancement)
 - [x] Create SubscriptionView.swift (240 lines)
 - [x] Implement tier-based features (Free/Standard/Premium)
 - [x] Add subscription card UI with features list
@@ -333,6 +333,12 @@ From LangTutor project-tasks.mdc:
 ### Tab Navigation Update
 - [x] Updated ContentView tabs: Pray, Feed, Groups, Voice, Settings
 - [x] Integrated FeedView and GroupsView into main navigation
+
+### Social Features Summary
+- User Feed: Post creation, likes, profile navigation
+- User Profiles: Follow/unfollow, stats, user prayers
+- Prayer Groups: Create, join/leave, group-specific posts
+- Subscriptions: 3-tier system UI (Stripe integration pending)
 
 ---
 
