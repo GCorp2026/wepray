@@ -1,61 +1,78 @@
 //
 //  ContentView.swift
-//  WePray
-//
-//  Created by Dmitrii Glinskii on 12/16/25.
+//  WePray - Prayer Tutoring App
 //
 
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @EnvironmentObject var appState: AppState
 
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
+        GeometryReader { geometry in
+            Group {
+                if appState.isLoggedIn {
+                    MainTabView()
+                } else {
+                    LandingPageView()
                 }
             }
-        } detail: {
-            Text("Select an item")
+            .frame(width: geometry.size.width, height: geometry.size.height)
         }
+        .edgesIgnoringSafeArea(.all)
     }
+}
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
+// MARK: - Main Tab View
+struct MainTabView: View {
+    @EnvironmentObject var appState: AppState
+    @State private var selectedTab = 0
 
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+    var body: some View {
+        TabView(selection: $selectedTab) {
+            PrayerChatView()
+                .tabItem {
+                    Label("Chat", systemImage: "bubble.left.and.bubble.right.fill")
+                }
+                .tag(0)
+
+            VoicePrayerView()
+                .tabItem {
+                    Label("Voice", systemImage: "mic.fill")
+                }
+                .tag(1)
+
+            SpeakingPracticeView()
+                .tabItem {
+                    Label("Speak", systemImage: "waveform")
+                }
+                .tag(2)
+
+            ListeningPracticeView()
+                .tabItem {
+                    Label("Listen", systemImage: "headphones")
+                }
+                .tag(3)
+
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gearshape.fill")
+                }
+                .tag(4)
+
+            if appState.currentUser?.isAdmin == true {
+                AdminView()
+                    .tabItem {
+                        Label("Admin", systemImage: "shield.fill")
+                    }
+                    .tag(5)
             }
         }
+        .accentColor(AppColors.primary)
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+        .environmentObject(AppState())
 }

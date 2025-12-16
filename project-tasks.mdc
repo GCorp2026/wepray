@@ -273,6 +273,13 @@ From LangTutor project-tasks.mdc:
 - [x] Drag to reorder articles
 - [x] Color picker and icon selection
 
+### Bug Fixes
+- [x] Removed duplicate `toHex()` function from `FeaturedPrayersAdminView.swift` (defined in `SharedTypes.swift`)
+- [x] Merged Swift files into WePray/WePray Xcode project folder
+- [x] Lowered iOS deployment target from 18.4 to 17.0
+- [x] Fixed nil dictionary value error in `SpeakingPracticeViewModel.swift` (changed to `[String: String?]`)
+- [x] Condensed `OpenAIService.swift` from 361 to 349 lines
+
 ---
 
 ## Phase 12: Social Features from Prayer Repository (PLANNED)
