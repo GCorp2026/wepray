@@ -73,7 +73,7 @@ WePray is a Christian prayer tutoring app built with SwiftUI for iOS. It provide
 ```
 wepray/
 ├── SharedTypes.swift (300 lines) - Core types, colors, models, voice settings
-├── WePrayApp.swift (112 lines) - Main app entry, AppState
+├── WePrayApp.swift (122 lines) - Main app entry, AppState with isPremium
 ├── ContentView.swift (79 lines) - Root view, tab navigation
 ├── AuthView.swift (235 lines) - Login/signup UI
 ├── LandingPageView.swift (271 lines) - Cinematic landing page
@@ -82,7 +82,7 @@ wepray/
 ├── FeaturedPrayersAdminView.swift (290 lines) - Admin management for prayers
 ├── FeaturedArticlesCarousel.swift (193 lines) - Mobile-optimized articles carousel
 ├── FeaturedArticlesAdminView.swift (324 lines) - Admin management for articles
-├── PrayerChatView.swift (250 lines) - Chat interface
+├── PrayerChatView.swift (328 lines) - Chat with action buttons, mic input, premium
 ├── PrayerChatViewModel.swift (225 lines) - Chat logic, API calls
 ├── VoicePrayerView.swift (266 lines) - Voice prayer interface
 ├── VoicePrayerViewModel.swift (241 lines) - Voice logic with GPT-4o & TTS
@@ -343,6 +343,31 @@ From LangTutor project-tasks.mdc:
 - User Profiles: Follow/unfollow, stats, user prayers
 - Prayer Groups: Create, join/leave, group-specific posts
 - Subscriptions: 3-tier system UI (Stripe integration pending)
+
+---
+
+## Phase 14: Prayer Chat Enhancements (COMPLETED)
+
+### Chat Message Actions
+- [x] Add copy button to AI response bubbles
+- [x] Add share button to AI response bubbles
+- [x] Add play audio button (Premium feature)
+- [x] Enable text selection for manual copy/paste (.textSelection(.enabled))
+
+### Voice Input
+- [x] Add microphone button for voice input in chat
+- [x] Lock voice input behind Premium subscription
+- [x] Visual feedback for recording state
+
+### Premium Features
+- [x] Add isPremium state to AppState
+- [x] Add Premium toggle in navigation bar (crown icon)
+- [x] Show alert when non-premium user tries audio features
+- [x] Premium users see enabled audio/mic buttons
+
+### File Updates
+- PrayerChatView.swift (328 lines) - Chat with action buttons and mic input
+- WePrayApp.swift (122 lines) - Added isPremium state
 
 ---
 

@@ -4,6 +4,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct PrayerChatView: View {
     @EnvironmentObject var appState: AppState
@@ -11,6 +12,8 @@ struct PrayerChatView: View {
     @State private var messageText = ""
     @State private var showLanguagePicker = false
     @State private var showDenominationPicker = false
+    @State private var isRecording = false
+    @State private var showPremiumAlert = false
 
     var body: some View {
         NavigationView {
@@ -22,14 +25,28 @@ struct PrayerChatView: View {
             .navigationTitle("Prayer Chat")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    settingsButton
-                }
+                ToolbarItem(placement: .navigationBarLeading) { premiumToggle }
+                ToolbarItem(placement: .navigationBarTrailing) { settingsButton }
+            }
+            .alert("Premium Feature", isPresented: $showPremiumAlert) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text("Enable Premium mode to use voice features.")
             }
         }
-        .onAppear {
-            viewModel.configure(appState: appState)
+        .onAppear { viewModel.configure(appState: appState) }
+    }
+
+    private var premiumToggle: some View {
+        Toggle(isOn: $appState.isPremium) {
+            HStack(spacing: 4) {
+                Image(systemName: appState.isPremium ? "crown.fill" : "crown")
+                    .foregroundColor(appState.isPremium ? .yellow : AppColors.subtext)
+                Text("Premium").font(.caption)
+            }
         }
+        .toggleStyle(.button)
+        .tint(appState.isPremium ? .yellow : AppColors.subtext)
     }
 
     private var selectionBar: some View {
@@ -134,15 +151,22 @@ struct PrayerChatView: View {
     }
 
     private var inputBar: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 8) {
+            // Microphone button (Premium feature)
+            Button(action: { appState.isPremium ? startVoiceInput() : (showPremiumAlert = true) }) {
+                Image(systemName: isRecording ? "mic.fill" : "mic")
+                    .font(.title3)
+                    .foregroundColor(isRecording ? .red : (appState.isPremium ? AppColors.primary : AppColors.subtext))
+                    .padding(10)
+                    .background(AppColors.background)
+                    .clipShape(Circle())
+            }
+
             TextField("Ask for prayer guidance...", text: $messageText)
                 .padding(12)
                 .background(AppColors.cardBackground)
                 .cornerRadius(20)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(AppColors.border, lineWidth: 1)
-                )
+                .overlay(RoundedRectangle(cornerRadius: 20).stroke(AppColors.border, lineWidth: 1))
 
             Button(action: sendMessage) {
                 Image(systemName: "paperplane.fill")
@@ -156,6 +180,15 @@ struct PrayerChatView: View {
         }
         .padding()
         .background(AppColors.cardBackground)
+    }
+
+    private func startVoiceInput() {
+        // Toggle recording state - actual implementation would use Speech framework
+        isRecording.toggle()
+        if !isRecording {
+            // When stopping recording, transcribe would happen here
+            // For now, placeholder
+        }
     }
 
     private var settingsButton: some View {
@@ -178,25 +211,63 @@ struct PrayerChatView: View {
 // MARK: - Chat Message Bubble
 struct ChatMessageBubble: View {
     let message: ChatMessage
+    @EnvironmentObject var appState: AppState
+    @State private var isPlayingAudio = false
+    @State private var showPremiumAlert = false
 
     var body: some View {
         HStack {
             if message.isFromUser { Spacer(minLength: 60) }
-
             VStack(alignment: message.isFromUser ? .trailing : .leading, spacing: 4) {
                 Text(message.content)
                     .padding(12)
                     .background(message.isFromUser ? AppColors.primary : AppColors.cardBackground)
                     .foregroundColor(message.isFromUser ? .white : AppColors.text)
                     .cornerRadius(16)
+                    .textSelection(.enabled)  // Enable text selection for copy/paste
 
-                Text(formatTimestamp(message.timestamp))
-                    .font(.caption2)
+                // Action buttons for AI responses
+                if !message.isFromUser {
+                    HStack(spacing: 16) {
+                        Button(action: copyMessage) {
+                            Image(systemName: "doc.on.doc").font(.caption)
+                        }
+                        Button(action: shareMessage) {
+                            Image(systemName: "square.and.arrow.up").font(.caption)
+                        }
+                        Button(action: { appState.isPremium ? playAudio() : (showPremiumAlert = true) }) {
+                            Image(systemName: isPlayingAudio ? "stop.circle.fill" : "play.circle.fill")
+                                .font(.caption)
+                                .foregroundColor(appState.isPremium ? AppColors.primary : AppColors.subtext)
+                        }
+                    }
                     .foregroundColor(AppColors.subtext)
+                    .padding(.top, 4)
+                }
+                Text(formatTimestamp(message.timestamp)).font(.caption2).foregroundColor(AppColors.subtext)
             }
-
             if !message.isFromUser { Spacer(minLength: 60) }
         }
+        .alert("Premium Feature", isPresented: $showPremiumAlert) {
+            Button("OK", role: .cancel) {}
+        } message: { Text("Enable Premium mode to use audio playback.") }
+    }
+
+    private func copyMessage() {
+        UIPasteboard.general.string = message.content
+    }
+
+    private func shareMessage() {
+        let activityVC = UIActivityViewController(activityItems: [message.content], applicationActivities: nil)
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first {
+            window.rootViewController?.present(activityVC, animated: true)
+        }
+    }
+
+    private func playAudio() {
+        isPlayingAudio.toggle()
+        // OpenAI TTS integration would go here
     }
 
     private func formatTimestamp(_ date: Date) -> String {

@@ -24,6 +24,7 @@ class AppState: ObservableObject {
     @Published var languages: [Language] = []
     @Published var denominations: [ChristianDenomination] = []
     @Published var adminSettings: AdminSettings = .default
+    @Published var isPremium: Bool = false  // Premium subscription toggle
 
     private let userDefaultsKey = "wepray_app_data"
 
