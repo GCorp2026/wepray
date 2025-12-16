@@ -284,6 +284,13 @@ From LangTutor project-tasks.mdc:
 - [x] Added 5 established prayers: Prayer of St. Francis, Gloria Patri, Apostles' Creed, Act of Contrition, Magnificat
 - [x] Total prayers in carousel: 10 (5 original + 5 new)
 
+### Cinematic Navy Blue Theme
+- [x] Updated AppColors to cinematic navy blue palette (dark background #0F172A)
+- [x] Updated all 10 prayer card gradients to navy/blue variations
+- [x] Updated all 10 article card gradients to navy/blue variations
+- [x] Updated 4 benefit card gradients to navy/blue variations
+- [x] Light text colors for dark background contrast
+
 ---
 
 ## Phase 12: Social Features from Prayer Repository (PLANNED)

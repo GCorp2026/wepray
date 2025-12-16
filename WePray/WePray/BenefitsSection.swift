@@ -2,10 +2,10 @@ import SwiftUI
 
 struct BenefitsSection: View {
     let benefits: [Benefit] = [
-        Benefit(title: "Prayer Guidance", description: "Personalized guidance to deepen your prayer life.", iconName: "hands.sparkles.fill", gradientColors: ["#6B4EFF", "#8B73FF"]),
-        Benefit(title: "Community", description: "Connect with a supportive community of fellow believers.", iconName: "person.3.fill", gradientColors: ["#00C9A7", "#00B894"]),
-        Benefit(title: "Daily Reminders", description: "Stay consistent with prayer through daily reminders.", iconName: "bell.fill", gradientColors: ["#FFB800", "#FFD700"]),
-        Benefit(title: "Spiritual Growth", description: "Experience spiritual growth through regular prayer and reflection.", iconName: "leaf.fill", gradientColors: ["#9B59B6", "#8E44AD"])
+        Benefit(title: "Prayer Guidance", description: "Personalized guidance to deepen your prayer life.", iconName: "hands.sparkles.fill", gradientColors: ["#1E3A8A", "#3B82F6"]),
+        Benefit(title: "Community", description: "Connect with a supportive community of fellow believers.", iconName: "person.3.fill", gradientColors: ["#1A237E", "#5C6BC0"]),
+        Benefit(title: "Daily Reminders", description: "Stay consistent with prayer through daily reminders.", iconName: "bell.fill", gradientColors: ["#0D47A1", "#42A5F5"]),
+        Benefit(title: "Spiritual Growth", description: "Experience spiritual growth through regular prayer and reflection.", iconName: "leaf.fill", gradientColors: ["#283593", "#7986CB"])
     ]
 
     @State private var cardVisibility: [Bool] = [false, false, false, false]
