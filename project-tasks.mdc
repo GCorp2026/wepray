@@ -74,7 +74,7 @@ WePray is a Christian prayer tutoring app built with SwiftUI for iOS. It provide
 wepray/
 ├── SharedTypes.swift (350 lines) - Core types, colors, models, PrayerPlan
 ├── WePrayApp.swift (122 lines) - Main app entry, AppState with isPremium
-├── ContentView.swift (82 lines) - Root view, tab navigation with Plans & Journal tabs
+├── ContentView.swift (87 lines) - Root view, tab navigation with Plans, Journal & Requests tabs
 ├── AuthView.swift (235 lines) - Login/signup UI
 ├── LandingPageView.swift (271 lines) - Cinematic landing page
 ├── BenefitsSection.swift (145 lines) - Cinematic benefits with animations
@@ -106,6 +106,12 @@ wepray/
 ├── JournalComponents.swift (126 lines) - Journal UI components
 ├── GrowthTrackingView.swift (305 lines) - Growth stats, charts & achievements
 ├── ScriptureService.swift (131 lines) - Scripture verse service
+├── PrayerRequestTypes.swift (203 lines) - Prayer request data models
+├── PrayerRequestViewModel.swift (232 lines) - Request management & persistence
+├── PrayerRequestListView.swift (319 lines) - Browse & filter prayer requests
+├── PrayerRequestDetailView.swift (234 lines) - Request detail & responses
+├── PrayerRequestComponents.swift (168 lines) - Prayer request UI components
+├── NewPrayerRequestView.swift (265 lines) - Submit new prayer requests
 ├── FeedView.swift (204 lines) - Prayer sharing feed with profile nav
 ├── GroupsView.swift (309 lines) - Community groups with detail view
 ├── SubscriptionView.swift (287 lines) - Subscription management with Stripe
@@ -530,6 +536,60 @@ From LangTutor project-tasks.mdc:
 - GrowthTrackingView.swift (305 lines)
 - ScriptureService.swift (131 lines)
 - ContentView.swift (82 lines) - Added Journal tab
+
+---
+
+## Phase 19: Prayer Request Community (COMPLETED)
+
+### Prayer Request Feature
+- [x] Create PrayerRequestTypes.swift with data models (PrayerRequest, PrayerResponse, Categories, Urgency)
+- [x] Create PrayerRequestViewModel.swift for request management and persistence
+- [x] Create PrayerRequestListView.swift for browsing and filtering requests
+- [x] Create PrayerRequestDetailView.swift for viewing requests and responses
+- [x] Create NewPrayerRequestView.swift for submitting prayer requests
+- [x] Create PrayerRequestComponents.swift with reusable UI components
+
+### Data Models
+- [x] PrayerRequest with title, description, category, urgency, anonymous option
+- [x] PrayerRequestCategory enum (11 categories: health, family, relationships, financial, career, spiritual, grief, anxiety, guidance, thanksgiving, other)
+- [x] PrayerUrgency enum (4 levels: ongoing, important, urgent, critical)
+- [x] PrayerResponse for community encouragement messages
+- [x] PrayerWarriorStats for tracking prayer activity
+- [x] PrayerWarriorLevel enum (5 levels: beginner, faithful, devoted, warrior, intercessor)
+
+### UI Components
+- [x] Prayer Warrior stats card with level badge
+- [x] Filter bar (all, recent, urgent, answered, my requests)
+- [x] Sort options (newest, oldest, most prayed, urgency)
+- [x] Category horizontal scroll filter
+- [x] Prayer request cards with pray button
+- [x] Prayer detail view with responses
+- [x] Testimony sheet for marking answered prayers
+- [x] Prayer Warrior stats view with achievements
+
+### Features
+- [x] Submit anonymous or named prayer requests
+- [x] Pray for requests (tracked with counts)
+- [x] Send encouragement responses
+- [x] Mark prayers as answered with testimony
+- [x] Prayer streak tracking
+- [x] Category-based filtering
+- [x] Request expiration (7, 14, 30 days or indefinite)
+- [x] Sample prayer requests for new users
+
+### Integration
+- [x] Added "Requests" tab to ContentView navigation
+- [x] Prayer warrior leveling system
+- [x] Streak tracking for daily prayers
+
+### File Structure Updates
+- PrayerRequestTypes.swift (203 lines)
+- PrayerRequestViewModel.swift (232 lines)
+- PrayerRequestListView.swift (319 lines)
+- PrayerRequestDetailView.swift (234 lines)
+- PrayerRequestComponents.swift (168 lines)
+- NewPrayerRequestView.swift (265 lines)
+- ContentView.swift (87 lines) - Added Requests tab
 
 ---
 

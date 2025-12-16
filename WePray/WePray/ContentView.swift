@@ -50,26 +50,31 @@ struct MainTabView: View {
                 .tabItem { Label("Feed", systemImage: "rectangle.stack.fill") }
                 .tag(3)
 
+            // Prayer Requests
+            PrayerRequestListView()
+                .tabItem { Label("Requests", systemImage: "hand.raised.fill") }
+                .tag(4)
+
             // Prayer Groups
             GroupsView()
                 .tabItem { Label("Groups", systemImage: "person.3.fill") }
-                .tag(4)
+                .tag(5)
 
             // Practice (Voice & Speaking)
             VoicePrayerView()
                 .tabItem { Label("Voice", systemImage: "mic.fill") }
-                .tag(5)
+                .tag(6)
 
             // Settings & Profile
             SettingsView()
                 .tabItem { Label("Settings", systemImage: "gearshape.fill") }
-                .tag(6)
+                .tag(7)
 
             // Admin (conditional)
             if appState.currentUser?.isAdmin == true {
                 AdminView()
                     .tabItem { Label("Admin", systemImage: "shield.fill") }
-                    .tag(7)
+                    .tag(8)
             }
         }
         .accentColor(AppColors.accent)
