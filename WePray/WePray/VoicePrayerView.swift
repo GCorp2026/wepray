@@ -124,7 +124,7 @@ struct VoicePrayerView: View {
                 .padding()
             }
             .frame(height: geometry.size.height * 0.6)
-            .onChange(of: viewModel.messages.count) { _ in
+            .onChange(of: viewModel.messages.count) {
                 withAnimation {
                     scrollProxy.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
                 }

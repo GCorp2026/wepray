@@ -283,6 +283,10 @@ From LangTutor project-tasks.mdc:
 - [x] Lowered iOS deployment target from 18.4 to 17.0
 - [x] Fixed nil dictionary value error in `SpeakingPracticeViewModel.swift` (changed to `[String: String?]`)
 - [x] Condensed `OpenAIService.swift` from 361 to 349 lines
+- [x] Renamed `StatItem` to `ProfileStatItem` in UserProfileView.swift (conflict with SpeakingPracticeView.StatItem)
+- [x] Fixed ternary type mismatch (Color vs LinearGradient) in UserProfileView.swift using Group/if-else
+- [x] Updated `onChange(of:perform:)` to iOS 17+ syntax in PrayerChatView.swift and VoicePrayerView.swift
+- [x] Fixed unused variable warning in ListeningPracticeView.swift (changed `if let prayer` to boolean test)
 
 ### Prayer Carousel Content
 - [x] Added 5 established prayers: Prayer of St. Francis, Gloria Patri, Apostles' Creed, Act of Contrition, Magnificat

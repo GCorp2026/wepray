@@ -78,7 +78,7 @@ struct ListeningPracticeView: View {
         VStack(spacing: 16) {
             if viewModel.isLoading {
                 ProgressView("Loading exercises...")
-            } else if let prayer = viewModel.currentPrayer {
+            } else if viewModel.currentPrayer != nil {
                 Text("Listen to the prayer")
                     .font(.headline)
 

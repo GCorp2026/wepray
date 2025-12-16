@@ -97,11 +97,11 @@ struct UserProfileView: View {
     // MARK: - Stats Row
     private var statsRow: some View {
         HStack(spacing: 0) {
-            StatItem(value: userProfile.prayerCount, label: "Prayers")
+            ProfileStatItem(value: userProfile.prayerCount, label: "Prayers")
             Divider().frame(height: 40).background(AppColors.border)
-            StatItem(value: userProfile.followersCount, label: "Followers")
+            ProfileStatItem(value: userProfile.followersCount, label: "Followers")
             Divider().frame(height: 40).background(AppColors.border)
-            StatItem(value: userProfile.followingCount, label: "Following")
+            ProfileStatItem(value: userProfile.followingCount, label: "Following")
         }
         .padding()
         .background(AppColors.cardBackground)
@@ -120,9 +120,13 @@ struct UserProfileView: View {
             .frame(maxWidth: .infinity)
             .padding()
             .background(
-                userProfile.isFollowing
-                    ? AppColors.cardBackground
-                    : LinearGradient(colors: [AppColors.primary, AppColors.primaryLight], startPoint: .leading, endPoint: .trailing)
+                Group {
+                    if userProfile.isFollowing {
+                        AppColors.cardBackground
+                    } else {
+                        LinearGradient(colors: [AppColors.primary, AppColors.primaryLight], startPoint: .leading, endPoint: .trailing)
+                    }
+                }
             )
             .cornerRadius(12)
             .overlay(
@@ -167,8 +171,8 @@ struct UserProfileView: View {
     }
 }
 
-// MARK: - Stat Item
-struct StatItem: View {
+// MARK: - Profile Stat Item (renamed to avoid conflict with SpeakingPracticeView.StatItem)
+struct ProfileStatItem: View {
     let value: Int
     let label: String
 

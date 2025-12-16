@@ -124,7 +124,7 @@ struct PrayerChatView: View {
                 }
                 .padding()
             }
-            .onChange(of: viewModel.messages.count) { _ in
+            .onChange(of: viewModel.messages.count) {
                 withAnimation {
                     scrollProxy.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
                 }
