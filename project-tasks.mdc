@@ -293,18 +293,19 @@ From LangTutor project-tasks.mdc:
 
 ---
 
-## Phase 12: Social Features from Prayer Repository (PLANNED)
+## Phase 12: Social Features from Prayer Repository (IN PROGRESS)
 
 ### User Feed
-- [ ] Create FeedView.swift for prayer sharing
-- [ ] Implement post creation and display
-- [ ] Add like/repost functionality
+- [x] Create FeedView.swift for prayer sharing (195 lines)
+- [x] Implement post creation and display
+- [x] Add like functionality with heart icon
 - [ ] Implement follow/unfollow system
 
 ### Prayer Groups
-- [ ] Create GroupsView.swift for community groups
-- [ ] Implement group creation and management
-- [ ] Add group membership features
+- [x] Create GroupsView.swift for community groups (238 lines)
+- [x] Implement group creation sheet
+- [x] Add join/leave group functionality
+- [x] My Groups horizontal scroll section
 - [ ] Group-specific prayer posts
 
 ### Subscription System
