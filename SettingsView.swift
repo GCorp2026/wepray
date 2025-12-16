@@ -15,6 +15,7 @@ struct SettingsView: View {
                 userProfileSection
                 languageSettingsSection
                 denominationSettingsSection
+                voiceSettingsSection
                 customContentSection
                 aboutSection
                 logoutSection
@@ -125,6 +126,66 @@ struct SettingsView: View {
             Text("Christian Denomination")
         } footer: {
             Text("Prayers will follow your selected tradition")
+        }
+    }
+
+    private var voiceSettingsSection: some View {
+        Section {
+            // Voice Selection
+            Menu {
+                ForEach(UserProfile.availableVoices, id: \.0) { voice in
+                    Button(action: {
+                        appState.currentUser?.preferredVoice = voice.0
+                        appState.saveUser()
+                    }) {
+                        HStack {
+                            Text(voice.1)
+                            if appState.currentUser?.preferredVoice == voice.0 {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                    }
+                }
+            } label: {
+                HStack {
+                    Label("Voice", systemImage: "waveform")
+                    Spacer()
+                    Text(UserProfile.availableVoices.first { $0.0 == appState.currentUser?.preferredVoice }?.1 ?? "Nova")
+                        .foregroundColor(AppColors.subtext)
+                    Image(systemName: "chevron.right").font(.caption).foregroundColor(AppColors.subtext)
+                }
+            }
+            .foregroundColor(AppColors.text)
+
+            // Playback Speed
+            Menu {
+                ForEach(UserProfile.playbackSpeeds, id: \.self) { speed in
+                    Button(action: {
+                        appState.currentUser?.playbackSpeed = speed
+                        appState.saveUser()
+                    }) {
+                        HStack {
+                            Text("\(speed, specifier: "%.2g")x")
+                            if appState.currentUser?.playbackSpeed == speed {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                    }
+                }
+            } label: {
+                HStack {
+                    Label("Playback Speed", systemImage: "speedometer")
+                    Spacer()
+                    Text("\(appState.currentUser?.playbackSpeed ?? 1.0, specifier: "%.2g")x")
+                        .foregroundColor(AppColors.subtext)
+                    Image(systemName: "chevron.right").font(.caption).foregroundColor(AppColors.subtext)
+                }
+            }
+            .foregroundColor(AppColors.text)
+        } header: {
+            Text("Voice Settings")
+        } footer: {
+            Text("Configure voice for prayer audio")
         }
     }
 

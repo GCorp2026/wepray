@@ -132,6 +132,8 @@ struct UserProfile: Identifiable, Codable {
     var selectedLanguage: Language
     var selectedDenomination: ChristianDenomination
     var isAdmin: Bool = false
+    var preferredVoice: String = "nova"  // OpenAI TTS voice: alloy, echo, fable, onyx, nova, shimmer
+    var playbackSpeed: Double = 1.0      // 0.5 to 2.0
 
     static let sample = UserProfile(
         displayName: "Guest",
@@ -139,6 +141,17 @@ struct UserProfile: Identifiable, Codable {
         selectedLanguage: Language.defaultLanguages.first(where: { $0.code == "en" })!,
         selectedDenomination: ChristianDenomination.defaultDenominations.first(where: { $0.name == "Protestant" })!
     )
+
+    static let availableVoices = [
+        ("alloy", "Alloy (Neutral)"),
+        ("echo", "Echo (Male)"),
+        ("fable", "Fable (Expressive)"),
+        ("onyx", "Onyx (Deep Male)"),
+        ("nova", "Nova (Female)"),
+        ("shimmer", "Shimmer (Warm Female)")
+    ]
+
+    static let playbackSpeeds = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
 }
 
 // MARK: - Chat Message
