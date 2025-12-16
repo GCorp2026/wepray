@@ -307,6 +307,7 @@ From LangTutor project-tasks.mdc:
 - [x] Fixed ternary type mismatch (Color vs LinearGradient) in UserProfileView.swift using Group/if-else
 - [x] Updated `onChange(of:perform:)` to iOS 17+ syntax in PrayerChatView.swift and VoicePrayerView.swift
 - [x] Fixed unused variable warning in ListeningPracticeView.swift (changed `if let prayer` to boolean test)
+- [x] Fixed extraneous '}' syntax error in SubscriptionView.swift (removed premature ZStack closure at line 139)
 
 ### Prayer Carousel Content
 - [x] Added 5 established prayers: Prayer of St. Francis, Gloria Patri, Apostles' Creed, Act of Contrition, Magnificat

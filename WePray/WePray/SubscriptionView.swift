@@ -136,7 +136,7 @@ struct SubscriptionView: View {
                     }
                     .padding()
                 }
-            }
+
                 // Loading Overlay
                 if stripeService.isProcessingPayment {
                     Color.black.opacity(0.5)
