@@ -91,7 +91,7 @@ wepray/
 ├── SpeakingPracticeViewModel.swift (255 lines) - Speaking practice with GPT-4o
 ├── ListeningPracticeView.swift (285 lines) - Listening practice UI
 ├── ListeningPracticeViewModel.swift (250 lines) - Listening practice with GPT-4o
-├── AdminView.swift (335 lines) - Admin panel with featured articles link
+├── AdminView.swift (326 lines) - Admin panel with voice mode settings
 ├── SettingsView.swift (309 lines) - User settings with voice preferences
 ├── FeedView.swift (204 lines) - Prayer sharing feed with profile nav
 ├── GroupsView.swift (309 lines) - Community groups with detail view
@@ -204,7 +204,7 @@ From LangTutor project-tasks.mdc:
 ### Navigation Updates
 - [x] Update ContentView with Speaking Practice tab
 - [x] Update ContentView with Listening Practice tab
-- [ ] Add Advanced Voice Mode section in Admin Panel (future enhancement)
+- [x] Add Advanced Voice Mode section in Admin Panel (voice settings, default voice, playback speed)
 - [x] Add voice settings in Settings view (voice selection, playback speed)
 
 ---

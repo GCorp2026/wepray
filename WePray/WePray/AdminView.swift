@@ -11,11 +11,15 @@ struct AdminView: View {
     @State private var voiceAPIService: AIServiceType = .openai
     @State private var prayerTutorAPIService: AIServiceType = .claude
     @State private var showSaveConfirmation = false
+    @State private var defaultVoice: String = "nova"
+    @State private var defaultPlaybackSpeed: Double = 1.0
+    @State private var voiceFeaturesEnabled: Bool = true
 
     var body: some View {
         NavigationView {
             Form {
                 apiConfigurationSection
+                voiceModeSection
                 featuredPrayersSection
                 featuredArticlesSection
                 languageManagementSection
@@ -54,6 +58,22 @@ struct AdminView: View {
                 ForEach(AIServiceType.allCases, id: \.self) { Text($0.displayName).tag($0) }
             }.pickerStyle(.segmented)
         }.padding(.vertical, 4)
+    }
+
+    private var voiceModeSection: some View {
+        Section {
+            Toggle("Enable Voice Features", isOn: $voiceFeaturesEnabled)
+            Picker("Default Voice", selection: $defaultVoice) {
+                ForEach(UserProfile.availableVoices, id: \.0) { Text($0.1).tag($0.0) }
+            }
+            Picker("Playback Speed", selection: $defaultPlaybackSpeed) {
+                ForEach(UserProfile.playbackSpeeds, id: \.self) { Text("\($0, specifier: "%.2g")x").tag($0) }
+            }
+        } header: {
+            HStack { Image(systemName: "waveform").foregroundColor(AppColors.primary); Text("Advanced Voice Mode") }
+        } footer: {
+            Text("Configure default voice settings for all users.")
+        }
     }
 
     private var featuredPrayersSection: some View {
@@ -114,61 +134,32 @@ struct AdminView: View {
 
     private var languageManagementSection: some View {
         Section {
-            ForEach(appState.languages.sorted { $0.name < $1.name }) { language in
+            ForEach(appState.languages.sorted { $0.name < $1.name }) { lang in
                 HStack {
-                    Text(language.flag)
-                    Text(language.name)
+                    Text("\(lang.flag) \(lang.name)")
                     Spacer()
-                    if language.isCustom {
-                        Text("Custom")
-                            .font(.caption)
-                            .foregroundColor(AppColors.primary)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 2)
-                            .background(AppColors.primary.opacity(0.1))
-                            .cornerRadius(4)
-                    }
+                    if lang.isCustom { Text("Custom").font(.caption).foregroundColor(AppColors.primary) }
                 }
             }
-
             NavigationLink(destination: AddCustomLanguageView()) {
-                Label("Add Custom Language", systemImage: "plus.circle.fill")
-                    .foregroundColor(AppColors.primary)
+                Label("Add Custom Language", systemImage: "plus.circle.fill").foregroundColor(AppColors.primary)
             }
-        } header: {
-            Text("Languages")
-        } footer: {
-            Text("Languages are sorted alphabetically. Custom languages are stored permanently.")
-        }
+        } header: { Text("Languages") }
     }
 
     private var denominationManagementSection: some View {
         Section {
-            ForEach(appState.denominations.sorted { $0.name < $1.name }) { denomination in
+            ForEach(appState.denominations.sorted { $0.name < $1.name }) { denom in
                 HStack {
-                    Text(denomination.name)
+                    Text(denom.name)
                     Spacer()
-                    if denomination.isCustom {
-                        Text("Custom")
-                            .font(.caption)
-                            .foregroundColor(AppColors.primary)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 2)
-                            .background(AppColors.primary.opacity(0.1))
-                            .cornerRadius(4)
-                    }
+                    if denom.isCustom { Text("Custom").font(.caption).foregroundColor(AppColors.primary) }
                 }
             }
-
             NavigationLink(destination: AddCustomDenominationView()) {
-                Label("Add Custom Denomination", systemImage: "plus.circle.fill")
-                    .foregroundColor(AppColors.primary)
+                Label("Add Custom Denomination", systemImage: "plus.circle.fill").foregroundColor(AppColors.primary)
             }
-        } header: {
-            Text("Christian Denominations")
-        } footer: {
-            Text("Denominations are sorted alphabetically. Duplicates are automatically prevented.")
-        }
+        } header: { Text("Christian Denominations") }
     }
 
     private var saveSection: some View {
