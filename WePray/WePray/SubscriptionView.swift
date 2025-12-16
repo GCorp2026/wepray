@@ -85,7 +85,14 @@ struct SubscriptionFeature: Identifiable {
 struct SubscriptionView: View {
     @State private var currentPlan: SubscriptionTier = .free
     @State private var selectedTier: SubscriptionTier = .standard
+    @StateObject private var stripeService = StripeService.shared
+    @State private var showError = false
+    @State private var errorMessage = ""
+    @State private var showSuccess = false
     @Environment(\.dismiss) private var dismiss
+
+    // TODO: Replace with actual user ID from auth
+    private let userId = "user_placeholder_id"
 
     var body: some View {
         NavigationView {
@@ -130,6 +137,23 @@ struct SubscriptionView: View {
                     .padding()
                 }
             }
+                // Loading Overlay
+                if stripeService.isProcessingPayment {
+                    Color.black.opacity(0.5)
+                        .ignoresSafeArea()
+                    VStack(spacing: 16) {
+                        ProgressView()
+                            .scaleEffect(1.5)
+                            .tint(.white)
+                        Text("Processing payment...")
+                            .foregroundColor(.white)
+                            .font(.headline)
+                    }
+                    .padding(32)
+                    .background(Color(hex: "#1E293B"))
+                    .cornerRadius(16)
+                }
+            }
             .navigationTitle("Subscription")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -138,12 +162,35 @@ struct SubscriptionView: View {
                         .foregroundColor(AppColors.accent)
                 }
             }
+            .alert("Payment Error", isPresented: $showError) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(errorMessage)
+            }
+            .alert("Success!", isPresented: $showSuccess) {
+                Button("OK", role: .cancel) { dismiss() }
+            } message: {
+                Text("You are now subscribed to \(currentPlan.rawValue)!")
+            }
         }
     }
 
     private func subscribeTo(_ tier: SubscriptionTier) {
-        // Placeholder for Stripe integration
-        currentPlan = tier
+        Task {
+            let result = await stripeService.processPayment(for: tier, userId: userId)
+            switch result {
+            case .success(let status):
+                if let tierString = SubscriptionTier(rawValue: status.tier.capitalized) {
+                    currentPlan = tierString
+                } else {
+                    currentPlan = tier
+                }
+                showSuccess = true
+            case .failure(let error):
+                errorMessage = error.localizedDescription
+                showError = true
+            }
+        }
     }
 }
 

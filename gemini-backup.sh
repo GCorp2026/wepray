@@ -6,7 +6,7 @@
 # Configuration
 export GOOGLE_CLOUD_PROJECT="136334456295"
 export GEMINI_MODEL="${GEMINI_MODEL:-gemini-2.0-flash-exp}"
-export GEMINI_API_KEY="AIzaSyBmwgQ5-GS39dmCc17p3uLaqm8svYM6-l0"
+export GEMINI_API_KEY="AIzaSyCVb7emCYftKLfsOEuoOFXabC6f6IKtD34"
 
 # Check if Node.js is available
 if ! command -v node &> /dev/null; then

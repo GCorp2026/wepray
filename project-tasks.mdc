@@ -92,11 +92,13 @@ wepray/
 ├── ListeningPracticeView.swift (285 lines) - Listening practice UI
 ├── ListeningPracticeViewModel.swift (250 lines) - Listening practice with GPT-4o
 ├── AdminView.swift (326 lines) - Admin panel with voice mode settings
-├── SettingsView.swift (321 lines) - User settings with voice & realtime preferences
+├── SettingsView.swift (343 lines) - User settings with voice, realtime & notifications
+├── NotificationService.swift (332 lines) - Push notifications & prayer reminders
 ├── RealtimeVoiceService.swift (333 lines) - OpenAI Realtime API for low-latency voice
 ├── FeedView.swift (204 lines) - Prayer sharing feed with profile nav
 ├── GroupsView.swift (309 lines) - Community groups with detail view
-├── SubscriptionView.swift (240 lines) - Subscription management
+├── SubscriptionView.swift (287 lines) - Subscription management with Stripe
+├── StripeService.swift (300 lines) - Stripe payment & StoreKit integration
 ├── UserProfileView.swift (224 lines) - User profile & follow system
 ├── Info.plist - App configuration
 └── project-tasks.mdc - This file
@@ -302,7 +304,7 @@ From LangTutor project-tasks.mdc:
 
 ---
 
-## Phase 12: Social Features from Prayer Repository (MOSTLY COMPLETE)
+## Phase 12: Social Features from Prayer Repository (COMPLETED)
 
 ### User Feed
 - [x] Create FeedView.swift for prayer sharing (195 lines)
@@ -329,11 +331,13 @@ From LangTutor project-tasks.mdc:
 - [x] Post prayers within groups
 
 ### Subscription System
-- [ ] Integrate Stripe for payments (future enhancement)
-- [x] Create SubscriptionView.swift (240 lines)
+- [x] Integrate Stripe for payments
+- [x] Create StripeService.swift (300 lines) - Payment handling with StoreKit
+- [x] Create SubscriptionView.swift (287 lines) - With Stripe integration
 - [x] Implement tier-based features (Free/Standard/Premium)
 - [x] Add subscription card UI with features list
 - [x] Current plan indicator
+- [x] Payment processing with error handling and loading states
 
 ### Tab Navigation Update
 - [x] Updated ContentView tabs: Pray, Feed, Groups, Voice, Settings
@@ -343,7 +347,7 @@ From LangTutor project-tasks.mdc:
 - User Feed: Post creation, likes, profile navigation
 - User Profiles: Follow/unfollow, stats, user prayers
 - Prayer Groups: Create, join/leave, group-specific posts
-- Subscriptions: 3-tier system UI (Stripe integration pending)
+- Subscriptions: 3-tier system with Stripe payment integration
 
 ---
 
@@ -399,6 +403,40 @@ From LangTutor project-tasks.mdc:
 
 ---
 
+## Phase 16: Notifications & Reminders (COMPLETED)
+
+### Notification Service
+- [x] Create NotificationService.swift (332 lines)
+- [x] PrayerNotificationType enum with 7 notification types
+- [x] PrayerReminder model with repeat days support
+- [x] AppNotification model for in-app notifications
+- [x] NotificationSettings model for user preferences
+
+### Push Notifications
+- [x] UNUserNotificationCenter integration
+- [x] Request notification authorization
+- [x] Schedule daily prayer reminders
+- [x] Schedule repeating reminders by day of week
+- [x] Cancel notifications when disabled
+
+### Settings Integration
+- [x] Add Notifications section to SettingsView (343 lines)
+- [x] Daily prayer reminder toggle with time picker
+- [x] Group notifications toggle
+- [x] Social notifications toggle
+- [x] Sound toggle
+
+### Notification Types Supported
+- Prayer reminders (customizable time and days)
+- Daily prayer (morning reminder)
+- Group events
+- New followers
+- Post likes
+- Group posts
+- General announcements
+
+---
+
 ## Build Instructions
 
 1. Open wepray folder in Xcode
@@ -407,4 +445,11 @@ From LangTutor project-tasks.mdc:
 4. Set deployment target to iOS 17+
 5. Add microphone and speech recognition permissions
 6. Set API keys in environment variables or update AppConfig
-7. Build and run
+7. Add Stripe iOS SDK via Swift Package Manager:
+   - File > Add Package Dependencies
+   - URL: https://github.com/stripe/stripe-ios
+   - Add StripePaymentSheet package
+8. Configure Stripe:
+   - Update StripeConfig in StripeService.swift with your keys
+   - Set up backend endpoints for payment processing
+9. Build and run

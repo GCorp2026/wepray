@@ -7,7 +7,9 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var appState: AppState
+    @StateObject private var notificationService = NotificationService.shared
     @State private var showLogoutConfirmation = false
+    @State private var showAddReminder = false
 
     var body: some View {
         NavigationView {
@@ -16,6 +18,7 @@ struct SettingsView: View {
                 languageSettingsSection
                 denominationSettingsSection
                 voiceSettingsSection
+                notificationsSection
                 customContentSection
                 aboutSection
                 logoutSection
@@ -199,6 +202,25 @@ struct SettingsView: View {
         } footer: {
             Text("Real-time mode uses OpenAI Realtime API for ~300ms latency")
         }
+    }
+
+    private var notificationsSection: some View {
+        Section {
+            notificationToggle($notificationService.settings.dailyPrayerEnabled, "Daily Prayer", "sun.max.fill")
+            if notificationService.settings.dailyPrayerEnabled {
+                DatePicker("Time", selection: $notificationService.settings.dailyPrayerTime, displayedComponents: .hourAndMinute)
+                    .onChange(of: notificationService.settings.dailyPrayerTime) { _, _ in notificationService.saveSettings() }
+            }
+            notificationToggle($notificationService.settings.groupNotificationsEnabled, "Groups", "person.3.fill")
+            notificationToggle($notificationService.settings.socialNotificationsEnabled, "Social", "heart.fill")
+            notificationToggle($notificationService.settings.soundEnabled, "Sound", "speaker.wave.2.fill")
+        } header: { Text("Notifications") }
+    }
+
+    private func notificationToggle(_ binding: Binding<Bool>, _ label: String, _ icon: String) -> some View {
+        Toggle(isOn: binding) { Label(label, systemImage: icon) }
+            .tint(AppColors.primary)
+            .onChange(of: binding.wrappedValue) { _, _ in notificationService.saveSettings() }
     }
 
     private var customContentSection: some View {
