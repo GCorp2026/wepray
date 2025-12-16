@@ -93,6 +93,10 @@ wepray/
 ├── ListeningPracticeViewModel.swift (250 lines) - Listening practice with GPT-4o
 ├── AdminView.swift (335 lines) - Admin panel with featured articles link
 ├── SettingsView.swift (210 lines) - User settings
+├── FeedView.swift (195 lines) - Prayer sharing feed
+├── GroupsView.swift (238 lines) - Community prayer groups
+├── SubscriptionView.swift (240 lines) - Subscription management
+├── UserProfileView.swift (224 lines) - User profile & follow system
 ├── Info.plist - App configuration
 └── project-tasks.mdc - This file
 ```
@@ -299,7 +303,15 @@ From LangTutor project-tasks.mdc:
 - [x] Create FeedView.swift for prayer sharing (195 lines)
 - [x] Implement post creation and display
 - [x] Add like functionality with heart icon
-- [ ] Implement follow/unfollow system
+- [x] Implement follow/unfollow system
+
+### User Profile
+- [x] Create UserProfileView.swift (224 lines)
+- [x] UserProfileData model with stats
+- [x] Profile header with avatar, name, bio
+- [x] Stats row (Prayers, Followers, Following)
+- [x] Follow/Unfollow button with toggle
+- [x] User's prayer posts section
 
 ### Prayer Groups
 - [x] Create GroupsView.swift for community groups (238 lines)
@@ -310,9 +322,14 @@ From LangTutor project-tasks.mdc:
 
 ### Subscription System
 - [ ] Integrate Stripe for payments
-- [ ] Create SubscriptionView.swift
-- [ ] Implement tier-based features (Free/Standard/Premium)
-- [ ] Add subscription management
+- [x] Create SubscriptionView.swift (240 lines)
+- [x] Implement tier-based features (Free/Standard/Premium)
+- [x] Add subscription card UI with features list
+- [x] Current plan indicator
+
+### Tab Navigation Update
+- [x] Updated ContentView tabs: Pray, Feed, Groups, Voice, Settings
+- [x] Integrated FeedView and GroupsView into main navigation
 
 ---
 

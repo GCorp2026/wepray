@@ -30,45 +30,39 @@ struct MainTabView: View {
 
     var body: some View {
         TabView(selection: $selectedTab) {
+            // Home - Prayer Chat
             PrayerChatView()
-                .tabItem {
-                    Label("Chat", systemImage: "bubble.left.and.bubble.right.fill")
-                }
+                .tabItem { Label("Pray", systemImage: "hands.sparkles.fill") }
                 .tag(0)
 
-            VoicePrayerView()
-                .tabItem {
-                    Label("Voice", systemImage: "mic.fill")
-                }
+            // Community Feed
+            FeedView()
+                .tabItem { Label("Feed", systemImage: "rectangle.stack.fill") }
                 .tag(1)
 
-            SpeakingPracticeView()
-                .tabItem {
-                    Label("Speak", systemImage: "waveform")
-                }
+            // Prayer Groups
+            GroupsView()
+                .tabItem { Label("Groups", systemImage: "person.3.fill") }
                 .tag(2)
 
-            ListeningPracticeView()
-                .tabItem {
-                    Label("Listen", systemImage: "headphones")
-                }
+            // Practice (Voice & Speaking)
+            VoicePrayerView()
+                .tabItem { Label("Voice", systemImage: "mic.fill") }
                 .tag(3)
 
+            // Settings & Profile
             SettingsView()
-                .tabItem {
-                    Label("Settings", systemImage: "gearshape.fill")
-                }
+                .tabItem { Label("Settings", systemImage: "gearshape.fill") }
                 .tag(4)
 
+            // Admin (conditional)
             if appState.currentUser?.isAdmin == true {
                 AdminView()
-                    .tabItem {
-                        Label("Admin", systemImage: "shield.fill")
-                    }
+                    .tabItem { Label("Admin", systemImage: "shield.fill") }
                     .tag(5)
             }
         }
-        .accentColor(AppColors.primary)
+        .accentColor(AppColors.accent)
     }
 }
 
