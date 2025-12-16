@@ -74,7 +74,7 @@ WePray is a Christian prayer tutoring app built with SwiftUI for iOS. It provide
 wepray/
 ├── SharedTypes.swift (350 lines) - Core types, colors, models, PrayerPlan
 ├── WePrayApp.swift (122 lines) - Main app entry, AppState with isPremium
-├── ContentView.swift (77 lines) - Root view, tab navigation with Plans tab
+├── ContentView.swift (82 lines) - Root view, tab navigation with Plans & Journal tabs
 ├── AuthView.swift (235 lines) - Login/signup UI
 ├── LandingPageView.swift (271 lines) - Cinematic landing page
 ├── BenefitsSection.swift (145 lines) - Cinematic benefits with animations
@@ -99,6 +99,13 @@ wepray/
 ├── PrayerPlanListView.swift (301 lines) - Prayer plans list with templates
 ├── PrayerPlanDetailView.swift (301 lines) - Plan details with calendar view
 ├── PrayerPlanCreationView.swift (333 lines) - Create custom prayer plans
+├── JournalTypes.swift (152 lines) - Scripture & journal data models
+├── JournalViewModel.swift (182 lines) - Journal management & persistence
+├── JournalListView.swift (298 lines) - Journal list with verse of the day
+├── JournalEntryView.swift (281 lines) - Create/edit journal entries
+├── JournalComponents.swift (126 lines) - Journal UI components
+├── GrowthTrackingView.swift (305 lines) - Growth stats, charts & achievements
+├── ScriptureService.swift (131 lines) - Scripture verse service
 ├── FeedView.swift (204 lines) - Prayer sharing feed with profile nav
 ├── GroupsView.swift (309 lines) - Community groups with detail view
 ├── SubscriptionView.swift (287 lines) - Subscription management with Stripe
@@ -477,6 +484,52 @@ From LangTutor project-tasks.mdc:
 - SharedTypes.swift (350 lines) - Added PrayerPlan model
 - ContentView.swift (77 lines) - Added Plans tab
 - NotificationService.swift (348 lines) - Added prayer plan notifications
+
+---
+
+## Phase 18: Prayer Journal with Scripture Integration (COMPLETED)
+
+### Journal Feature
+- [x] Create JournalTypes.swift with data models (ScriptureVerse, JournalEntry, JournalMood, JournalTag)
+- [x] Create JournalViewModel.swift for journal management and persistence
+- [x] Create JournalListView.swift with verse of the day, stats, and entries list
+- [x] Create JournalEntryView.swift for creating/editing journal entries
+- [x] Create JournalComponents.swift with reusable UI components (MoodButton, TagChip, VersePicker)
+- [x] Create GrowthTrackingView.swift with stats, charts, and achievements
+- [x] Create ScriptureService.swift for verse management and favorites
+
+### Data Models
+- [x] ScriptureVerse with 30 predefined verses (ESV)
+- [x] JournalEntry with verse, reflection, prayer, gratitude, mood, tags, rating
+- [x] JournalMood enum (8 moods: grateful, peaceful, hopeful, joyful, reflective, anxious, struggling, seeking)
+- [x] JournalTag enum (8 tags: prayer, praise, confession, thanksgiving, intercession, worship, healing, guidance)
+- [x] ReflectionPrompt with 8 guided prompts
+- [x] GrowthStats for tracking progress
+
+### UI Components
+- [x] Verse of the Day card with favorite toggle
+- [x] Quick stats row (entries, streak, avg rating)
+- [x] Today's entry card or create button
+- [x] Journal entry list with mood icons and date
+- [x] Growth tracking with iOS 16+ Charts support
+- [x] Mood distribution visualization
+- [x] Monthly activity circles
+- [x] Achievement badges (6 unlockable badges)
+
+### Integration
+- [x] Added "Journal" tab to ContentView navigation
+- [x] Verse picker with favorites and search
+- [x] Export journal entries to text format
+
+### File Structure Updates
+- JournalTypes.swift (152 lines)
+- JournalViewModel.swift (182 lines)
+- JournalListView.swift (298 lines)
+- JournalEntryView.swift (281 lines)
+- JournalComponents.swift (126 lines)
+- GrowthTrackingView.swift (305 lines)
+- ScriptureService.swift (131 lines)
+- ContentView.swift (82 lines) - Added Journal tab
 
 ---
 
