@@ -202,6 +202,41 @@ struct FeaturedPrayer: Identifiable, Codable, Equatable {
             denomination: "Non-denominational",
             iconName: "leaf.fill",
             gradientColors: ["#9B59B6", "#8E44AD"]
+        ),
+        FeaturedPrayer(
+            title: "Prayer of St. Francis",
+            prayerText: "Lord, make me an instrument of your peace: where there is hatred, let me sow love; where there is injury, pardon.",
+            denomination: "Catholic",
+            iconName: "hands.sparkles",
+            gradientColors: ["#A8E6CF", "#56AB91"]
+        ),
+        FeaturedPrayer(
+            title: "Gloria Patri",
+            prayerText: "Glory be to the Father, and to the Son, and to the Holy Spirit; as it was in the beginning, is now, and ever shall be.",
+            denomination: "Universal",
+            iconName: "sparkles",
+            gradientColors: ["#FF8A8A", "#FF6B6B"]
+        ),
+        FeaturedPrayer(
+            title: "Apostles' Creed",
+            prayerText: "I believe in God, the Father almighty, creator of heaven and earth. I believe in Jesus Christ, his only Son, our Lord.",
+            denomination: "Universal",
+            iconName: "book.closed.fill",
+            gradientColors: ["#845EC2", "#B39CD0"]
+        ),
+        FeaturedPrayer(
+            title: "Act of Contrition",
+            prayerText: "My God, I am heartily sorry for having offended You, and I detest all my sins because of Your just punishments.",
+            denomination: "Catholic",
+            iconName: "heart.fill",
+            gradientColors: ["#FF6B6B", "#EE5A5A"]
+        ),
+        FeaturedPrayer(
+            title: "Magnificat",
+            prayerText: "My soul magnifies the Lord, and my spirit rejoices in God my Savior, for he has looked with favor on his humble servant.",
+            denomination: "Catholic",
+            iconName: "music.note",
+            gradientColors: ["#3F72AF", "#5B8FD4"]
         )
     ]
 }

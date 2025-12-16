@@ -280,6 +280,10 @@ From LangTutor project-tasks.mdc:
 - [x] Fixed nil dictionary value error in `SpeakingPracticeViewModel.swift` (changed to `[String: String?]`)
 - [x] Condensed `OpenAIService.swift` from 361 to 349 lines
 
+### Prayer Carousel Content
+- [x] Added 5 established prayers: Prayer of St. Francis, Gloria Patri, Apostles' Creed, Act of Contrition, Magnificat
+- [x] Total prayers in carousel: 10 (5 original + 5 new)
+
 ---
 
 ## Phase 12: Social Features from Prayer Repository (PLANNED)
