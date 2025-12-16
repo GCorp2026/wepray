@@ -44,58 +44,29 @@ struct GroupsView: View {
         NavigationView {
             ZStack {
                 AppColors.background.ignoresSafeArea()
-
                 ScrollView {
-                    // My Groups Section
                     if prayerGroups.contains(where: { $0.isJoined }) {
                         VStack(alignment: .leading, spacing: 12) {
-                            Text("My Groups")
-                                .font(.headline)
-                                .foregroundColor(AppColors.text)
-                                .padding(.horizontal)
-
+                            Text("My Groups").font(.headline).foregroundColor(AppColors.text).padding(.horizontal)
                             ScrollView(.horizontal, showsIndicators: false) {
-                                HStack(spacing: 12) {
-                                    ForEach(prayerGroups.filter { $0.isJoined }) { group in
-                                        MyGroupCard(group: group)
-                                    }
-                                }
-                                .padding(.horizontal)
+                                HStack(spacing: 12) { ForEach(prayerGroups.filter { $0.isJoined }) { MyGroupCard(group: $0) } }.padding(.horizontal)
                             }
-                        }
-                        .padding(.vertical)
+                        }.padding(.vertical)
                     }
-
-                    // All Groups Grid
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("Discover Groups")
-                            .font(.headline)
-                            .foregroundColor(AppColors.text)
-                            .padding(.horizontal)
-
+                        Text("Discover Groups").font(.headline).foregroundColor(AppColors.text).padding(.horizontal)
                         LazyVGrid(columns: columns, spacing: 16) {
-                            ForEach(filteredGroups) { group in
-                                GroupCard(group: group, joinAction: { toggleJoinStatus(groupId: group.id) })
-                            }
-                        }
-                        .padding(.horizontal)
+                            ForEach(filteredGroups) { group in GroupCard(group: group, joinAction: { toggleJoinStatus(groupId: group.id) }) }
+                        }.padding(.horizontal)
                     }
                 }
             }
-            .navigationTitle("Prayer Groups")
-            .searchable(text: $searchText, prompt: "Search groups")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button { showingCreateGroupSheet = true } label: {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.title2)
-                            .foregroundColor(AppColors.accent)
-                    }
-                }
-            }
+            .navigationTitle("Prayer Groups").searchable(text: $searchText, prompt: "Search groups")
+            .toolbar { ToolbarItem(placement: .navigationBarTrailing) {
+                Button { showingCreateGroupSheet = true } label: { Image(systemName: "plus.circle.fill").font(.title2).foregroundColor(AppColors.accent) }
+            }}
             .sheet(isPresented: $showingCreateGroupSheet) {
-                CreateGroupSheet(isPresented: $showingCreateGroupSheet, name: $newGroupName, description: $newGroupDescription, onCreate: createNewGroup)
-                    .presentationDetents([.medium])
+                CreateGroupSheet(isPresented: $showingCreateGroupSheet, name: $newGroupName, description: $newGroupDescription, onCreate: createNewGroup).presentationDetents([.medium])
             }
         }
     }
@@ -120,23 +91,24 @@ struct MyGroupCard: View {
     let group: PrayerGroup
 
     var body: some View {
-        HStack(spacing: 12) {
-            ZStack {
-                Circle()
-                    .fill(LinearGradient(colors: group.gradientColors.map { Color(hex: $0) }, startPoint: .topLeading, endPoint: .bottomTrailing))
-                    .frame(width: 50, height: 50)
-                Image(systemName: group.iconName)
-                    .foregroundColor(.white)
-                    .font(.title3)
+        NavigationLink(destination: GroupDetailView(group: group)) {
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(LinearGradient(colors: group.gradientColors.map { Color(hex: $0) }, startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .frame(width: 50, height: 50)
+                    Image(systemName: group.iconName).foregroundColor(.white).font(.title3)
+                }
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(group.name).font(.subheadline.bold()).foregroundColor(AppColors.text)
+                    Text("\(group.memberCount) members").font(.caption).foregroundColor(AppColors.subtext)
+                }
             }
-            VStack(alignment: .leading, spacing: 2) {
-                Text(group.name).font(.subheadline.bold()).foregroundColor(AppColors.text)
-                Text("\(group.memberCount) members").font(.caption).foregroundColor(AppColors.subtext)
-            }
+            .padding()
+            .background(AppColors.cardBackground)
+            .cornerRadius(12)
         }
-        .padding()
-        .background(AppColors.cardBackground)
-        .cornerRadius(12)
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
@@ -146,37 +118,33 @@ struct GroupCard: View {
     let joinAction: () -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(LinearGradient(colors: group.gradientColors.map { Color(hex: $0) }, startPoint: .topLeading, endPoint: .bottomTrailing))
-                    .frame(height: 80)
-                Image(systemName: group.iconName)
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-            }
-
-            Text(group.name).font(.headline).foregroundColor(AppColors.text).lineLimit(1)
-            Text(group.description).font(.caption).foregroundColor(AppColors.subtext).lineLimit(2)
-
-            HStack {
-                Text("\(group.memberCount) members").font(.caption2).foregroundColor(AppColors.subtext)
-                Spacer()
-                Button(action: joinAction) {
-                    Text(group.isJoined ? "Joined" : "Join")
-                        .font(.caption.bold())
-                        .foregroundColor(group.isJoined ? AppColors.subtext : .white)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
-                        .background(group.isJoined ? AppColors.border : AppColors.primary)
-                        .cornerRadius(8)
+        NavigationLink(destination: GroupDetailView(group: group)) {
+            VStack(alignment: .leading, spacing: 8) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(LinearGradient(colors: group.gradientColors.map { Color(hex: $0) }, startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .frame(height: 80)
+                    Image(systemName: group.iconName).font(.largeTitle).foregroundColor(.white)
+                }
+                Text(group.name).font(.headline).foregroundColor(AppColors.text).lineLimit(1)
+                Text(group.description).font(.caption).foregroundColor(AppColors.subtext).lineLimit(2)
+                HStack {
+                    Text("\(group.memberCount) members").font(.caption2).foregroundColor(AppColors.subtext)
+                    Spacer()
+                    Button(action: joinAction) {
+                        Text(group.isJoined ? "Joined" : "Join").font(.caption.bold())
+                            .foregroundColor(group.isJoined ? AppColors.subtext : .white)
+                            .padding(.horizontal, 12).padding(.vertical, 6)
+                            .background(group.isJoined ? AppColors.border : AppColors.primary).cornerRadius(8)
+                    }
                 }
             }
+            .padding()
+            .background(AppColors.cardBackground)
+            .cornerRadius(16)
+            .shadow(color: AppColors.primary.opacity(0.1), radius: 8, x: 0, y: 4)
         }
-        .padding()
-        .background(AppColors.cardBackground)
-        .cornerRadius(16)
-        .shadow(color: AppColors.primary.opacity(0.1), radius: 8, x: 0, y: 4)
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
@@ -191,44 +159,147 @@ struct CreateGroupSheet: View {
         NavigationView {
             ZStack {
                 AppColors.background.ignoresSafeArea()
-
                 VStack(spacing: 20) {
-                    TextField("Group Name", text: $name)
-                        .padding()
-                        .background(AppColors.cardBackground)
-                        .cornerRadius(12)
-                        .foregroundColor(AppColors.text)
-
-                    TextField("Description", text: $description, axis: .vertical)
-                        .lineLimit(3...5)
-                        .padding()
-                        .background(AppColors.cardBackground)
-                        .cornerRadius(12)
-                        .foregroundColor(AppColors.text)
-
+                    TextField("Group Name", text: $name).padding().background(AppColors.cardBackground).cornerRadius(12).foregroundColor(AppColors.text)
+                    TextField("Description", text: $description, axis: .vertical).lineLimit(3...5).padding().background(AppColors.cardBackground).cornerRadius(12).foregroundColor(AppColors.text)
                     Spacer()
-
                     Button(action: { onCreate(); isPresented = false }) {
-                        Text("Create Group")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(LinearGradient(colors: [AppColors.primary, AppColors.primaryLight], startPoint: .leading, endPoint: .trailing))
-                            .cornerRadius(12)
+                        Text("Create Group").font(.headline).foregroundColor(.white).frame(maxWidth: .infinity).padding()
+                            .background(LinearGradient(colors: [AppColors.primary, AppColors.primaryLight], startPoint: .leading, endPoint: .trailing)).cornerRadius(12)
+                    }.disabled(name.isEmpty)
+                }.padding()
+            }
+            .navigationTitle("Create Group").navigationBarTitleDisplayMode(.inline)
+            .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cancel") { isPresented = false }.foregroundColor(AppColors.accent) } }
+        }
+    }
+}
+
+// MARK: - Group Detail View
+struct GroupDetailView: View {
+    let group: PrayerGroup
+    @State private var groupPosts: [PrayerPost] = []
+    @State private var showingPostSheet = false
+    @State private var newPostContent = ""
+    @State private var isJoined: Bool = false
+
+    var body: some View {
+        ZStack {
+            AppColors.background.ignoresSafeArea()
+            ScrollView {
+                VStack(spacing: 16) {
+                    // Group Header
+                    VStack(spacing: 12) {
+                        ZStack {
+                            Circle().fill(LinearGradient(colors: group.gradientColors.map { Color(hex: $0) },
+                                startPoint: .topLeading, endPoint: .bottomTrailing)).frame(width: 80, height: 80)
+                            Image(systemName: group.iconName).font(.largeTitle).foregroundColor(.white)
+                        }
+                        Text(group.description).font(.subheadline).foregroundColor(AppColors.subtext).multilineTextAlignment(.center)
+                        Text("\(group.memberCount) members").font(.caption).foregroundColor(AppColors.subtext)
+                        Button(action: { isJoined.toggle() }) {
+                            Text(isJoined ? "Leave Group" : "Join Group").font(.headline).foregroundColor(.white)
+                                .frame(maxWidth: .infinity).padding()
+                                .background(LinearGradient(colors: [AppColors.primary, AppColors.primaryLight], startPoint: .leading, endPoint: .trailing))
+                                .cornerRadius(12)
+                        }
                     }
-                    .disabled(name.isEmpty)
+                    .padding()
+                    .background(AppColors.cardBackground)
+                    .cornerRadius(16)
+                    // Group Posts
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Group Prayers").font(.headline).foregroundColor(AppColors.text)
+                        if groupPosts.isEmpty {
+                            Text("No prayers shared yet in this group").font(.subheadline).foregroundColor(AppColors.subtext)
+                                .frame(maxWidth: .infinity, alignment: .center).padding()
+                        } else {
+                            ForEach(groupPosts) { post in
+                                GroupPostCard(post: post)
+                            }
+                        }
+                    }
                 }
                 .padding()
             }
-            .navigationTitle("Create Group")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { isPresented = false }
-                        .foregroundColor(AppColors.accent)
+        }
+        .navigationTitle(group.name)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button { showingPostSheet = true } label: {
+                    Image(systemName: "plus.circle.fill").font(.title2).foregroundColor(AppColors.accent)
                 }
             }
+        }
+        .sheet(isPresented: $showingPostSheet) {
+            GroupPostSheet(isPresented: $showingPostSheet, content: $newPostContent, groupName: group.name, onPost: addGroupPost)
+                .presentationDetents([.medium])
+        }
+        .onAppear { isJoined = group.isJoined; loadGroupPosts() }
+    }
+
+    private func loadGroupPosts() {
+        groupPosts = [
+            PrayerPost(authorName: "Sarah M.", content: "Praying for strength for everyone in \(group.name)!", timestamp: Date(timeIntervalSinceNow: -1800), likes: 5, isLiked: false),
+            PrayerPost(authorName: "David K.", content: "God bless this community. So grateful for this group.", timestamp: Date(timeIntervalSinceNow: -7200), likes: 8, isLiked: true)
+        ]
+    }
+
+    private func addGroupPost() {
+        guard !newPostContent.isEmpty else { return }
+        let post = PrayerPost(authorName: "You", content: newPostContent, timestamp: Date(), likes: 0, isLiked: false)
+        groupPosts.insert(post, at: 0)
+        newPostContent = ""
+    }
+}
+
+// MARK: - Group Post Card
+struct GroupPostCard: View {
+    let post: PrayerPost
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Circle().fill(AppColors.primary).frame(width: 32, height: 32)
+                    .overlay(Text(String(post.authorName.prefix(1))).font(.caption.bold()).foregroundColor(.white))
+                Text(post.authorName).font(.subheadline.bold()).foregroundColor(AppColors.text)
+                Spacer()
+                Text(post.timestamp, style: .relative).font(.caption).foregroundColor(AppColors.subtext)
+            }
+            Text(post.content).font(.body).foregroundColor(AppColors.text)
+            HStack { Image(systemName: post.isLiked ? "heart.fill" : "heart").foregroundColor(post.isLiked ? .red : AppColors.subtext)
+                Text("\(post.likes)").font(.caption).foregroundColor(AppColors.subtext) }
+        }
+        .padding()
+        .background(AppColors.cardBackground)
+        .cornerRadius(12)
+    }
+}
+
+// MARK: - Group Post Sheet
+struct GroupPostSheet: View {
+    @Binding var isPresented: Bool
+    @Binding var content: String
+    let groupName: String
+    let onPost: () -> Void
+
+    var body: some View {
+        NavigationView {
+            ZStack {
+                AppColors.background.ignoresSafeArea()
+                VStack(spacing: 16) {
+                    Text("Share in \(groupName)").font(.headline).foregroundColor(AppColors.text)
+                    TextEditor(text: $content).frame(height: 120).padding(8).background(AppColors.cardBackground).cornerRadius(12)
+                    Button(action: { onPost(); isPresented = false }) {
+                        Text("Share Prayer").font(.headline).foregroundColor(.white).frame(maxWidth: .infinity).padding()
+                            .background(LinearGradient(colors: [AppColors.primary, AppColors.primaryLight], startPoint: .leading, endPoint: .trailing)).cornerRadius(12)
+                    }
+                    Spacer()
+                }
+                .padding()
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cancel") { isPresented = false }.foregroundColor(AppColors.accent) } }
         }
     }
 }

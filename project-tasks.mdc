@@ -94,7 +94,7 @@ wepray/
 ├── AdminView.swift (335 lines) - Admin panel with featured articles link
 ├── SettingsView.swift (210 lines) - User settings
 ├── FeedView.swift (204 lines) - Prayer sharing feed with profile nav
-├── GroupsView.swift (238 lines) - Community prayer groups
+├── GroupsView.swift (309 lines) - Community groups with detail view
 ├── SubscriptionView.swift (240 lines) - Subscription management
 ├── UserProfileView.swift (224 lines) - User profile & follow system
 ├── Info.plist - App configuration
@@ -315,11 +315,13 @@ From LangTutor project-tasks.mdc:
 - [x] Navigation from Feed to User Profiles (tap author name)
 
 ### Prayer Groups
-- [x] Create GroupsView.swift for community groups (238 lines)
+- [x] Create GroupsView.swift for community groups (309 lines)
 - [x] Implement group creation sheet
 - [x] Add join/leave group functionality
 - [x] My Groups horizontal scroll section
-- [ ] Group-specific prayer posts
+- [x] Group-specific prayer posts with GroupDetailView
+- [x] Navigate to group detail on tap
+- [x] Post prayers within groups
 
 ### Subscription System
 - [ ] Integrate Stripe for payments
