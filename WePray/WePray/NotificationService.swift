@@ -11,6 +11,7 @@ import SwiftUI
 enum PrayerNotificationType: String, Codable, CaseIterable {
     case prayerReminder = "prayer_reminder"
     case dailyPrayer = "daily_prayer"
+    case prayerPlan = "prayer_plan"
     case groupEvent = "group_event"
     case newFollower = "new_follower"
     case postLike = "post_like"
@@ -21,6 +22,7 @@ enum PrayerNotificationType: String, Codable, CaseIterable {
         switch self {
         case .prayerReminder: return "Prayer Time"
         case .dailyPrayer: return "Daily Prayer"
+        case .prayerPlan: return "Prayer Plan"
         case .groupEvent: return "Group Event"
         case .newFollower: return "New Follower"
         case .postLike: return "Post Liked"
@@ -33,6 +35,7 @@ enum PrayerNotificationType: String, Codable, CaseIterable {
         switch self {
         case .prayerReminder: return "bell.fill"
         case .dailyPrayer: return "sun.max.fill"
+        case .prayerPlan: return "calendar.badge.clock"
         case .groupEvent: return "calendar"
         case .newFollower: return "person.badge.plus"
         case .postLike: return "heart.fill"
@@ -211,6 +214,31 @@ class NotificationService: NSObject, ObservableObject {
         }
     }
 
+    // MARK: - Schedule Prayer Plan Reminder
+    func schedulePrayerPlanReminder(planName: String, planId: UUID, at time: Date = Calendar.current.date(from: DateComponents(hour: 9, minute: 0)) ?? Date()) {
+        let content = UNMutableNotificationContent()
+        content.title = "Prayer Plan: \(planName)"
+        content.body = "Time to continue your prayer plan. Stay consistent!"
+        content.sound = settings.soundEnabled ? .default : nil
+        content.userInfo = ["type": PrayerNotificationType.prayerPlan.rawValue, "planId": planId.uuidString]
+
+        let calendar = Calendar.current
+        var dateComponents = DateComponents()
+        dateComponents.hour = calendar.component(.hour, from: time)
+        dateComponents.minute = calendar.component(.minute, from: time)
+
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        let request = UNNotificationRequest(identifier: "prayer_plan_\(planId.uuidString)", content: content, trigger: trigger)
+
+        center.add(request) { error in
+            if let error = error { print("Failed to schedule prayer plan reminder: \(error)") }
+        }
+    }
+
+    func cancelPrayerPlanReminder(planId: UUID) {
+        center.removePendingNotificationRequests(withIdentifiers: ["prayer_plan_\(planId.uuidString)"])
+    }
+
     // MARK: - Cancel Notifications
     func cancelReminder(_ reminder: PrayerReminder) {
         let identifiers = [reminder.id.uuidString] + (1...7).map { "\(reminder.id.uuidString)_\($0)" }
@@ -311,22 +339,10 @@ class NotificationService: NSObject, ObservableObject {
 
 // MARK: - UNUserNotificationCenterDelegate
 extension NotificationService: UNUserNotificationCenterDelegate {
-    nonisolated func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        willPresent notification: UNNotification
-    ) async -> UNNotificationPresentationOptions {
-        return [.banner, .sound, .badge]
-    }
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions { [.banner, .sound, .badge] }
 
-    nonisolated func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        didReceive response: UNNotificationResponse
-    ) async {
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         let userInfo = response.notification.request.content.userInfo
-        if let typeString = userInfo["type"] as? String,
-           let type = PrayerNotificationType(rawValue: typeString) {
-            print("User tapped notification of type: \(type)")
-            // Handle navigation based on notification type
-        }
+        if let typeString = userInfo["type"] as? String, let type = PrayerNotificationType(rawValue: typeString) { print("Notification tapped: \(type)") }
     }
 }

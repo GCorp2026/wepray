@@ -291,6 +291,55 @@ struct AdminSettings: Codable {
     static let `default` = AdminSettings()
 }
 
+// MARK: - Prayer Plan Model
+enum PrayerFrequency: String, CaseIterable, Codable {
+    case daily = "Daily"
+    case weekly = "Weekly"
+    case custom = "Custom"
+}
+
+enum PrayerTheme: String, CaseIterable, Codable {
+    case gratitude = "Gratitude"
+    case healing = "Healing"
+    case forgiveness = "Forgiveness"
+    case guidance = "Guidance"
+    case peace = "Peace"
+    case strength = "Strength"
+    case family = "Family"
+    case protection = "Protection"
+}
+
+struct PrayerPlan: Identifiable, Codable, Equatable {
+    var id: UUID = UUID()
+    var name: String
+    var description: String
+    var themes: [PrayerTheme]
+    var frequency: PrayerFrequency
+    var durationDays: Int
+    var prayersPerDay: Int
+    var startDate: Date
+    var completedDays: [Date] = []
+    var isShared: Bool = false
+    var createdAt: Date = Date()
+
+    var progress: Double {
+        guard durationDays > 0 else { return 0 }
+        return min(Double(completedDays.count) / Double(durationDays), 1.0)
+    }
+
+    var isActive: Bool {
+        let endDate = Calendar.current.date(byAdding: .day, value: durationDays, to: startDate) ?? startDate
+        return Date() >= startDate && Date() <= endDate
+    }
+
+    static let templates: [PrayerPlan] = [
+        PrayerPlan(name: "30 Days of Gratitude", description: "Cultivate thankfulness", themes: [.gratitude], frequency: .daily, durationDays: 30, prayersPerDay: 3, startDate: Date()),
+        PrayerPlan(name: "Healing Journey", description: "Seek God's healing", themes: [.healing, .peace], frequency: .daily, durationDays: 21, prayersPerDay: 2, startDate: Date()),
+        PrayerPlan(name: "Family Blessing", description: "Pray for your family", themes: [.family, .protection], frequency: .daily, durationDays: 14, prayersPerDay: 4, startDate: Date()),
+        PrayerPlan(name: "Seeking Guidance", description: "Divine wisdom in decisions", themes: [.guidance], frequency: .daily, durationDays: 7, prayersPerDay: 2, startDate: Date())
+    ]
+}
+
 // MARK: - App Configuration
 struct AppConfig {
     static let openAIAPIKey = ProcessInfo.processInfo.environment["OPENAI_API_KEY"] ?? ""
