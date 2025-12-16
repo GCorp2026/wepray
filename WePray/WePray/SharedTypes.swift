@@ -134,6 +134,7 @@ struct UserProfile: Identifiable, Codable {
     var isAdmin: Bool = false
     var preferredVoice: String = "nova"  // OpenAI TTS voice: alloy, echo, fable, onyx, nova, shimmer
     var playbackSpeed: Double = 1.0      // 0.5 to 2.0
+    var realtimeVoiceEnabled: Bool = false  // Use OpenAI Realtime API for low-latency voice
 
     static let sample = UserProfile(
         displayName: "Guest",

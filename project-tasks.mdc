@@ -85,14 +85,15 @@ wepray/
 ├── PrayerChatView.swift (328 lines) - Chat with action buttons, mic input, premium
 ├── PrayerChatViewModel.swift (225 lines) - Chat logic, API calls
 ├── VoicePrayerView.swift (266 lines) - Voice prayer interface
-├── VoicePrayerViewModel.swift (241 lines) - Voice logic with GPT-4o & TTS
+├── VoicePrayerViewModel.swift (310 lines) - Voice logic with GPT-4o, TTS & Realtime
 ├── OpenAIService.swift (310 lines) - Centralized OpenAI API (GPT-4o, Whisper, TTS)
 ├── SpeakingPracticeView.swift (280 lines) - Speaking practice UI
 ├── SpeakingPracticeViewModel.swift (255 lines) - Speaking practice with GPT-4o
 ├── ListeningPracticeView.swift (285 lines) - Listening practice UI
 ├── ListeningPracticeViewModel.swift (250 lines) - Listening practice with GPT-4o
 ├── AdminView.swift (326 lines) - Admin panel with voice mode settings
-├── SettingsView.swift (309 lines) - User settings with voice preferences
+├── SettingsView.swift (321 lines) - User settings with voice & realtime preferences
+├── RealtimeVoiceService.swift (333 lines) - OpenAI Realtime API for low-latency voice
 ├── FeedView.swift (204 lines) - Prayer sharing feed with profile nav
 ├── GroupsView.swift (309 lines) - Community groups with detail view
 ├── SubscriptionView.swift (240 lines) - Subscription management
@@ -199,7 +200,7 @@ From LangTutor project-tasks.mdc:
 - [x] Replace AVSpeechSynthesizer with OpenAI TTS
 - [x] Implement real Whisper transcription
 - [x] Add voice selection (alloy, echo, fable, onyx, nova, shimmer)
-- [ ] Add real-time audio streaming support (future enhancement)
+- [x] Add real-time audio streaming support (OpenAI Realtime API)
 
 ### Navigation Updates
 - [x] Update ContentView with Speaking Practice tab
@@ -368,6 +369,33 @@ From LangTutor project-tasks.mdc:
 ### File Updates
 - PrayerChatView.swift (328 lines) - Chat with action buttons and mic input
 - WePrayApp.swift (122 lines) - Added isPremium state
+
+---
+
+## Phase 15: Real-time Audio Streaming (COMPLETED)
+
+### OpenAI Realtime API Integration
+- [x] Create RealtimeVoiceService.swift (333 lines)
+- [x] Implement WebSocket connection to OpenAI Realtime API
+- [x] Audio format: PCM16, 24kHz, mono, little-endian
+- [x] Server-side Voice Activity Detection (VAD)
+- [x] Real-time audio streaming (~300ms latency)
+
+### Voice Prayer Realtime Mode
+- [x] Add realtimeVoiceEnabled to UserProfile
+- [x] Update VoicePrayerViewModel with realtime mode support
+- [x] Toggle between standard and realtime modes
+- [x] Auto-connect when realtime mode enabled
+
+### Settings Integration
+- [x] Add Real-time Voice toggle in Settings
+- [x] Updated footer text explaining latency benefits
+
+### Architecture
+- WebSocket URL: wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview
+- Input/Output: Base64-encoded PCM16 audio chunks
+- Transcription: Built-in Whisper-1 transcription
+- Turn Detection: Server VAD with 500ms silence threshold
 
 ---
 

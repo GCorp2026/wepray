@@ -131,6 +131,18 @@ struct SettingsView: View {
 
     private var voiceSettingsSection: some View {
         Section {
+            // Realtime Voice Mode Toggle
+            Toggle(isOn: Binding(
+                get: { appState.currentUser?.realtimeVoiceEnabled ?? false },
+                set: { newValue in
+                    appState.currentUser?.realtimeVoiceEnabled = newValue
+                    appState.saveUser()
+                }
+            )) {
+                Label("Real-time Voice", systemImage: "bolt.fill")
+            }
+            .tint(AppColors.primary)
+
             // Voice Selection
             Menu {
                 ForEach(UserProfile.availableVoices, id: \.0) { voice in
@@ -185,7 +197,7 @@ struct SettingsView: View {
         } header: {
             Text("Voice Settings")
         } footer: {
-            Text("Configure voice for prayer audio")
+            Text("Real-time mode uses OpenAI Realtime API for ~300ms latency")
         }
     }
 

@@ -16,17 +16,56 @@ class VoicePrayerViewModel: ObservableObject {
     @Published var selectedVoice: OpenAIVoice = .nova
     @Published var useOpenAITTS = true
     @Published var errorMessage: String?
+    @Published var useRealtimeMode = false
+    @Published var isRealtimeConnected = false
 
     private var appState: AppState?
     private var audioRecorder: AVAudioRecorder?
     private var audioPlayer: AVAudioPlayer?
     private let speechSynthesizer = AVSpeechSynthesizer()
     private let openAI = OpenAIService.shared
+    private let realtimeService = RealtimeVoiceService()
 
     func configure(appState: AppState) {
         self.appState = appState
         addWelcomeMessage()
         setupAudioSession()
+        configureRealtimeService()
+    }
+
+    private func configureRealtimeService() {
+        guard let appState = appState else { return }
+        let denomination = appState.currentUser?.selectedDenomination.name ?? "Protestant"
+        let language = appState.currentUser?.selectedLanguage.name ?? "English"
+        let voice = appState.currentUser?.preferredVoice ?? "nova"
+        useRealtimeMode = appState.currentUser?.realtimeVoiceEnabled ?? false
+        realtimeService.configure(denomination: denomination, language: language, voice: voice)
+    }
+
+    // MARK: - Realtime Mode
+    func connectRealtime() async {
+        do {
+            try await realtimeService.connect()
+            isRealtimeConnected = true
+            errorMessage = nil
+        } catch {
+            errorMessage = "Realtime connection failed: \(error.localizedDescription)"
+            isRealtimeConnected = false
+        }
+    }
+
+    func disconnectRealtime() {
+        realtimeService.disconnect()
+        isRealtimeConnected = false
+    }
+
+    func toggleRealtimeMode(_ enabled: Bool) async {
+        useRealtimeMode = enabled
+        if enabled {
+            await connectRealtime()
+        } else {
+            disconnectRealtime()
+        }
     }
 
     private func setupAudioSession() {
@@ -67,6 +106,15 @@ class VoicePrayerViewModel: ObservableObject {
     }
 
     func startRecording() {
+        // Use realtime mode if enabled and connected
+        if useRealtimeMode && isRealtimeConnected {
+            realtimeService.startListening()
+            isRecording = true
+            errorMessage = nil
+            return
+        }
+
+        // Fallback to standard recording
         let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.m4a")
 
         let settings: [String: Any] = [
@@ -88,6 +136,17 @@ class VoicePrayerViewModel: ObservableObject {
     }
 
     func stopRecording() async {
+        // Use realtime mode if enabled and connected
+        if useRealtimeMode && isRealtimeConnected {
+            realtimeService.stopListening()
+            isRecording = false
+            // Realtime mode handles transcription and response automatically
+            // Sync messages from realtime service
+            syncRealtimeMessages()
+            return
+        }
+
+        // Standard recording flow
         audioRecorder?.stop()
         isRecording = false
         isProcessing = true
@@ -233,6 +292,16 @@ class VoicePrayerViewModel: ObservableObject {
         ]
 
         return prayers[language.code] ?? prayers["en"]!
+    }
+
+    private func syncRealtimeMessages() {
+        // Sync new messages from realtime service to view model
+        for msg in realtimeService.conversationHistory {
+            let exists = messages.contains { $0.content == msg.content }
+            if !exists {
+                messages.append(ChatMessage(content: msg.content, isFromUser: msg.isFromUser))
+            }
+        }
     }
 
     private func getDocumentsDirectory() -> URL {

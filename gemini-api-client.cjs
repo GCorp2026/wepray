@@ -86,7 +86,7 @@ function getAllFiles(dirPath, arrayOfFiles = []) {
     } else {
       // Only include text files
       const ext = path.extname(file);
-      const textExtensions = ['.js', '.ts', '.tsx', '.jsx', '.json', '.md', '.sql', '.txt', '.css', '.html', '.xml', '.yaml', '.yml', '.env', '.swift', '.plist', '.xcconfig'];
+      const textExtensions = ['.js', '.ts', '.tsx', '.jsx', '.json', '.md', '.sql', '.txt', '.css', '.html', '.xml', '.yaml', '.yml', '.env'];
       if (textExtensions.includes(ext) || !ext) {
         arrayOfFiles.push(filePath);
       }
