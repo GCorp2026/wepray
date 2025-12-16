@@ -93,7 +93,7 @@ wepray/
 ├── ListeningPracticeViewModel.swift (250 lines) - Listening practice with GPT-4o
 ├── AdminView.swift (335 lines) - Admin panel with featured articles link
 ├── SettingsView.swift (210 lines) - User settings
-├── FeedView.swift (195 lines) - Prayer sharing feed
+├── FeedView.swift (204 lines) - Prayer sharing feed with profile nav
 ├── GroupsView.swift (238 lines) - Community prayer groups
 ├── SubscriptionView.swift (240 lines) - Subscription management
 ├── UserProfileView.swift (224 lines) - User profile & follow system
@@ -312,6 +312,7 @@ From LangTutor project-tasks.mdc:
 - [x] Stats row (Prayers, Followers, Following)
 - [x] Follow/Unfollow button with toggle
 - [x] User's prayer posts section
+- [x] Navigation from Feed to User Profiles (tap author name)
 
 ### Prayer Groups
 - [x] Create GroupsView.swift for community groups (238 lines)

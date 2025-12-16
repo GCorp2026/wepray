@@ -84,21 +84,30 @@ struct PrayerPostCard: View {
     let post: PrayerPost
     let likeAction: () -> Void
 
+    private func getUserProfile() -> UserProfileData {
+        UserProfileData.sampleUsers.first { $0.name == post.authorName } ??
+        UserProfileData(name: post.authorName, bio: "Prayer warrior.", avatarInitial: String(post.authorName.prefix(1)),
+            followersCount: 0, followingCount: 0, isFollowing: false, prayerCount: 1, joinDate: Date())
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            // Header
-            HStack {
-                Circle()
-                    .fill(LinearGradient(colors: [AppColors.primary, AppColors.primaryLight], startPoint: .topLeading, endPoint: .bottomTrailing))
-                    .frame(width: 40, height: 40)
-                    .overlay(Text(String(post.authorName.prefix(1))).font(.headline).foregroundColor(.white))
+            // Header - Tappable for Profile
+            NavigationLink(destination: UserProfileView(userProfile: getUserProfile())) {
+                HStack {
+                    Circle()
+                        .fill(LinearGradient(colors: [AppColors.primary, AppColors.primaryLight], startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .frame(width: 40, height: 40)
+                        .overlay(Text(String(post.authorName.prefix(1))).font(.headline).foregroundColor(.white))
 
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(post.authorName).font(.headline).foregroundColor(AppColors.text)
-                    Text(post.timestamp, style: .relative).font(.caption).foregroundColor(AppColors.subtext)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(post.authorName).font(.headline).foregroundColor(AppColors.text)
+                        Text(post.timestamp, style: .relative).font(.caption).foregroundColor(AppColors.subtext)
+                    }
+                    Spacer()
                 }
-                Spacer()
             }
+            .buttonStyle(PlainButtonStyle())
 
             // Content
             Text(post.content)
