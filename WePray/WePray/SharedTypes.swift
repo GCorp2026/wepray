@@ -131,10 +131,15 @@ struct UserProfile: Identifiable, Codable {
     var email: String
     var selectedLanguage: Language
     var selectedDenomination: ChristianDenomination
+    var role: UserRole = .user
     var isAdmin: Bool = false
     var preferredVoice: String = "nova"  // OpenAI TTS voice: alloy, echo, fable, onyx, nova, shimmer
     var playbackSpeed: Double = 1.0      // 0.5 to 2.0
     var realtimeVoiceEnabled: Bool = false  // Use OpenAI Realtime API for low-latency voice
+    var prayerFriendName: String = "Prayer Friend"  // Custom name for the AI prayer companion
+    var aboutMe: String = ""
+    var skills: [String] = []
+    var profession: String = ""
 
     static let sample = UserProfile(
         displayName: "Guest",
@@ -284,11 +289,46 @@ struct Article: Identifiable, Codable, Equatable {
 struct AdminSettings: Codable {
     var chatAPIService: AIServiceType = .claude
     var voiceAPIService: AIServiceType = .openai
-    var prayerTutorAPIService: AIServiceType = .claude
+    var prayerFriendAPIService: AIServiceType = .claude
     var featuredPrayers: [FeaturedPrayer] = FeaturedPrayer.defaultPrayers
     var featuredArticles: [Article] = Article.defaultArticles
 
     static let `default` = AdminSettings()
+}
+
+// MARK: - User Role
+enum UserRole: String, CaseIterable, Codable {
+    case superAdmin = "super_admin"
+    case admin = "admin"
+    case premium = "premium"
+    case user = "user"
+
+    var displayName: String {
+        switch self {
+        case .superAdmin: return "Super Admin"
+        case .admin: return "Admin"
+        case .premium: return "Premium"
+        case .user: return "User"
+        }
+    }
+
+    var badgeIcon: String {
+        switch self {
+        case .superAdmin: return "crown.fill"
+        case .admin: return "shield.fill"
+        case .premium: return "star.fill"
+        case .user: return "person.fill"
+        }
+    }
+
+    var badgeColor: String {
+        switch self {
+        case .superAdmin: return "#FFD700"  // Gold
+        case .admin: return "#3B82F6"       // Blue
+        case .premium: return "#8B5CF6"     // Purple
+        case .user: return "#6B7280"        // Gray
+        }
+    }
 }
 
 // MARK: - Prayer Plan Model

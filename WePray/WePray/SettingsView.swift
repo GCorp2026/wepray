@@ -1,6 +1,6 @@
 //
 //  SettingsView.swift
-//  WePray - Prayer Tutoring App
+//  WePray - Prayer Friend App
 //
 
 import SwiftUI
@@ -10,11 +10,13 @@ struct SettingsView: View {
     @StateObject private var notificationService = NotificationService.shared
     @State private var showLogoutConfirmation = false
     @State private var showAddReminder = false
+    @State private var prayerFriendName: String = ""
 
     var body: some View {
         NavigationView {
             Form {
                 userProfileSection
+                prayerFriendSection
                 languageSettingsSection
                 denominationSettingsSection
                 voiceSettingsSection
@@ -54,6 +56,33 @@ struct SettingsView: View {
             .padding(.vertical, 8)
         } header: {
             Text("Profile")
+        }
+    }
+
+    private var prayerFriendSection: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Prayer Friend Name")
+                    .font(.subheadline)
+                    .foregroundColor(AppColors.subtext)
+                TextField("Enter name for your prayer friend", text: $prayerFriendName)
+                    .textFieldStyle(.roundedBorder)
+                    .onAppear {
+                        prayerFriendName = appState.currentUser?.prayerFriendName ?? "Prayer Friend"
+                    }
+                    .onChange(of: prayerFriendName) { _, newValue in
+                        appState.currentUser?.prayerFriendName = newValue
+                        appState.saveUser()
+                    }
+                Text("This is the name your AI prayer companion will use")
+                    .font(.caption)
+                    .foregroundColor(AppColors.subtext)
+            }
+            .padding(.vertical, 4)
+        } header: {
+            Text("Prayer Friend")
+        } footer: {
+            Text("Personalize your prayer experience by giving your prayer friend a name.")
         }
     }
 

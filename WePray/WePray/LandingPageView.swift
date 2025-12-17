@@ -43,7 +43,7 @@ struct LandingPageView: View {
                     .font(.system(size: 42, weight: .bold, design: .rounded))
                     .foregroundStyle(titleGradient)
 
-                Text("Prayer Tutoring for Every Faith")
+                Text("Your Prayer Friend for Every Faith")
                     .font(.system(size: 18, weight: .medium, design: .rounded))
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)

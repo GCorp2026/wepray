@@ -842,6 +842,138 @@ From LangTutor project-tasks.mdc:
 
 ---
 
+---
+
+## Phase 24: Supabase Database, User Roles & Prayer Friend (IN PROGRESS)
+
+### Priority Checklist
+
+**PHASE 1: DATABASE & AUTH (Critical Foundation)** ✅ COMPLETED
+
+1. **Build Supabase Database** - Complex ✅
+   - [x] Design database schema for all entities
+   - [x] Create users table with auth integration & 4 roles
+   - [x] Create prayers, devotionals, journals tables
+   - [x] Create prayer_requests, meditation_sessions tables
+   - [x] Create scripture_memory, prayer_circles tables
+   - [x] Create groups, clubs, subscriptions tables
+   - [x] Create tweets/feed_posts tables
+   - [x] Set up Row Level Security (RLS) policies
+   - [x] Create database migrations
+   - [ ] Test data sync with iOS app
+
+2. **User Roles & Authentication** - Medium ✅
+   - [x] Implement 4 user roles: Super Admin, Admin, Premium, User
+   - [x] Auto-promote first 2 users to Admin role (DB trigger)
+   - [ ] Password visibility toggle on login
+   - [ ] Password verification (type twice) on signup
+   - [x] Role-based permissions system (UserRole enum)
+
+**PHASE 2: PRAYER FRIEND AI** ✅ COMPLETED
+
+3. **Rename 'Prayer Tutor' to 'Prayer Friend'** - Medium ✅
+   - [x] Update all UI text from "prayer tutor" to "prayer friend"
+   - [x] Add prayerFriendName field to UserProfile
+   - [ ] Create onboarding step for naming prayer friend
+   - [x] Add prayer friend name setting in SettingsView
+   - [x] Update PrayerChatViewModel to use custom name
+   - [ ] Update VoicePrayerViewModel to use custom name
+
+4. **Claude AI Integration for Prayer Friend** - Complex ✅
+   - [x] Add Claude API key to AppConfig
+   - [x] Integrate Claude AI for prayer chat responses (in PrayerChatViewModel)
+   - [x] Ensure AI never reveals its artificial nature (sanitizeResponse)
+   - [x] Use custom prayer friend name in responses
+
+**PHASE 3: USER ROLES & PERMISSIONS** (Partial)
+
+5. **Super Admin Role** - Complex
+   - [x] Role defined in UserRole enum with badge
+   - [ ] Full system access
+   - [ ] Manage all users/roles/content
+   - [ ] Set commissions for Premium/Users
+   - [ ] Full oversight over all revenue
+   - [ ] Post/view tweets
+
+6. **Admin Role** - Medium
+   - [x] Role defined in UserRole enum with badge
+   - [ ] Manage users/roles/products/courses
+   - [ ] Manage events/meetings/pricing
+   - [ ] Full oversight of messages/schedules
+
+7. **Premium Role** - Medium
+   - [x] Role defined in UserRole enum with badge
+   - [ ] Manage own prayer circles/groups/events/meetings
+   - [ ] View personal schedule
+   - [ ] Private messaging with users
+   - [ ] Post/view tweets in separate tab
+
+8. **User Role** - Medium
+   - [x] Role defined in UserRole enum with badge
+   - [ ] Build prayer profile
+   - [ ] Post tweets
+   - [ ] Connect with other users
+   - [ ] Join clubs/prayer circles/groups
+   - [ ] Book events/meetings
+   - [ ] Private messaging
+
+**PHASE 4: USER FEATURES**
+
+9. **User Profile & Admin Panel** - Medium
+   - [x] User profile has 'aboutMe', 'skills', 'profession' fields
+   - [ ] Admin Panel (Admin/Super Admin only)
+   - [ ] View all registered users
+   - [ ] Approve pending accounts
+   - [ ] Promote/delete/add users
+   - [ ] Change user roles
+
+10. **Professional Networking** - Medium
+    - [ ] Send/accept connection requests
+    - [ ] Display user's network on profile
+    - [ ] Search users by name/skills/profession
+
+11. **Club/Group Management** - Medium
+    - [ ] Create and manage clubs/groups/prayer circles
+    - [ ] Name, description, public/private settings
+    - [ ] Invite users, approve memberships
+    - [ ] Search and join public clubs
+
+**PHASE 5: UI ENHANCEMENTS** ✅ COMPLETED
+
+12. **Role Badges** - Simple ✅
+    - [x] Display role badge next to username (RoleBadgeView.swift)
+    - [x] Super Admin: Crown icon (gold)
+    - [x] Admin: Shield icon (blue)
+    - [x] Premium: Star icon (purple)
+    - [x] User: Person icon (gray)
+
+13. **Tweets/Feed System** - Medium
+    - [ ] Tweet posting functionality
+    - [ ] Separate tweets tab view
+    - [ ] Schedule viewing for all roles
+
+14. **Private Messaging** - Medium
+    - [ ] Direct messaging between users
+    - [ ] Message oversight for Admin roles
+
+**MAINTENANCE**
+
+15. **Module Line Limit Enforcement** - Medium
+    - [ ] Audit all .swift files for 350 line limit
+    - [ ] Refactor any files exceeding limit
+    - [x] Split large files into smaller components (RoleBadgeView.swift)
+
+### Files Created/Modified in Phase 24:
+- supabase/migrations/20241217000000_initial_schema.sql (NEW - Full DB schema)
+- SharedTypes.swift (MODIFIED - Added UserRole enum, prayerFriendName)
+- AdminView.swift (MODIFIED - Renamed prayerTutor to prayerFriend)
+- PrayerChatViewModel.swift (MODIFIED - Prayer friend name, sanitizeResponse)
+- SettingsView.swift (MODIFIED - Added prayer friend name setting)
+- LandingPageView.swift (MODIFIED - Updated tagline)
+- RoleBadgeView.swift (NEW - Role badge components)
+
+---
+
 ## Build Instructions
 
 1. Open wepray folder in Xcode

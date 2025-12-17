@@ -1,6 +1,6 @@
 //
 //  AdminView.swift
-//  WePray - Prayer Tutoring App
+//  WePray - Prayer Friend App
 //
 
 import SwiftUI
@@ -9,7 +9,7 @@ struct AdminView: View {
     @EnvironmentObject var appState: AppState
     @State private var chatAPIService: AIServiceType = .claude
     @State private var voiceAPIService: AIServiceType = .openai
-    @State private var prayerTutorAPIService: AIServiceType = .claude
+    @State private var prayerFriendAPIService: AIServiceType = .claude
     @State private var showSaveConfirmation = false
     @State private var defaultVoice: String = "nova"
     @State private var defaultPlaybackSpeed: Double = 1.0
@@ -41,9 +41,9 @@ struct AdminView: View {
 
     private var apiConfigurationSection: some View {
         Section {
-            apiPickerRow("Written Chat Prayer Tutor", selection: $chatAPIService)
+            apiPickerRow("Written Chat Prayer Friend", selection: $chatAPIService)
             apiPickerRow("Voice Prayer (Audio)", selection: $voiceAPIService)
-            apiPickerRow("Prayer Tutor Responses", selection: $prayerTutorAPIService)
+            apiPickerRow("Prayer Friend Responses", selection: $prayerFriendAPIService)
         } header: {
             Text("AI API Configuration")
         } footer: {
@@ -180,13 +180,13 @@ struct AdminView: View {
     private func loadSettings() {
         chatAPIService = appState.adminSettings.chatAPIService
         voiceAPIService = appState.adminSettings.voiceAPIService
-        prayerTutorAPIService = appState.adminSettings.prayerTutorAPIService
+        prayerFriendAPIService = appState.adminSettings.prayerFriendAPIService
     }
 
     private func saveSettings() {
         appState.adminSettings.chatAPIService = chatAPIService
         appState.adminSettings.voiceAPIService = voiceAPIService
-        appState.adminSettings.prayerTutorAPIService = prayerTutorAPIService
+        appState.adminSettings.prayerFriendAPIService = prayerFriendAPIService
         appState.saveAdminSettings()
         showSaveConfirmation = true
     }

@@ -1,6 +1,6 @@
 //
 //  PrayerChatViewModel.swift
-//  WePray - Prayer Tutoring App
+//  WePray - Prayer Friend App
 //
 
 import Foundation
@@ -18,6 +18,10 @@ class PrayerChatViewModel: ObservableObject {
         addWelcomeMessage()
     }
 
+    private var prayerFriendName: String {
+        appState?.currentUser?.prayerFriendName ?? "Prayer Friend"
+    }
+
     private func addWelcomeMessage() {
         guard messages.isEmpty else { return }
         let language = appState?.currentUser?.selectedLanguage.name ?? "English"
@@ -31,20 +35,31 @@ class PrayerChatViewModel: ObservableObject {
     }
 
     private func getWelcomeMessage(language: String, denomination: String) -> String {
+        let name = prayerFriendName
         switch language.lowercased() {
         case "russian":
-            return "Благословения вам! Я ваш помощник по молитве из \(denomination) традиции. Как я могу помочь вам сегодня в молитве?"
+            return "Благословения вам! Я \(name), ваш помощник по молитве из \(denomination) традиции. Как я могу помочь вам сегодня?"
         case "chinese":
-            return "愿上帝保佑你！我是你的\(denomination)祷告导师。今天我能如何帮助你祷告？"
+            return "愿上帝保佑你！我是\(name)，你的\(denomination)祷告伙伴。今天我能如何帮助你祷告？"
         case "spanish":
-            return "Bendiciones! Soy tu tutor de oracion de la tradicion \(denomination). Como puedo ayudarte hoy con tu oracion?"
+            return "¡Bendiciones! Soy \(name), tu compañero de oración de la tradición \(denomination). ¿Cómo puedo ayudarte hoy?"
         case "brazilian portuguese":
-            return "Bencaos! Sou seu tutor de oracao da tradicao \(denomination). Como posso ajuda-lo hoje com sua oracao?"
+            return "Bênçãos! Sou \(name), seu companheiro de oração da tradição \(denomination). Como posso ajudá-lo hoje?"
         case "french":
-            return "Benedictions! Je suis votre tuteur de priere de la tradition \(denomination). Comment puis-je vous aider aujourd'hui dans votre priere?"
+            return "Bénédictions! Je suis \(name), votre compagnon de prière de la tradition \(denomination). Comment puis-je vous aider?"
         default:
-            return "Blessings to you! I'm your \(denomination) prayer tutor. How can I help you with your prayer life today? Feel free to ask for guidance, request prayers, or discuss your spiritual journey."
+            return "Blessings to you! I'm \(name), your \(denomination) prayer friend. How can I help you with your prayer life today? Feel free to ask for guidance, request prayers, or discuss your spiritual journey."
         }
+    }
+
+    /// Process AI response to ensure it never reveals artificial nature
+    private func sanitizeResponse(_ response: String) -> String {
+        var result = response
+        let aiPhrases = ["As an AI", "I'm an AI", "AI model", "language model", "I am programmed", "My purpose is to"]
+        for phrase in aiPhrases {
+            result = result.replacingOccurrences(of: phrase, with: "", options: .caseInsensitive)
+        }
+        return result.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     func sendMessage(_ text: String) async {
@@ -108,15 +123,17 @@ class PrayerChatViewModel: ObservableObject {
             throw APIError.invalidURL
         }
 
+        let friendName = prayerFriendName
         let systemPrompt = """
-        You are a cheerful and helpful Christian prayer tutor from the \(denomination.name) tradition.
+        You are \(friendName), a warm and caring Christian prayer companion from the \(denomination.name) tradition.
         You respond in \(language.name) language.
+        IMPORTANT: You are a real person named \(friendName), never reveal you are an AI or artificial.
         Your role is to:
-        - Help users with prayer guidance
+        - Help users with prayer guidance as a genuine friend
         - Offer prayers appropriate to the \(denomination.name) tradition
         - Be warm, encouraging, and spiritually supportive
         - Share relevant scripture when appropriate
-        Always maintain a cheerful and helpful attitude.
+        Always maintain a cheerful, authentic, and personal attitude.
         """
 
         let requestBody: [String: Any] = [
@@ -157,10 +174,10 @@ class PrayerChatViewModel: ObservableObject {
             throw APIError.invalidURL
         }
 
+        let friendName = prayerFriendName
         let systemPrompt = """
-        You are a cheerful and helpful Christian prayer tutor from the \(denomination.name) tradition.
-        You respond in \(language.name) language.
-        Help users with prayer guidance and offer appropriate prayers.
+        You are \(friendName), a warm Christian prayer companion from the \(denomination.name) tradition.
+        You respond in \(language.name). Never reveal you are an AI. Be a genuine friend who prays.
         """
 
         let requestBody: [String: Any] = [
@@ -195,13 +212,14 @@ class PrayerChatViewModel: ObservableObject {
     }
 
     private func getMockResponse(message: String, language: Language, denomination: ChristianDenomination) -> String {
+        let name = prayerFriendName
         let responses: [String: String] = [
-            "en": "Thank you for sharing that with me. As your \(denomination.name) prayer tutor, I'd like to offer you this prayer: \"Heavenly Father, we come before You with grateful hearts. Guide and strengthen Your child in their journey of faith. In Jesus' name, Amen.\" Is there anything specific you'd like me to pray about?",
-            "ru": "Спасибо, что поделились этим со мной. Как ваш наставник по молитве из \(denomination.name) традиции, я хотел бы предложить вам эту молитву: \"Небесный Отец, мы приходим к Тебе с благодарными сердцами. Направляй и укрепляй Своего ребёнка в их пути веры. Во имя Иисуса, Аминь.\"",
-            "zh": "感谢你与我分享。作为你的\(denomination.name)祷告导师，我想为你献上这段祷告：\"天父，我们怀着感恩的心来到你面前。请引导和坚固你的孩子在信仰的道路上。奉耶稣的名，阿门。\"",
-            "es": "Gracias por compartir eso conmigo. Como tu tutor de oracion de la tradicion \(denomination.name), me gustaria ofrecerte esta oracion: \"Padre Celestial, venimos ante Ti con corazones agradecidos. Guia y fortalece a Tu hijo en su camino de fe. En el nombre de Jesus, Amen.\"",
-            "pt-BR": "Obrigado por compartilhar isso comigo. Como seu tutor de oracao da tradicao \(denomination.name), gostaria de oferecer esta oracao: \"Pai Celestial, vimos diante de Ti com coracoes gratos. Guia e fortalece Seu filho em sua jornada de fe. Em nome de Jesus, Amem.\"",
-            "fr": "Merci de partager cela avec moi. En tant que votre tuteur de priere de la tradition \(denomination.name), j'aimerais vous offrir cette priere: \"Pere Celeste, nous venons devant Toi avec des coeurs reconnaissants. Guide et fortifie Ton enfant dans son cheminement de foi. Au nom de Jesus, Amen.\""
+            "en": "Thank you for sharing that with me. As \(name), your \(denomination.name) prayer friend, I'd like to offer you this prayer: \"Heavenly Father, we come before You with grateful hearts. Guide and strengthen Your child in their journey of faith. In Jesus' name, Amen.\" Is there anything specific you'd like me to pray about?",
+            "ru": "Спасибо, что поделились этим со мной. Как \(name), ваш молитвенный друг из \(denomination.name) традиции, я хотел бы предложить вам эту молитву: \"Небесный Отец, мы приходим к Тебе с благодарными сердцами. Направляй и укрепляй Своего ребёнка в их пути веры. Во имя Иисуса, Аминь.\"",
+            "zh": "感谢你与我分享。作为\(name)，你的\(denomination.name)祷告伙伴，我想为你献上这段祷告：\"天父，我们怀着感恩的心来到你面前。请引导和坚固你的孩子在信仰的道路上。奉耶稣的名，阿门。\"",
+            "es": "Gracias por compartir eso conmigo. Como \(name), tu compañero de oración de la tradición \(denomination.name), me gustaría ofrecerte esta oración: \"Padre Celestial, venimos ante Ti con corazones agradecidos. Guía y fortalece a Tu hijo en su camino de fe. En el nombre de Jesús, Amén.\"",
+            "pt-BR": "Obrigado por compartilhar isso comigo. Como \(name), seu companheiro de oração da tradição \(denomination.name), gostaria de oferecer esta oração: \"Pai Celestial, vimos diante de Ti com corações gratos. Guia e fortalece Seu filho em sua jornada de fé. Em nome de Jesus, Amém.\"",
+            "fr": "Merci de partager cela avec moi. En tant que \(name), votre compagnon de prière de la tradition \(denomination.name), j'aimerais vous offrir cette prière: \"Père Céleste, nous venons devant Toi avec des cœurs reconnaissants. Guide et fortifie Ton enfant dans son cheminement de foi. Au nom de Jésus, Amen.\""
         ]
 
         return responses[language.code] ?? responses["en"]!
