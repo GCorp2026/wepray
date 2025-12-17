@@ -924,13 +924,13 @@ From LangTutor project-tasks.mdc:
 
 **PHASE 4: USER FEATURES**
 
-9. **User Profile & Admin Panel** - Medium
+9. **User Profile & Admin Panel** - Medium ✅
    - [x] User profile has 'aboutMe', 'skills', 'profession' fields
-   - [ ] Admin Panel (Admin/Super Admin only)
-   - [ ] View all registered users
-   - [ ] Approve pending accounts
-   - [ ] Promote/delete/add users
-   - [ ] Change user roles
+   - [x] Admin Panel (Admin/Super Admin only)
+   - [x] View all registered users
+   - [x] Approve pending accounts
+   - [x] Promote/delete/add users
+   - [x] Change user roles
 
 10. **Professional Networking** - Medium
     - [ ] Send/accept connection requests
@@ -1033,6 +1033,39 @@ From LangTutor project-tasks.mdc:
 
 **Modified Files:**
 - ContentView.swift (111 lines) - Added Tweets tab (tag 6), renumbered subsequent tabs
+
+---
+
+## Phase 26: Admin User Management Panel (COMPLETED)
+
+### Admin User Management Feature
+- [x] Create AdminUserTypes.swift with AccountStatus, UserAction, UserFilter enums
+- [x] Create AdminUserViewModel.swift for user CRUD operations
+- [x] Create AdminUserManagementView.swift main admin view
+- [x] Create AdminUserComponents.swift with reusable UI components
+- [x] Integrate User Management into AdminView.swift navigation
+
+### Features Implemented
+- [x] View all registered users with statistics dashboard
+- [x] Filter by: All, Pending, Active, Suspended, Banned, Admins, Premium
+- [x] Search users by name or email
+- [x] Swipe actions: Approve pending users, Delete users
+- [x] View and edit user details in sheet
+- [x] Change user roles (User, Premium, Admin, Super Admin)
+- [x] Change account status (Active, Pending, Suspended, Banned)
+- [x] Add new users with role selection
+- [x] User statistics: Total, Admins, Premium, Pending counts
+
+### Files Created/Modified in Phase 26
+
+**New Files:**
+- AdminUserTypes.swift (235 lines) - AccountStatus, UserAction, UserFilter enums, ManagedUser model with sample data
+- AdminUserViewModel.swift (215 lines) - User CRUD, filtering, statistics, available actions
+- AdminUserManagementView.swift (124 lines) - Main view with stats header, filter bar, user list
+- AdminUserComponents.swift (236 lines) - StatCard, FilterChip, UserRow, StatusBadge, AddUserView, UserDetailSheet
+
+**Modified Files:**
+- AdminView.swift (349 lines) - Already had User Management section integrated
 
 ---
 

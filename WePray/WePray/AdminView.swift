@@ -18,6 +18,7 @@ struct AdminView: View {
     var body: some View {
         NavigationView {
             Form {
+                userManagementSection
                 apiConfigurationSection
                 voiceModeSection
                 featuredPrayersSection
@@ -36,6 +37,28 @@ struct AdminView: View {
             } message: {
                 Text("Your API configuration has been saved successfully.")
             }
+        }
+    }
+
+    // MARK: - User Management Section
+    private var userManagementSection: some View {
+        Section {
+            NavigationLink(destination: AdminUserManagementView()) {
+                HStack {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(LinearGradient(colors: [.blue, .purple], startPoint: .topLeading, endPoint: .bottomTrailing))
+                            .frame(width: 36, height: 36)
+                        Image(systemName: "person.3.fill").foregroundColor(.white)
+                    }
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("User Management").font(.subheadline).fontWeight(.medium)
+                        Text("Manage users, roles & permissions").font(.caption).foregroundColor(.secondary)
+                    }
+                }
+            }
+        } header: {
+            HStack { Image(systemName: "shield.fill").foregroundColor(AppColors.primary); Text("Administration") }
         }
     }
 
