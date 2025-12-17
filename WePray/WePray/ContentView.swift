@@ -45,46 +45,51 @@ struct MainTabView: View {
                 .tabItem { Label("Devos", systemImage: "sun.max.fill") }
                 .tag(2)
 
+            // Scripture Memory
+            ScriptureMemoryView()
+                .tabItem { Label("Memory", systemImage: "book.closed.fill") }
+                .tag(3)
+
             // Guided Meditation
             MeditationListView()
                 .tabItem { Label("Meditate", systemImage: "sparkles") }
-                .tag(3)
+                .tag(4)
 
             // Prayer Journal
             JournalListView()
                 .tabItem { Label("Journal", systemImage: "book.fill") }
-                .tag(4)
+                .tag(5)
 
             // Community Feed
             FeedView()
                 .tabItem { Label("Feed", systemImage: "rectangle.stack.fill") }
-                .tag(5)
+                .tag(6)
 
             // Prayer Requests
             PrayerRequestListView()
                 .tabItem { Label("Requests", systemImage: "hand.raised.fill") }
-                .tag(6)
+                .tag(7)
 
             // Prayer Groups
             GroupsView()
                 .tabItem { Label("Groups", systemImage: "person.3.fill") }
-                .tag(7)
+                .tag(8)
 
             // Practice (Voice & Speaking)
             VoicePrayerView()
                 .tabItem { Label("Voice", systemImage: "mic.fill") }
-                .tag(8)
+                .tag(9)
 
             // Settings & Profile
             SettingsView()
                 .tabItem { Label("Settings", systemImage: "gearshape.fill") }
-                .tag(9)
+                .tag(10)
 
             // Admin (conditional)
             if appState.currentUser?.isAdmin == true {
                 AdminView()
                     .tabItem { Label("Admin", systemImage: "shield.fill") }
-                    .tag(10)
+                    .tag(11)
             }
         }
         .accentColor(AppColors.accent)
