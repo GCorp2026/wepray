@@ -11,6 +11,7 @@ struct PrayerRequest: Identifiable, Codable, Equatable {
     var id: UUID = UUID()
     var authorId: String
     var authorName: String
+    var authorRole: UserRole = .user
     var isAnonymous: Bool
     var title: String
     var description: String
@@ -115,6 +116,7 @@ struct PrayerResponse: Identifiable, Codable, Equatable {
     var requestId: UUID
     var authorId: String
     var authorName: String
+    var authorRole: UserRole = .user
     var message: String
     var createdAt: Date = Date()
 

@@ -70,9 +70,14 @@ struct PrayerRequestDetailView: View {
                 .overlay(Image(systemName: request.category.icon).foregroundColor(request.category.color))
 
             VStack(alignment: .leading, spacing: 4) {
-                Text(request.displayName)
-                    .font(.headline)
-                    .foregroundColor(AppColors.text)
+                HStack(spacing: 6) {
+                    Text(request.displayName)
+                        .font(.headline)
+                        .foregroundColor(AppColors.text)
+                    if !request.isAnonymous {
+                        RoleBadgeView(role: request.authorRole, size: .small)
+                    }
+                }
                 HStack(spacing: 8) {
                     Text(request.category.rawValue)
                         .font(.caption)
@@ -214,7 +219,8 @@ struct PrayerRequestDetailView: View {
                         to: request,
                         message: newResponse,
                         authorId: appState.currentUser?.id.uuidString ?? "guest",
-                        authorName: appState.currentUser?.displayName ?? "Guest"
+                        authorName: appState.currentUser?.displayName ?? "Guest",
+                        authorRole: appState.currentUser?.role ?? .user
                     )
                     newResponse = ""
                 } label: {

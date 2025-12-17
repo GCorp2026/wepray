@@ -72,7 +72,10 @@ WePray is a Christian prayer tutoring app built with SwiftUI for iOS. It provide
 
 ```
 wepray/
-├── SharedTypes.swift (350 lines) - Core types, colors, models, PrayerPlan
+├── SharedTypes.swift (316 lines) - Core types, models, PrayerPlan (colors moved to AppTheme)
+├── AppTheme.swift (52 lines) - App colors and Color hex extension
+├── UserRoleTypes.swift (182 lines) - UserRole, RolePermission, CommissionSettings, RevenueStats
+├── RoleBadgeView.swift (180 lines) - Role badge UI components
 ├── WePrayApp.swift (122 lines) - Main app entry, AppState with isPremium
 ├── ContentView.swift (97 lines) - Root view, tab navigation with Plans, Devos, Meditate, Journal & Requests tabs
 ├── AuthView.swift (235 lines) - Login/signup UI
@@ -895,11 +898,13 @@ From LangTutor project-tasks.mdc:
    - [ ] Full oversight over all revenue
    - [ ] Post/view tweets
 
-6. **Admin Role** - Medium
+6. **Admin Role** - Medium ✅
    - [x] Role defined in UserRole enum with badge
-   - [ ] Manage users/roles/products/courses
-   - [ ] Manage events/meetings/pricing
-   - [ ] Full oversight of messages/schedules
+   - [x] Permissions: manageUsers, manageRoles, manageProducts, manageCourses
+   - [x] Permissions: manageEvents, manageMeetings, manageClubs, manageGroups
+   - [x] Permissions: managePrayerCircles, managePricing, viewMessages, viewSchedules
+   - [x] Permissions: setCommissions, viewRevenue, postTweets
+   - [ ] UI implementation for admin management screens
 
 7. **Premium Role** - Medium
    - [x] Role defined in UserRole enum with badge
@@ -958,19 +963,31 @@ From LangTutor project-tasks.mdc:
 
 **MAINTENANCE**
 
-15. **Module Line Limit Enforcement** - Medium
-    - [ ] Audit all .swift files for 350 line limit
-    - [ ] Refactor any files exceeding limit
-    - [x] Split large files into smaller components (RoleBadgeView.swift)
+15. **Module Line Limit Enforcement** - Medium ✅
+    - [x] Audit all .swift files for 350 line limit
+    - [x] Refactor any files exceeding limit
+    - [x] Split SharedTypes.swift into AppTheme.swift (52 lines) and UserRoleTypes.swift (182 lines)
+    - [x] Split large files into smaller components (RoleBadgeView.swift 180 lines)
 
 ### Files Created/Modified in Phase 24:
-- supabase/migrations/20241217000000_initial_schema.sql (NEW - Full DB schema)
-- SharedTypes.swift (MODIFIED - Added UserRole enum, prayerFriendName)
-- AdminView.swift (MODIFIED - Renamed prayerTutor to prayerFriend)
-- PrayerChatViewModel.swift (MODIFIED - Prayer friend name, sanitizeResponse)
-- SettingsView.swift (MODIFIED - Added prayer friend name setting)
-- LandingPageView.swift (MODIFIED - Updated tagline)
-- RoleBadgeView.swift (NEW - Role badge components)
+
+**New Files:**
+- supabase/migrations/20241217000000_initial_schema.sql - Full DB schema with 30+ tables
+- AppTheme.swift (52 lines) - App colors and Color hex extension (split from SharedTypes)
+- UserRoleTypes.swift (182 lines) - UserRole, RolePermission, CommissionSettings, RevenueStats
+- RoleBadgeView.swift (180 lines) - Role badge UI components
+
+**Modified Files:**
+- SharedTypes.swift (316 lines) - Added prayerFriendName, aboutMe, skills, profession to UserProfile; added commissionSettings to AdminSettings; moved colors to AppTheme.swift and roles to UserRoleTypes.swift
+- AdminView.swift - Renamed prayerTutor to prayerFriend
+- PrayerChatViewModel.swift - Prayer friend name, sanitizeResponse to remove AI phrases
+- SettingsView.swift - Added prayer friend name setting section
+- LandingPageView.swift - Updated tagline to "Your Prayer Friend"
+- PrayerRequestTypes.swift (205 lines) - Added authorRole to PrayerRequest and PrayerResponse models
+- PrayerRequestListView.swift (324 lines) - Role badges shown next to usernames in PrayerRequestCard
+- PrayerRequestDetailView.swift (240 lines) - Role badges in request header
+- PrayerRequestComponents.swift (169 lines) - Role badges in ResponseCard
+- PrayerRequestViewModel.swift (233 lines) - addResponse includes authorRole parameter
 
 ---
 

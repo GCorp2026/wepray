@@ -20,6 +20,7 @@ struct ResponseCard: View {
                 HStack {
                     Text(response.authorName)
                         .font(.subheadline.bold())
+                    RoleBadgeView(role: response.authorRole, size: .small)
                     Spacer()
                     Text(response.formattedDate)
                         .font(.caption2)

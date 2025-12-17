@@ -160,11 +160,12 @@ class PrayerRequestViewModel: ObservableObject {
     }
 
     // MARK: - Response Management
-    func addResponse(to request: PrayerRequest, message: String, authorId: String, authorName: String) {
+    func addResponse(to request: PrayerRequest, message: String, authorId: String, authorName: String, authorRole: UserRole = .user) {
         let response = PrayerResponse(
             requestId: request.id,
             authorId: authorId,
             authorName: authorName,
+            authorRole: authorRole,
             message: message
         )
 

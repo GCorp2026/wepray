@@ -232,9 +232,14 @@ struct PrayerRequestCard: View {
                         .overlay(Image(systemName: request.category.icon).font(.caption).foregroundColor(request.category.color))
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(request.displayName)
-                            .font(.subheadline.bold())
-                            .foregroundColor(AppColors.text)
+                        HStack(spacing: 6) {
+                            Text(request.displayName)
+                                .font(.subheadline.bold())
+                                .foregroundColor(AppColors.text)
+                            if !request.isAnonymous {
+                                RoleBadgeView(role: request.authorRole, size: .small)
+                            }
+                        }
                         Text(request.formattedDate)
                             .font(.caption2)
                             .foregroundColor(AppColors.subtext)
