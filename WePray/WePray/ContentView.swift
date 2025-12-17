@@ -60,36 +60,41 @@ struct MainTabView: View {
                 .tabItem { Label("Journal", systemImage: "book.fill") }
                 .tag(5)
 
+            // Tweet Timeline
+            TweetTimelineView()
+                .tabItem { Label("Tweets", systemImage: "bubble.left.and.bubble.right.fill") }
+                .tag(6)
+
             // Community Feed
             FeedView()
                 .tabItem { Label("Feed", systemImage: "rectangle.stack.fill") }
-                .tag(6)
+                .tag(7)
 
             // Prayer Requests
             PrayerRequestListView()
                 .tabItem { Label("Requests", systemImage: "hand.raised.fill") }
-                .tag(7)
+                .tag(8)
 
             // Prayer Groups
             GroupsView()
                 .tabItem { Label("Groups", systemImage: "person.3.fill") }
-                .tag(8)
+                .tag(9)
 
             // Practice (Voice & Speaking)
             VoicePrayerView()
                 .tabItem { Label("Voice", systemImage: "mic.fill") }
-                .tag(9)
+                .tag(10)
 
             // Settings & Profile
             SettingsView()
                 .tabItem { Label("Settings", systemImage: "gearshape.fill") }
-                .tag(10)
+                .tag(11)
 
             // Admin (conditional)
             if appState.currentUser?.isAdmin == true {
                 AdminView()
                     .tabItem { Label("Admin", systemImage: "shield.fill") }
-                    .tag(11)
+                    .tag(12)
             }
         }
         .accentColor(AppColors.accent)

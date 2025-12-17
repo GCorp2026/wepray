@@ -952,10 +952,12 @@ From LangTutor project-tasks.mdc:
     - [x] Premium: Star icon (purple)
     - [x] User: Person icon (gray)
 
-13. **Tweets/Feed System** - Medium
-    - [ ] Tweet posting functionality
-    - [ ] Separate tweets tab view
-    - [ ] Schedule viewing for all roles
+13. **Tweets/Feed System** - Medium ✅
+    - [x] Tweet posting functionality
+    - [x] Separate tweets tab view
+    - [x] Role badges next to usernames
+    - [x] Like, retweet, reply functionality
+    - [x] Tweet filtering and sorting
 
 14. **Private Messaging** - Medium
     - [ ] Direct messaging between users
@@ -993,6 +995,44 @@ From LangTutor project-tasks.mdc:
 - WePrayApp.swift (133 lines) - showPrayerFriendOnboarding flag, completePrayerFriendOnboarding()
 - ContentView.swift (106 lines) - fullScreenCover for prayer friend onboarding
 - VoicePrayerViewModel.swift (317 lines) - prayerFriendName property, updated welcome and prompts
+
+---
+
+## Phase 25: Tweet/Timeline Feature (COMPLETED)
+
+### Tweet Timeline Feature
+- [x] Create TweetTypes.swift with Tweet model, TweetAuthor, TweetFilter, TweetSort enums
+- [x] Create TweetViewModel.swift for tweet CRUD operations
+- [x] Create TweetComponents.swift with TweetCard, TweetActionBar, TweetFilterChips
+- [x] Create TweetComposeView.swift for composing tweets
+- [x] Create TweetTimelineView.swift with main timeline and detail views
+- [x] Add Tweets tab to ContentView navigation
+
+### Features Implemented
+- [x] All users (Super Admin, Admin, Premium, User) can post and view tweets
+- [x] Role badges displayed next to usernames (uses existing RoleBadgeView)
+- [x] Like functionality with toggle and count
+- [x] Retweet functionality with toggle and count
+- [x] Reply system with nested replies
+- [x] Tweet filtering: All, Following, Trending, My Tweets
+- [x] Tweet sorting: Newest, Oldest, Most Liked, Most Retweeted
+- [x] Pull to refresh functionality
+- [x] 280 character limit with counter
+- [x] UserDefaults persistence for tweets
+- [x] Floating compose button
+- [x] Tweet detail view with replies
+
+### Files Created in Phase 25
+
+**New Files:**
+- TweetTypes.swift (180 lines) - Tweet model, TweetAuthor, TweetFilter, TweetSort, sample data
+- TweetViewModel.swift (140 lines) - Tweet CRUD, filtering, sorting, persistence
+- TweetComponents.swift (250 lines) - TweetCard, TweetActionBar, TweetFilterChips, TweetComposeButton
+- TweetComposeView.swift (130 lines) - Tweet compose sheet with character limit
+- TweetTimelineView.swift (245 lines) - Main timeline, tweet detail view, replies
+
+**Modified Files:**
+- ContentView.swift (111 lines) - Added Tweets tab (tag 6), renumbered subsequent tabs
 
 ---
 
