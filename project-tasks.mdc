@@ -74,7 +74,7 @@ WePray is a Christian prayer tutoring app built with SwiftUI for iOS. It provide
 wepray/
 ├── SharedTypes.swift (350 lines) - Core types, colors, models, PrayerPlan
 ├── WePrayApp.swift (122 lines) - Main app entry, AppState with isPremium
-├── ContentView.swift (87 lines) - Root view, tab navigation with Plans, Journal & Requests tabs
+├── ContentView.swift (92 lines) - Root view, tab navigation with Plans, Journal, Meditate & Requests tabs
 ├── AuthView.swift (235 lines) - Login/signup UI
 ├── LandingPageView.swift (271 lines) - Cinematic landing page
 ├── BenefitsSection.swift (145 lines) - Cinematic benefits with animations
@@ -112,6 +112,10 @@ wepray/
 ├── PrayerRequestDetailView.swift (234 lines) - Request detail & responses
 ├── PrayerRequestComponents.swift (168 lines) - Prayer request UI components
 ├── NewPrayerRequestView.swift (265 lines) - Submit new prayer requests
+├── MeditationTypes.swift (294 lines) - Meditation session data models
+├── MeditationViewModel.swift (224 lines) - Session management with TTS
+├── MeditationListView.swift (289 lines) - Browse and filter sessions
+├── MeditationPlayerView.swift (268 lines) - Animated meditation player
 ├── FeedView.swift (204 lines) - Prayer sharing feed with profile nav
 ├── GroupsView.swift (309 lines) - Community groups with detail view
 ├── SubscriptionView.swift (287 lines) - Subscription management with Stripe
@@ -596,6 +600,58 @@ From LangTutor project-tasks.mdc:
 - PrayerRequestComponents.swift (168 lines)
 - NewPrayerRequestView.swift (265 lines)
 - ContentView.swift (87 lines) - Added Requests tab
+
+---
+
+## Phase 20: Guided Meditation & Prayer Sessions (COMPLETED)
+
+### Meditation Session Feature
+- [x] Create MeditationTypes.swift with data models (MeditationSession, Category, Difficulty, Music)
+- [x] Create MeditationViewModel.swift for session management with AVSpeechSynthesizer
+- [x] Create MeditationListView.swift for browsing and filtering sessions
+- [x] Create MeditationPlayerView.swift with animated player UI
+
+### Data Models
+- [x] MeditationSession with title, description, duration, category, difficulty, script, music
+- [x] MeditationCategory enum (10 categories: morning, evening, peace, gratitude, healing, forgiveness, strength, guidance, sleep, stress)
+- [x] MeditationDifficulty enum (3 levels: beginner, intermediate, advanced)
+- [x] MeditationMusic enum (6 options: silence, nature, piano, ambient, choral, bells)
+- [x] MeditationProgress for tracking stats, streaks, and weekly goals
+- [x] PlayerState enum (idle, loading, playing, paused, completed)
+
+### UI Components
+- [x] Progress card with weekly goal, streak, and stats
+- [x] Category filter horizontal scroll
+- [x] Recent sessions "Continue" section
+- [x] Session list with favorite toggle
+- [x] Animated player with pulsing circles
+- [x] Timer display with progress bar
+- [x] Play/Pause/Stop controls
+- [x] Script view sheet for reading along
+- [x] Music indicator badge
+
+### Features
+- [x] 5 default meditation sessions (Morning Gratitude, Evening Peace, Finding Inner Peace, Healing Prayer, Strength for Today)
+- [x] Text-to-speech with AVSpeechSynthesizer for guided narration
+- [x] Session favorites with persistence
+- [x] Completion tracking and stats
+- [x] Streak calculation with longest streak tracking
+- [x] Weekly progress with configurable goal (default 30 min)
+- [x] Category-based filtering
+- [x] Search functionality
+- [x] Session timer with auto-complete
+
+### Integration
+- [x] Added "Meditate" tab to ContentView navigation
+- [x] Category colors and icons for visual distinction
+- [x] Background music indicator (placeholder for future audio)
+
+### File Structure Updates
+- MeditationTypes.swift (294 lines)
+- MeditationViewModel.swift (224 lines)
+- MeditationListView.swift (289 lines)
+- MeditationPlayerView.swift (268 lines)
+- ContentView.swift (92 lines) - Added Meditate tab
 
 ---
 
