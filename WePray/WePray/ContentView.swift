@@ -60,56 +60,61 @@ struct MainTabView: View {
                 .tabItem { Label("Journal", systemImage: "book.fill") }
                 .tag(5)
 
+            // Events & Meetings
+            EventListView()
+                .tabItem { Label("Events", systemImage: "calendar.badge.plus") }
+                .tag(6)
+
             // Tweet Timeline
             TweetTimelineView()
                 .tabItem { Label("Tweets", systemImage: "bubble.left.and.bubble.right.fill") }
-                .tag(6)
+                .tag(7)
 
             // Community Feed
             FeedView()
                 .tabItem { Label("Feed", systemImage: "rectangle.stack.fill") }
-                .tag(7)
+                .tag(8)
 
             // Prayer Requests
             PrayerRequestListView()
                 .tabItem { Label("Requests", systemImage: "hand.raised.fill") }
-                .tag(8)
+                .tag(9)
 
             // Prayer Groups
             GroupsView()
                 .tabItem { Label("Groups", systemImage: "person.3.fill") }
-                .tag(9)
+                .tag(10)
 
             // Clubs Management
             ClubManagementView()
                 .tabItem { Label("Clubs", systemImage: "building.2.fill") }
-                .tag(10)
+                .tag(11)
 
             // Professional Network
             ConnectionRequestsView()
                 .tabItem { Label("Network", systemImage: "person.2.fill") }
-                .tag(11)
+                .tag(12)
 
             // Private Messages
             MessagingView()
                 .tabItem { Label("Messages", systemImage: "message.fill") }
-                .tag(12)
+                .tag(13)
 
             // Practice (Voice & Speaking)
             VoicePrayerView()
                 .tabItem { Label("Voice", systemImage: "mic.fill") }
-                .tag(13)
+                .tag(14)
 
             // Settings & Profile
             SettingsView()
                 .tabItem { Label("Settings", systemImage: "gearshape.fill") }
-                .tag(14)
+                .tag(15)
 
             // Admin (conditional)
             if appState.currentUser?.isAdmin == true {
                 AdminView()
                     .tabItem { Label("Admin", systemImage: "shield.fill") }
-                    .tag(15)
+                    .tag(16)
             }
         }
         .accentColor(AppColors.accent)

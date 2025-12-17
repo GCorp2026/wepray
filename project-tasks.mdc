@@ -145,6 +145,16 @@ wepray/
 ├── MessagingViewModel.swift (219 lines) - Messaging CRUD, filtering, statistics
 ├── MessagingComponents.swift (263 lines) - ConversationRow, MessageBubble, MessageInputBar
 ├── MessagingView.swift (203 lines) - Conversation list, chat view
+├── EventTypes.swift (246 lines) - Event models, category/type/status enums, sample data
+├── EventViewModel.swift (202 lines) - Event CRUD, registration, filtering
+├── EventComponents.swift (301 lines) - EventCard, EventStatusBadge, FilterChips, AttendeeRow
+├── EventListView.swift (254 lines) - Event list, search, create event sheet
+├── EventDetailView.swift (299 lines) - Event details, attendees, registration
+├── PrayerProfileTypes.swift (237 lines) - Prayer profile models, enums, sample data
+├── PrayerProfileViewModel.swift (187 lines) - Profile CRUD, stats management
+├── PrayerProfileComponents.swift (266 lines) - UI components for prayer profile
+├── PrayerProfileView.swift (286 lines) - Main prayer profile view
+├── PrayerProfileSheets.swift (94 lines) - Add Scripture and Add Testimony sheets
 ├── Info.plist - App configuration
 └── project-tasks.mdc - This file
 ```
@@ -922,21 +932,21 @@ From LangTutor project-tasks.mdc:
    - [x] Permissions: setCommissions, viewRevenue, postTweets
    - [ ] UI implementation for admin management screens
 
-7. **Premium Role** - Medium
+7. **Premium Role** - Medium ✅
    - [x] Role defined in UserRole enum with badge
-   - [ ] Manage own prayer circles/groups/events/meetings
-   - [ ] View personal schedule
-   - [ ] Private messaging with users
-   - [ ] Post/view tweets in separate tab
+   - [x] Manage own prayer circles/groups/events/meetings
+   - [x] View personal schedule (via Events tab - My Events filter)
+   - [x] Private messaging with users
+   - [x] Post/view tweets in separate tab
 
-8. **User Role** - Medium
+8. **User Role** - Medium ✅
    - [x] Role defined in UserRole enum with badge
-   - [ ] Build prayer profile
-   - [ ] Post tweets
-   - [ ] Connect with other users
-   - [ ] Join clubs/prayer circles/groups
-   - [ ] Book events/meetings
-   - [ ] Private messaging
+   - [x] Build prayer profile
+   - [x] Post tweets
+   - [x] Connect with other users
+   - [x] Join clubs/prayer circles/groups
+   - [x] Book events/meetings
+   - [x] Private messaging
 
 **PHASE 4: USER FEATURES**
 
@@ -1193,6 +1203,82 @@ From LangTutor project-tasks.mdc:
 
 **Modified Files:**
 - ContentView.swift - Added Messages tab
+
+---
+
+## Phase 30: Events & Meetings (COMPLETED)
+
+### Events Feature
+- [x] Create EventTypes.swift with data models (Event, EventCategory, EventType, EventStatus, EventRecurrence, EventAttendee)
+- [x] Create EventViewModel.swift for event management
+- [x] Create EventComponents.swift with UI components (EventCard, EventFilterChips, EventCategoryChips, UpcomingEventCard, AttendeeRow)
+- [x] Create EventListView.swift for browsing and creating events
+- [x] Create EventDetailView.swift for event details and registration
+- [x] Add Events tab to ContentView navigation
+
+### Features Implemented
+- [x] Create and manage events/meetings (Premium, Admin, Super Admin)
+- [x] Event categories: Prayer Meeting, Bible Study, Worship, Fellowship, Retreat, Conference, Workshop, Outreach, Youth, Other
+- [x] Event types: In Person, Virtual, Hybrid
+- [x] Event status: Upcoming, Ongoing, Completed, Cancelled
+- [x] Event recurrence: One-time, Daily, Weekly, Bi-weekly, Monthly
+- [x] Register/unregister for events
+- [x] Attendee management with attendance tracking
+- [x] Event filter chips (All, Upcoming, My Events, Hosting, Past)
+- [x] Category filter horizontal scroll
+- [x] Search functionality
+- [x] Virtual meeting link support
+- [x] Location support for in-person events
+- [x] UserDefaults persistence for events
+
+### Files Created in Phase 30
+
+**New Files:**
+- EventTypes.swift (246 lines) - Event models, category/type/status enums, sample data
+- EventViewModel.swift (202 lines) - Event CRUD, registration, filtering
+- EventComponents.swift (301 lines) - EventCard, EventStatusBadge, FilterChips, AttendeeRow
+- EventListView.swift (254 lines) - Event list, search, create event sheet
+- EventDetailView.swift (299 lines) - Event details, attendees, registration
+
+**Modified Files:**
+- ContentView.swift (131 lines) - Added Events tab (tag 6), renumbered subsequent tabs
+
+---
+
+## Phase 31: Prayer Profile Builder (COMPLETED)
+
+### Prayer Profile Feature
+- [x] Create PrayerProfileTypes.swift with data models (PrayerFocusArea, PrayerTimePreference, PrayerStyle, FavoriteScripture, PrayerTestimony, PrayerProfile, PrayerProfileStats)
+- [x] Create PrayerProfileViewModel.swift for profile management
+- [x] Create PrayerProfileComponents.swift with UI components (PrayerStatsCard, FocusAreaChip, PrayerTimeChip, PrayerStyleCard, ScriptureCard, TestimonyCard, VisibilityPicker, PrayerJourneyBadge)
+- [x] Create PrayerProfileView.swift for profile display and editing
+- [x] Create PrayerProfileSheets.swift for Add Scripture and Add Testimony sheets
+- [x] Add Prayer Profile link to UserProfileView
+
+### Features Implemented
+- [x] Prayer profile with bio, goal, and journey timeline
+- [x] 12 Prayer focus areas: Health, Family, Relationships, Career, Finances, Spiritual Growth, Peace, Guidance, Gratitude, Forgiveness, Strength, Wisdom
+- [x] 7 Prayer time preferences with icons
+- [x] 7 Prayer styles with descriptions: Contemplative, Intercessory, Worship-focused, Scripture-based, Conversational, Liturgical, Silent/Meditative
+- [x] Favorite scriptures management with personal notes
+- [x] Prayer testimonies with categories and visibility settings
+- [x] Prayer request visibility: Public, Connections Only, Private
+- [x] Prayer partner availability toggle
+- [x] Prayer stats: Total prayers, streak, answered prayers, prayer partners
+- [x] Tab-based navigation: About, Preferences, Testimonies
+- [x] UserDefaults persistence for profiles and stats
+
+### Files Created in Phase 31
+
+**New Files:**
+- PrayerProfileTypes.swift (237 lines) - Prayer profile models, enums, sample data
+- PrayerProfileViewModel.swift (187 lines) - Profile CRUD, stats management
+- PrayerProfileComponents.swift (266 lines) - UI components for prayer profile
+- PrayerProfileView.swift (286 lines) - Main prayer profile view
+- PrayerProfileSheets.swift (94 lines) - Add Scripture and Add Testimony sheets
+
+**Modified Files:**
+- UserProfileView.swift (323 lines) - Added Prayer Profile navigation link
 
 ---
 

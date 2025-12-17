@@ -122,6 +122,22 @@ struct UserProfileView: View {
                 }
             }
 
+            // Prayer Profile Link
+            NavigationLink(destination: PrayerProfileView()) {
+                HStack(spacing: 8) {
+                    Image(systemName: "hands.sparkles.fill")
+                        .foregroundColor(AppColors.primary)
+                    Text("View Prayer Profile")
+                        .font(.subheadline.weight(.medium))
+                        .foregroundColor(AppColors.primary)
+                }
+                .padding(.vertical, 8)
+                .padding(.horizontal, 16)
+                .background(AppColors.primary.opacity(0.1))
+                .cornerRadius(20)
+            }
+            .padding(.top, 8)
+
             // Join Date
             Text("Member since \(userProfile.joinDate, format: .dateTime.month().year())")
                 .font(.caption)
