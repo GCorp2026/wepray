@@ -75,9 +75,9 @@ struct PrayerRequestListView: View {
 
             Divider().frame(height: 40)
 
-            StatItem(value: "\(viewModel.stats.totalPrayersOffered)", label: "Prayers", icon: "hands.sparkles.fill")
-            StatItem(value: "\(viewModel.stats.currentStreak)", label: "Streak", icon: "flame.fill")
-            StatItem(value: "\(viewModel.stats.answeredPrayers)", label: "Answered", icon: "checkmark.circle.fill")
+            PrayerStatItem(value: "\(viewModel.stats.totalPrayersOffered)", label: "Prayers", icon: "hands.sparkles.fill")
+            PrayerStatItem(value: "\(viewModel.stats.currentStreak)", label: "Streak", icon: "flame.fill")
+            PrayerStatItem(value: "\(viewModel.stats.answeredPrayers)", label: "Answered", icon: "checkmark.circle.fill")
         }
         .padding()
         .background(LinearGradient(colors: [AppColors.primary.opacity(0.2), AppColors.cardBackground], startPoint: .topLeading, endPoint: .bottomTrailing))
@@ -168,7 +168,7 @@ struct PrayerRequestListView: View {
 }
 
 // MARK: - Stat Item
-struct StatItem: View {
+struct PrayerStatItem: View {
     let value: String
     let label: String
     let icon: String

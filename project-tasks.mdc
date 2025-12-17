@@ -312,6 +312,7 @@ From LangTutor project-tasks.mdc:
 - [x] Fixed missing 'name' member in NewPrayerRequestView.swift (use `displayName` instead of `name`)
 - [x] Fixed UUID/String comparison in PrayerRequestDetailView.swift line 127 (use `.uuidString`)
 - [x] Fixed same issues in PrayerRequestDetailView.swift lines 216-217
+- [x] Renamed `StatItem` to `PrayerStatItem` in PrayerRequestListView.swift (conflict with SpeakingPracticeView.StatItem)
 
 ### Prayer Carousel Content
 - [x] Added 5 established prayers: Prayer of St. Francis, Gloria Patri, Apostles' Creed, Act of Contrition, Magnificat
