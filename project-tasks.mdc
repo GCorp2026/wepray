@@ -74,7 +74,7 @@ WePray is a Christian prayer tutoring app built with SwiftUI for iOS. It provide
 wepray/
 ├── SharedTypes.swift (350 lines) - Core types, colors, models, PrayerPlan
 ├── WePrayApp.swift (122 lines) - Main app entry, AppState with isPremium
-├── ContentView.swift (92 lines) - Root view, tab navigation with Plans, Journal, Meditate & Requests tabs
+├── ContentView.swift (97 lines) - Root view, tab navigation with Plans, Devos, Meditate, Journal & Requests tabs
 ├── AuthView.swift (235 lines) - Login/signup UI
 ├── LandingPageView.swift (271 lines) - Cinematic landing page
 ├── BenefitsSection.swift (145 lines) - Cinematic benefits with animations
@@ -116,6 +116,11 @@ wepray/
 ├── MeditationViewModel.swift (224 lines) - Session management with TTS
 ├── MeditationListView.swift (289 lines) - Browse and filter sessions
 ├── MeditationPlayerView.swift (268 lines) - Animated meditation player
+├── DevotionalTypes.swift (270 lines) - Devotional & reading plan models
+├── DevotionalViewModel.swift (185 lines) - Devotional management
+├── DevotionalListView.swift (290 lines) - Browse daily devotionals
+├── DevotionalDetailView.swift (215 lines) - Read individual devotionals
+├── ReadingPlanView.swift (305 lines) - Bible reading plans UI
 ├── FeedView.swift (204 lines) - Prayer sharing feed with profile nav
 ├── GroupsView.swift (309 lines) - Community groups with detail view
 ├── SubscriptionView.swift (287 lines) - Subscription management with Stripe
@@ -652,6 +657,62 @@ From LangTutor project-tasks.mdc:
 - MeditationListView.swift (289 lines)
 - MeditationPlayerView.swift (268 lines)
 - ContentView.swift (92 lines) - Added Meditate tab
+
+---
+
+## Phase 21: Daily Devotionals & Bible Reading Plans (COMPLETED)
+
+### Devotional Feature
+- [x] Create DevotionalTypes.swift with data models (DailyDevotional, ScriptureReference, ReadingPlan)
+- [x] Create DevotionalViewModel.swift for devotional and reading plan management
+- [x] Create DevotionalListView.swift for browsing daily devotionals
+- [x] Create DevotionalDetailView.swift for reading individual devotionals
+- [x] Create ReadingPlanView.swift for Bible reading plans
+
+### Data Models
+- [x] DailyDevotional with title, scripture, reflection, prayer, application, author, category
+- [x] ScriptureReference with book, chapter, verse range, and text
+- [x] DevotionalCategory enum (10 categories: faith, hope, love, peace, wisdom, strength, gratitude, forgiveness, purpose, prayer)
+- [x] ReadingPlan with title, description, duration, category, and daily readings
+- [x] DailyReading with day number, title, passages, completion status
+- [x] PlanCategory enum (8 categories: beginner, gospels, psalms, newTestament, oldTestament, wholeBible, topical, seasonal)
+- [x] DevotionalProgress for tracking stats, streaks, and notes
+
+### UI Components
+- [x] Today's Devotional highlight card
+- [x] Active reading plan progress card
+- [x] Stats row (read count, streak, notes, saved)
+- [x] Category filter horizontal scroll
+- [x] Devotional list with favorites and read status
+- [x] Devotional detail with scripture, reflection, prayer, application sections
+- [x] Notes section with TextEditor
+- [x] Reading plan cards with progress bars
+- [x] Plan detail sheet with daily readings checklist
+- [x] Share functionality for devotionals
+
+### Features
+- [x] 3 sample daily devotionals (Walking in Faith, The Gift of Peace, Strength in Weakness)
+- [x] 3 default reading plans (7 Days of Psalms, Gospel of John, 30 Days of Proverbs)
+- [x] Mark devotionals as read with streak tracking
+- [x] Favorite devotionals for quick access
+- [x] Personal notes on devotionals
+- [x] Start/abandon reading plans
+- [x] Track daily reading completion
+- [x] Category-based filtering
+- [x] Search functionality
+
+### Integration
+- [x] Added "Devos" tab to ContentView navigation
+- [x] Category colors and icons for visual distinction
+- [x] Share devotionals via ShareLink
+
+### File Structure Updates
+- DevotionalTypes.swift (270 lines)
+- DevotionalViewModel.swift (185 lines)
+- DevotionalListView.swift (290 lines)
+- DevotionalDetailView.swift (215 lines)
+- ReadingPlanView.swift (305 lines)
+- ContentView.swift (97 lines) - Added Devos tab
 
 ---
 
