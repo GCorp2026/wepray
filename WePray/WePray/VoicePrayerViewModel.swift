@@ -26,6 +26,11 @@ class VoicePrayerViewModel: ObservableObject {
     private let openAI = OpenAIService.shared
     private let realtimeService = RealtimeVoiceService()
 
+    // Prayer Friend name from user profile
+    var prayerFriendName: String {
+        appState?.currentUser?.prayerFriendName ?? "Prayer Friend"
+    }
+
     func configure(appState: AppState) {
         self.appState = appState
         addWelcomeMessage()
@@ -89,19 +94,20 @@ class VoicePrayerViewModel: ObservableObject {
     }
 
     private func getWelcomeMessage(language: String, denomination: String) -> String {
+        let name = prayerFriendName
         switch language.lowercased() {
         case "russian":
-            return "Благословения! Нажмите кнопку микрофона, чтобы начать голосовую молитву в традиции \(denomination)."
+            return "Благословения! Я \(name), ваш молитвенный друг. Нажмите кнопку микрофона, чтобы начать голосовую молитву в традиции \(denomination)."
         case "chinese":
-            return "愿上帝保佑你！点击麦克风按钮开始\(denomination)传统的语音祷告。"
+            return "愿上帝保佑你！我是\(name)，你的祷告伙伴。点击麦克风按钮开始\(denomination)传统的语音祷告。"
         case "spanish":
-            return "Bendiciones! Toca el boton del microfono para comenzar tu oracion de voz en la tradicion \(denomination)."
+            return "Bendiciones! Soy \(name), tu companero de oracion. Toca el boton del microfono para comenzar tu oracion de voz en la tradicion \(denomination)."
         case "brazilian portuguese":
-            return "Bencaos! Toque no botao do microfone para iniciar sua oracao por voz na tradicao \(denomination)."
+            return "Bencaos! Sou \(name), seu companheiro de oracao. Toque no botao do microfone para iniciar sua oracao por voz na tradicao \(denomination)."
         case "french":
-            return "Benedictions! Appuyez sur le bouton du microphone pour commencer votre priere vocale dans la tradition \(denomination)."
+            return "Benedictions! Je suis \(name), votre compagnon de priere. Appuyez sur le bouton du microphone pour commencer votre priere vocale dans la tradition \(denomination)."
         default:
-            return "Blessings! Tap the microphone button to start your voice prayer in the \(denomination) tradition. I'll respond with an appropriate prayer in your language."
+            return "Blessings! I'm \(name), your prayer companion. Tap the microphone button to start your voice prayer in the \(denomination) tradition. I'll respond with an appropriate prayer in your language."
         }
     }
 
@@ -187,12 +193,13 @@ class VoicePrayerViewModel: ObservableObject {
         let denomination = appState.currentUser?.selectedDenomination ?? ChristianDenomination.defaultDenominations[5]
 
         let systemPrompt = """
-        You are a prayer leader from the \(denomination.name) tradition.
+        You are \(prayerFriendName), a prayer companion from the \(denomination.name) tradition.
         Generate a heartfelt, spoken prayer in \(language.name) language that:
         - Addresses the user's request
         - Follows \(denomination.name) prayer traditions
         - Is suitable for being read aloud
         - Is warm and spiritually comforting
+        - Never reveal that you are an AI or artificial
         Keep the prayer to 3-5 sentences.
         """
 

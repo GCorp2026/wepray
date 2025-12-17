@@ -868,8 +868,8 @@ From LangTutor project-tasks.mdc:
 2. **User Roles & Authentication** - Medium ✅
    - [x] Implement 4 user roles: Super Admin, Admin, Premium, User
    - [x] Auto-promote first 2 users to Admin role (DB trigger)
-   - [ ] Password visibility toggle on login
-   - [ ] Password verification (type twice) on signup
+   - [x] Password visibility toggle on login (eye icon in CustomTextField)
+   - [x] Password verification (type twice) on signup (confirmPassword field)
    - [x] Role-based permissions system (UserRole enum)
 
 **PHASE 2: PRAYER FRIEND AI** ✅ COMPLETED
@@ -877,10 +877,10 @@ From LangTutor project-tasks.mdc:
 3. **Rename 'Prayer Tutor' to 'Prayer Friend'** - Medium ✅
    - [x] Update all UI text from "prayer tutor" to "prayer friend"
    - [x] Add prayerFriendName field to UserProfile
-   - [ ] Create onboarding step for naming prayer friend
+   - [x] Create onboarding step for naming prayer friend (PrayerFriendOnboardingView.swift)
    - [x] Add prayer friend name setting in SettingsView
    - [x] Update PrayerChatViewModel to use custom name
-   - [ ] Update VoicePrayerViewModel to use custom name
+   - [x] Update VoicePrayerViewModel to use custom name
 
 4. **Claude AI Integration for Prayer Friend** - Complex ✅
    - [x] Add Claude API key to AppConfig
@@ -976,6 +976,7 @@ From LangTutor project-tasks.mdc:
 - AppTheme.swift (52 lines) - App colors and Color hex extension (split from SharedTypes)
 - UserRoleTypes.swift (182 lines) - UserRole, RolePermission, CommissionSettings, RevenueStats
 - RoleBadgeView.swift (180 lines) - Role badge UI components
+- PrayerFriendOnboardingView.swift (210 lines) - Onboarding for naming prayer friend
 
 **Modified Files:**
 - SharedTypes.swift (316 lines) - Added prayerFriendName, aboutMe, skills, profession to UserProfile; added commissionSettings to AdminSettings; moved colors to AppTheme.swift and roles to UserRoleTypes.swift
@@ -988,6 +989,10 @@ From LangTutor project-tasks.mdc:
 - PrayerRequestDetailView.swift (240 lines) - Role badges in request header
 - PrayerRequestComponents.swift (169 lines) - Role badges in ResponseCard
 - PrayerRequestViewModel.swift (233 lines) - addResponse includes authorRole parameter
+- AuthView.swift (294 lines) - Password visibility toggle, confirm password on signup
+- WePrayApp.swift (133 lines) - showPrayerFriendOnboarding flag, completePrayerFriendOnboarding()
+- ContentView.swift (106 lines) - fullScreenCover for prayer friend onboarding
+- VoicePrayerViewModel.swift (317 lines) - prayerFriendName property, updated welcome and prompts
 
 ---
 

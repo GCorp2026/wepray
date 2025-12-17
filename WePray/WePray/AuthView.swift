@@ -9,6 +9,7 @@ struct AuthView: View {
     @EnvironmentObject var appState: AppState
     @State private var email = ""
     @State private var password = ""
+    @State private var confirmPassword = ""
     @State private var displayName = ""
     @State private var isSignUp = false
     @State private var showError = false
@@ -84,6 +85,15 @@ struct AuthView: View {
                 icon: "lock.fill",
                 isSecure: true
             )
+
+            if isSignUp {
+                CustomTextField(
+                    placeholder: "Confirm Password",
+                    text: $confirmPassword,
+                    icon: "lock.fill",
+                    isSecure: true
+                )
+            }
         }
     }
 
@@ -195,6 +205,26 @@ struct AuthView: View {
             return
         }
 
+        if isSignUp {
+            guard !displayName.isEmpty else {
+                errorMessage = "Please enter a display name"
+                showError = true
+                return
+            }
+
+            guard password == confirmPassword else {
+                errorMessage = "Passwords do not match"
+                showError = true
+                return
+            }
+
+            guard password.count >= 6 else {
+                errorMessage = "Password must be at least 6 characters"
+                showError = true
+                return
+            }
+        }
+
         guard let language = selectedLanguage, let denomination = selectedDenomination else {
             errorMessage = "Please select a language and denomination"
             showError = true
@@ -209,17 +239,18 @@ struct AuthView: View {
             isAdmin: email.contains("admin")
         )
 
-        appState.login(user: user)
+        appState.login(user: user, isNewUser: isSignUp)
     }
 }
 
-// MARK: - Custom Text Field
+// MARK: - Custom Text Field with Password Visibility Toggle
 struct CustomTextField: View {
     let placeholder: String
     @Binding var text: String
     let icon: String
     var keyboardType: UIKeyboardType = .default
     var isSecure: Bool = false
+    @State private var showPassword: Bool = false
 
     var body: some View {
         HStack(spacing: 12) {
@@ -228,7 +259,19 @@ struct CustomTextField: View {
                 .frame(width: 20)
 
             if isSecure {
-                SecureField(placeholder, text: $text)
+                Group {
+                    if showPassword {
+                        TextField(placeholder, text: $text)
+                            .autocapitalization(.none)
+                    } else {
+                        SecureField(placeholder, text: $text)
+                    }
+                }
+
+                Button(action: { showPassword.toggle() }) {
+                    Image(systemName: showPassword ? "eye.slash.fill" : "eye.fill")
+                        .foregroundColor(AppColors.subtext)
+                }
             } else {
                 TextField(placeholder, text: $text)
                     .keyboardType(keyboardType)

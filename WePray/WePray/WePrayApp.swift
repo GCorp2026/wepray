@@ -25,6 +25,7 @@ class AppState: ObservableObject {
     @Published var denominations: [ChristianDenomination] = []
     @Published var adminSettings: AdminSettings = .default
     @Published var isPremium: Bool = false  // Premium subscription toggle
+    @Published var showPrayerFriendOnboarding: Bool = false  // Show onboarding for new users
 
     private let userDefaultsKey = "wepray_app_data"
 
@@ -107,9 +108,20 @@ class AppState: ObservableObject {
         }
     }
 
-    func login(user: UserProfile) {
+    func login(user: UserProfile, isNewUser: Bool = false) {
         currentUser = user
         isLoggedIn = true
+        saveUser()
+
+        // Show onboarding for new users who haven't named their prayer friend
+        if isNewUser && user.prayerFriendName == "Prayer Friend" {
+            showPrayerFriendOnboarding = true
+        }
+    }
+
+    func completePrayerFriendOnboarding(name: String) {
+        currentUser?.prayerFriendName = name
+        showPrayerFriendOnboarding = false
         saveUser()
     }
 

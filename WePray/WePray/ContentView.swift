@@ -93,6 +93,10 @@ struct MainTabView: View {
             }
         }
         .accentColor(AppColors.accent)
+        .fullScreenCover(isPresented: $appState.showPrayerFriendOnboarding) {
+            PrayerFriendOnboardingView()
+                .environmentObject(appState)
+        }
     }
 }
 
