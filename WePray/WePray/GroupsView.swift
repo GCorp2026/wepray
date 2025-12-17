@@ -45,6 +45,44 @@ struct GroupsView: View {
             ZStack {
                 AppColors.background.ignoresSafeArea()
                 ScrollView {
+                    // MARK: - Prayer Circles Section
+                    NavigationLink(destination: PrayerCircleListView()) {
+                        HStack(spacing: 16) {
+                            ZStack {
+                                Circle()
+                                    .fill(LinearGradient(colors: [AppColors.primary, AppColors.accent], startPoint: .topLeading, endPoint: .bottomTrailing))
+                                    .frame(width: 56, height: 56)
+                                Image(systemName: "person.3.sequence.fill")
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                            }
+
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Prayer Circles")
+                                    .font(.headline)
+                                    .foregroundColor(AppColors.text)
+                                Text("Join circles with scheduled meetings & structured prayer")
+                                    .font(.caption)
+                                    .foregroundColor(AppColors.subtext)
+                                    .lineLimit(2)
+                            }
+
+                            Spacer()
+
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(AppColors.subtext)
+                        }
+                        .padding()
+                        .background(AppColors.cardBackground)
+                        .cornerRadius(16)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(AppColors.accent.opacity(0.3), lineWidth: 1)
+                        )
+                    }
+                    .padding(.horizontal)
+                    .padding(.top)
+
                     if prayerGroups.contains(where: { $0.isJoined }) {
                         VStack(alignment: .leading, spacing: 12) {
                             Text("My Groups").font(.headline).foregroundColor(AppColors.text).padding(.horizontal)

@@ -716,6 +716,132 @@ From LangTutor project-tasks.mdc:
 
 ---
 
+## Phase 22: Scripture Memory (COMPLETED)
+
+### Scripture Memory Feature
+- [x] Create ScriptureMemoryTypes.swift with data models (MemoryVerse, VerseCategory, MasteryLevel)
+- [x] Create ScriptureMemoryViewModel.swift for scripture memory management
+- [x] Create ScriptureMemoryView.swift for browsing and managing scripture verses
+- [x] Create ScriptureMemoryComponents.swift for reusable UI components
+- [x] Create VerseDetailView.swift for viewing verse details and notes
+
+### Practice Modes
+- [x] Create FlashcardPracticeView.swift - flashcard-style memorization with swipe gestures
+- [x] Create TypeVersePracticeView.swift - type verse from memory practice
+- [x] Create FillBlanksPracticeView.swift - fill in the blanks practice with FlowLayout
+- [x] Create ScriptureListeningPracticeView.swift - audio listening practice with speech synthesis
+- [x] Create AddVerseView.swift - add new verses with preset selection
+
+### Data Models
+- [x] MemoryVerse with reference, text, translation, category, difficulty, mastery level, review tracking
+- [x] VerseCategory enum (10 categories: faith, hope, love, peace, wisdom, strength, gratitude, forgiveness, purpose, encouragement)
+- [x] VerseDifficulty enum (easy, medium, hard) with word limits
+- [x] MasteryLevel enum (new, learning, memorizing, mastered) with review intervals
+- [x] ReviewSession for tracking session stats
+- [x] MemoryProgress for tracking overall progress, streaks, accuracy
+
+### UI Components
+- [x] Progress card showing memorization stats and streak
+- [x] Review section with due verses carousel
+- [x] Practice mode cards for all 4 practice types
+- [x] Category filter horizontal scroll
+- [x] Verse cards with mastery level indicators
+- [x] Flashcard flip animation with 3D rotation
+- [x] Swipe gestures for flashcard navigation
+
+### Features
+- [x] Spaced repetition algorithm for review scheduling
+- [x] 5 default scripture verses (John 3:16, Philippians 4:13, Jeremiah 29:11, Proverbs 3:5-6, Romans 8:28)
+- [x] Add new scripture verses manually or from presets
+- [x] Track verse mastery levels (new, learning, memorizing, mastered)
+- [x] Category-based filtering
+- [x] Search functionality
+- [x] Favorite verses
+- [x] Personal notes per verse
+- [x] Session results with accuracy tracking
+- [x] Streak tracking for consistent practice
+
+### Integration
+- [x] Added "Memory" tab to ContentView navigation (tag 3)
+- [x] Category colors and icons for visual distinction
+- [x] Text-to-speech for listening practice
+
+### File Structure Updates
+- ScriptureMemoryTypes.swift (277 lines)
+- ScriptureMemoryViewModel.swift (203 lines)
+- ScriptureMemoryView.swift (304 lines)
+- ScriptureMemoryComponents.swift (243 lines)
+- VerseDetailView.swift (159 lines)
+- FlashcardPracticeView.swift (314 lines)
+- TypeVersePracticeView.swift (312 lines)
+- FillBlanksPracticeView.swift (317 lines)
+- ScriptureListeningPracticeView.swift (328 lines)
+- AddVerseView.swift (293 lines)
+- ContentView.swift (102 lines) - Added Memory tab
+
+---
+
+## Phase 23: Community Prayer Circles (COMPLETED)
+
+### Prayer Circle Feature
+- [x] Create PrayerCircleTypes.swift with data models (PrayerCircle, CircleMeeting, CirclePrayerRequest)
+- [x] Create PrayerCircleViewModel.swift for circle management
+- [x] Create PrayerCircleListView.swift for browsing and discovering circles
+- [x] Create PrayerCircleDetailView.swift for circle details, meetings, and requests
+- [x] Create PrayerCircleComponents.swift for reusable UI components
+- [x] Create CreatePrayerCircleView.swift for creating new circles
+- [x] Create ScheduleMeetingView.swift for scheduling virtual meetings
+- [x] Create AddPrayerRequestView.swift for submitting prayer requests
+
+### Data Models
+- [x] PrayerCircle with name, description, category, members, meetings, requests
+- [x] CircleCategory enum (10 categories: family, healing, career, relationships, faith, community, youth, seniors, missions, gratitude)
+- [x] CircleMeeting with title, date, duration, link, recurrence, attendees
+- [x] RecurrenceType enum (daily, weekly, bi-weekly, monthly)
+- [x] CirclePrayerRequest with author, content, status, prayer count, urgency
+- [x] RequestStatus enum (active, answered, ongoing)
+- [x] CircleMember with name, role, prayer count
+- [x] MemberRole enum (leader, moderator, member)
+
+### UI Components
+- [x] Upcoming meetings carousel with video call integration
+- [x] My circles horizontal scroll section
+- [x] Category filter chips for circle discovery
+- [x] Circle cards with gradient icons and join buttons
+- [x] Meeting scheduling with date picker and recurrence options
+- [x] Prayer request cards with urgency indicators
+- [x] Member cards with role badges
+- [x] Tab selector for requests/members views
+
+### Features
+- [x] Create and join prayer circles
+- [x] Schedule recurring virtual meetings with video call links
+- [x] Submit and respond to prayer requests within circles
+- [x] Mark requests as prayed for with prayer count tracking
+- [x] Request status tracking (active, answered, ongoing)
+- [x] Urgency marking for time-sensitive requests
+- [x] Member management with roles (leader, moderator, member)
+- [x] Category-based filtering and search
+- [x] Private/public circle options
+
+### Integration
+- [x] Added Prayer Circles navigation link to GroupsView
+- [x] Circle category colors and icons for visual distinction
+- [x] Video call link integration for meetings
+
+### File Structure Updates
+- PrayerCircleTypes.swift (321 lines)
+- PrayerCircleViewModel.swift (191 lines)
+- PrayerCircleListView.swift (173 lines)
+- PrayerCircleDetailView.swift (273 lines)
+- PrayerCircleComponents.swift (345 lines)
+- CreatePrayerCircleView.swift (219 lines)
+- ScheduleMeetingView.swift (227 lines)
+- AddPrayerRequestView.swift (197 lines)
+- GroupsView.swift - Added Prayer Circles section
+
+---
+
 ## Build Instructions
 
 1. Open wepray folder in Xcode
