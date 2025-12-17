@@ -175,8 +175,8 @@ struct NewPrayerRequestView: View {
                 category: selectedCategory,
                 urgency: selectedUrgency,
                 isAnonymous: isAnonymous,
-                authorId: appState.currentUser?.id ?? "guest",
-                authorName: appState.currentUser?.name ?? "Guest User",
+                authorId: appState.currentUser?.id.uuidString ?? "guest",
+                authorName: appState.currentUser?.displayName ?? "Guest User",
                 expiresIn: expiresIn
             )
             dismiss()

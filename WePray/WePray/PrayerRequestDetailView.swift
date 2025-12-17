@@ -124,7 +124,7 @@ struct PrayerRequestDetailView: View {
             .font(.caption)
             .foregroundColor(AppColors.subtext)
 
-            if request.authorId == appState.currentUser?.id && !request.isAnswered {
+            if request.authorId == appState.currentUser?.id.uuidString && !request.isAnswered {
                 Button { showingTestimony = true } label: {
                     Label("Mark as Answered", systemImage: "checkmark.circle")
                         .font(.subheadline)
@@ -213,8 +213,8 @@ struct PrayerRequestDetailView: View {
                     viewModel.addResponse(
                         to: request,
                         message: newResponse,
-                        authorId: appState.currentUser?.id ?? "guest",
-                        authorName: appState.currentUser?.name ?? "Guest"
+                        authorId: appState.currentUser?.id.uuidString ?? "guest",
+                        authorName: appState.currentUser?.displayName ?? "Guest"
                     )
                     newResponse = ""
                 } label: {
