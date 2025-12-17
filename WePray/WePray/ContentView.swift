@@ -80,21 +80,36 @@ struct MainTabView: View {
                 .tabItem { Label("Groups", systemImage: "person.3.fill") }
                 .tag(9)
 
+            // Clubs Management
+            ClubManagementView()
+                .tabItem { Label("Clubs", systemImage: "building.2.fill") }
+                .tag(10)
+
+            // Professional Network
+            ConnectionRequestsView()
+                .tabItem { Label("Network", systemImage: "person.2.fill") }
+                .tag(11)
+
+            // Private Messages
+            MessagingView()
+                .tabItem { Label("Messages", systemImage: "message.fill") }
+                .tag(12)
+
             // Practice (Voice & Speaking)
             VoicePrayerView()
                 .tabItem { Label("Voice", systemImage: "mic.fill") }
-                .tag(10)
+                .tag(13)
 
             // Settings & Profile
             SettingsView()
                 .tabItem { Label("Settings", systemImage: "gearshape.fill") }
-                .tag(11)
+                .tag(14)
 
             // Admin (conditional)
             if appState.currentUser?.isAdmin == true {
                 AdminView()
                     .tabItem { Label("Admin", systemImage: "shield.fill") }
-                    .tag(12)
+                    .tag(15)
             }
         }
         .accentColor(AppColors.accent)
