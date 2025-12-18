@@ -46,7 +46,7 @@ struct UserManagementView: View {
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showUserDetail) {
             if let user = selectedUser {
-                UserDetailSheet(user: binding(for: user), onSave: saveUser)
+                UserMgmtDetailSheet(user: binding(for: user), onSave: saveUser)
             }
         }
     }
@@ -68,7 +68,7 @@ struct UserManagementView: View {
             HStack(spacing: 8) {
                 // Status Filters
                 ForEach(UserStatus.allCases, id: \.self) { status in
-                    FilterChip(title: status.rawValue, isSelected: selectedStatus == status) {
+                    UserMgmtFilterChip(title: status.rawValue, isSelected: selectedStatus == status) {
                         selectedStatus = selectedStatus == status ? nil : status
                     }
                 }
@@ -77,7 +77,7 @@ struct UserManagementView: View {
 
                 // Role Filters
                 ForEach(UserRole.allCases, id: \.self) { role in
-                    FilterChip(title: role.displayName, isSelected: selectedRole == role) {
+                    UserMgmtFilterChip(title: role.displayName, isSelected: selectedRole == role) {
                         selectedRole = selectedRole == role ? nil : role
                     }
                 }
@@ -87,10 +87,10 @@ struct UserManagementView: View {
 
     private var userStats: some View {
         HStack(spacing: 12) {
-            StatCard(value: "\(users.count)", label: "Total", color: AppColors.primary)
-            StatCard(value: "\(users.filter { $0.status == .active }.count)", label: "Active", color: Color(hex: "#10B981"))
-            StatCard(value: "\(users.filter { $0.status == .suspended }.count)", label: "Suspended", color: Color(hex: "#EF4444"))
-            StatCard(value: "\(users.filter { $0.role == .premium }.count)", label: "Premium", color: Color(hex: "#8B5CF6"))
+            UserMgmtStatCard(value: "\(users.count)", label: "Total", color: AppColors.primary)
+            UserMgmtStatCard(value: "\(users.filter { $0.status == .active }.count)", label: "Active", color: Color(hex: "#10B981"))
+            UserMgmtStatCard(value: "\(users.filter { $0.status == .suspended }.count)", label: "Suspended", color: Color(hex: "#EF4444"))
+            UserMgmtStatCard(value: "\(users.filter { $0.role == .premium }.count)", label: "Premium", color: Color(hex: "#8B5CF6"))
         }
     }
 
@@ -185,8 +185,8 @@ struct UserManagementCard: View {
     }
 }
 
-// MARK: - Filter Chip
-struct FilterChip: View {
+// MARK: - User Management Filter Chip
+struct UserMgmtFilterChip: View {
     let title: String
     let isSelected: Bool
     let action: () -> Void
@@ -204,8 +204,8 @@ struct FilterChip: View {
     }
 }
 
-// MARK: - Stat Card
-struct StatCard: View {
+// MARK: - User Management Stat Card
+struct UserMgmtStatCard: View {
     let value: String
     let label: String
     let color: Color
@@ -226,8 +226,8 @@ struct StatCard: View {
     }
 }
 
-// MARK: - User Detail Sheet
-struct UserDetailSheet: View {
+// MARK: - User Management Detail Sheet
+struct UserMgmtDetailSheet: View {
     @Environment(\.dismiss) var dismiss
     @Binding var user: ManagedUser
     let onSave: (ManagedUser) -> Void

@@ -156,7 +156,7 @@ struct PrayerRequestListView: View {
                 EmptyRequestsView()
             } else {
                 ForEach(viewModel.filteredRequests) { request in
-                    PrayerRequestCard(request: request, hasPrayed: viewModel.hasPrayedFor(request)) {
+                    RequestListCard(request: request, hasPrayed: viewModel.hasPrayedFor(request)) {
                         viewModel.prayForRequest(request)
                     } onTap: {
                         selectedRequest = request
@@ -215,8 +215,8 @@ struct CategoryChip: View {
     }
 }
 
-// MARK: - Prayer Request Card
-struct PrayerRequestCard: View {
+// MARK: - Request List Card
+struct RequestListCard: View {
     let request: PrayerRequest
     let hasPrayed: Bool
     let onPray: () -> Void

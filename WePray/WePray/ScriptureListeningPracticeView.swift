@@ -293,6 +293,7 @@ struct ScriptureListeningPracticeView: View {
 
 // MARK: - Speech Synthesizer Manager
 
+@MainActor
 class SpeechSynthesizerManager: NSObject, ObservableObject, AVSpeechSynthesizerDelegate {
     private let synthesizer = AVSpeechSynthesizer()
     private var completion: (() -> Void)?

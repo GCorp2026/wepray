@@ -255,7 +255,8 @@ struct AdminSettings: Codable {
     static let `default` = AdminSettings()
 }
 
-// Note: UserRole, RolePermission, CommissionSettings are in UserRoleTypes.swift
+// Note: UserRole, RolePermission in UserRoleTypes.swift
+// Note: CommissionSettings, RevenueStats in AdminManagementTypes.swift
 
 // MARK: - Prayer Plan Model
 enum PrayerFrequency: String, CaseIterable, Codable {

@@ -44,3 +44,16 @@ struct FlowLayout: Layout {
         return (CGSize(width: maxWidth, height: currentY + lineHeight), positions)
     }
 }
+
+// MARK: - Custom Text Field Style
+
+/// A styled text field with app-themed background and rounded corners
+struct CustomTextFieldStyle: TextFieldStyle {
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        configuration
+            .padding()
+            .background(AppColors.border.opacity(0.3))
+            .cornerRadius(10)
+            .foregroundColor(AppColors.text)
+    }
+}

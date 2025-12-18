@@ -267,16 +267,7 @@ struct PrayerPlanCreationView: View {
     }
 }
 
-// MARK: - Custom Text Field Style
-struct CustomTextFieldStyle: TextFieldStyle {
-    func _body(configuration: TextField<Self._Label>) -> some View {
-        configuration
-            .padding()
-            .background(AppColors.border.opacity(0.3))
-            .cornerRadius(10)
-            .foregroundColor(AppColors.text)
-    }
-}
+// Note: CustomTextFieldStyle moved to UIHelpers.swift
 
 // MARK: - Theme Selection Button
 struct ThemeSelectionButton: View {

@@ -74,8 +74,8 @@ WePray is a Christian prayer tutoring app built with SwiftUI for iOS. It provide
 wepray/
 ├── SharedTypes.swift (316 lines) - Core types, models, PrayerPlan (colors moved to AppTheme)
 ├── AppTheme.swift (52 lines) - App colors and Color hex extension
-├── UIHelpers.swift (46 lines) - Shared UI helpers (FlowLayout)
-├── UserRoleTypes.swift (186 lines) - UserRole, RolePermission, CommissionSettings, RevenueStats
+├── UIHelpers.swift (60 lines) - Shared UI helpers (FlowLayout, CustomTextFieldStyle)
+├── UserRoleTypes.swift (150 lines) - UserRole, RolePermission enums with badge colors
 ├── RoleBadgeView.swift (180 lines) - Role badge UI components
 ├── WePrayApp.swift (122 lines) - Main app entry, AppState with isPremium
 ├── ContentView.swift (116 lines) - Root view, tab navigation with Network tab added
@@ -156,7 +156,7 @@ wepray/
 ├── PrayerProfileComponents.swift (266 lines) - UI components for prayer profile
 ├── PrayerProfileView.swift (286 lines) - Main prayer profile view
 ├── PrayerProfileSheets.swift (94 lines) - Add Scripture and Add Testimony sheets
-├── AdminManagementTypes.swift (232 lines) - Admin models, user status, commission/revenue types
+├── AdminManagementTypes.swift (260 lines) - Admin models, ManagedUser, UserStatus, CommissionSettings, RevenueStats
 ├── UserManagementView.swift (305 lines) - User management, filter, search, suspend
 ├── CommissionSettingsView.swift (165 lines) - Commission rate configuration
 ├── RevenueOverviewView.swift (225 lines) - Revenue dashboard, stats, payouts
@@ -1371,6 +1371,77 @@ From LangTutor project-tasks.mdc:
 - PrayerFriendOnboardingView.swift - Removed duplicate FlowLayout
 - PrayerPlanDetailView.swift - Removed duplicate FlowLayout
 - Multiple UI files - Fixed badgeColor → badgeColorValue usage
+
+---
+
+## Phase 34: Type Redeclarations & Ambiguity Fixes (COMPLETED)
+
+### Type Redeclaration Fixes
+- [x] Fix ManagedUser redeclaration - Removed duplicate from AdminUserTypes.swift, kept in AdminManagementTypes.swift
+- [x] Fix CommissionSettings redeclaration - Removed from UserRoleTypes.swift, kept in AdminManagementTypes.swift with `.default` static property
+- [x] Fix RevenueStats redeclaration - Removed from UserRoleTypes.swift, kept in AdminManagementTypes.swift
+
+### Component Redeclaration Fixes
+- [x] Fix StatCard redeclaration - Renamed to AdminStatCard (AdminUserComponents), JournalStatCard (JournalListView), UserMgmtStatCard (UserManagementView)
+- [x] Fix FilterChip redeclaration - Renamed to AdminFilterChip (AdminUserComponents), UserMgmtFilterChip (UserManagementView)
+- [x] Fix UserDetailSheet redeclaration - Renamed to AdminUserDetailSheet (AdminUserComponents), UserMgmtDetailSheet (UserManagementView)
+- [x] Fix PrayerRequestCard redeclaration - Renamed to RequestListCard in PrayerRequestListView.swift
+- [x] Fix CustomTextFieldStyle redeclaration - Moved to shared UIHelpers.swift, removed from PrayerPlanCreationView and AddVerseView
+
+### Type Ambiguity Fixes
+- [x] ManagedUser unified with alias properties (displayName, profileInitial) for backward compatibility
+- [x] Added isPending property to unified ManagedUser model
+- [x] Replaced AccountStatus with UserStatus in AdminUserComponents.swift
+
+### Codable Conformance Fixes
+- [x] Added `.default` static property to CommissionSettings for AdminSettings Codable conformance
+
+### Swift 6 Sendable Fixes
+- [x] Added @MainActor to SpeechSynthesizerManager class in ScriptureListeningPracticeView.swift
+
+### Files Modified in Phase 34
+
+**UserRoleTypes.swift:**
+- Removed duplicate CommissionSettings and RevenueStats
+- Added comment noting they moved to AdminManagementTypes.swift
+
+**AdminManagementTypes.swift:**
+- Added `.default` static property to CommissionSettings
+- Added isPending property to ManagedUser
+- Added displayName and profileInitial computed properties as aliases
+
+**AdminUserTypes.swift:**
+- Removed duplicate ManagedUser struct and sample data
+- Kept AccountStatus, UserAction, UserFilter enums
+
+**AdminUserComponents.swift:**
+- Renamed StatCard → AdminStatCard
+- Renamed FilterChip → AdminFilterChip
+- Renamed UserDetailSheet → AdminUserDetailSheet
+- Replaced AccountStatus with UserStatus
+
+**JournalListView.swift:**
+- Renamed StatCard → JournalStatCard
+
+**PrayerRequestListView.swift:**
+- Renamed PrayerRequestCard → RequestListCard
+
+**UserManagementView.swift:**
+- Renamed FilterChip → UserMgmtFilterChip
+- Renamed StatCard → UserMgmtStatCard
+- Renamed UserDetailSheet → UserMgmtDetailSheet
+
+**UIHelpers.swift:**
+- Added CustomTextFieldStyle (moved from other files)
+
+**PrayerPlanCreationView.swift & AddVerseView.swift:**
+- Removed duplicate CustomTextFieldStyle, added comment noting it moved to UIHelpers.swift
+
+**SharedTypes.swift:**
+- Updated comments to reflect new type locations
+
+**ScriptureListeningPracticeView.swift:**
+- Added @MainActor to SpeechSynthesizerManager for Sendable conformance
 
 ---
 

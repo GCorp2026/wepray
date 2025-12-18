@@ -7,8 +7,8 @@ import SwiftUI
 
 // ManagedUser is defined in AdminUserTypes.swift
 
-// MARK: - Stat Card
-struct StatCard: View {
+// MARK: - Admin Stat Card
+struct AdminStatCard: View {
     let title: String
     let value: String
     let icon: String
@@ -33,8 +33,8 @@ struct StatCard: View {
     }
 }
 
-// MARK: - Filter Chip
-struct FilterChip: View {
+// MARK: - Admin Filter Chip
+struct AdminFilterChip: View {
     let title: String
     var icon: String? = nil
     var color: Color = AppColors.accent
@@ -93,7 +93,7 @@ struct UserRow: View {
 
 // MARK: - Status Badge
 struct StatusBadge: View {
-    let status: AccountStatus
+    let status: UserStatus
 
     var body: some View {
         HStack(spacing: 4) {
@@ -156,13 +156,13 @@ struct AddUserView: View {
     }
 }
 
-// MARK: - User Detail Sheet
-struct UserDetailSheet: View {
+// MARK: - Admin User Detail Sheet
+struct AdminUserDetailSheet: View {
     let user: ManagedUser
     @Binding var users: [ManagedUser]
     @Environment(\.dismiss) var dismiss
     @State private var editedRole: UserRole
-    @State private var editedStatus: AccountStatus
+    @State private var editedStatus: UserStatus
 
     init(user: ManagedUser, users: Binding<[ManagedUser]>) {
         self.user = user
@@ -202,7 +202,7 @@ struct UserDetailSheet: View {
                 }
                 Section("Status") {
                     Picker("Status", selection: $editedStatus) {
-                        ForEach(AccountStatus.allCases, id: \.self) { status in
+                        ForEach(UserStatus.allCases, id: \.self) { status in
                             HStack {
                                 Image(systemName: status.icon)
                                 Text(status.displayName)

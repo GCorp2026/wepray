@@ -161,27 +161,4 @@ enum RolePermission: String, CaseIterable, Codable {
     }
 }
 
-// MARK: - Commission Settings
-struct CommissionSettings: Codable {
-    var premiumUserCommission: Double = 15.0  // Percentage
-    var regularUserCommission: Double = 20.0  // Percentage
-
-    static let `default` = CommissionSettings()
-}
-
-// MARK: - Revenue Stats
-struct RevenueStats: Codable {
-    var totalRevenue: Double = 0.0
-    var premiumUserRevenue: Double = 0.0
-    var regularUserRevenue: Double = 0.0
-    var commissionsEarned: Double = 0.0
-    var period: String = "all_time"
-
-    var formattedTotalRevenue: String {
-        String(format: "$%.2f", totalRevenue)
-    }
-
-    var formattedCommissions: String {
-        String(format: "$%.2f", commissionsEarned)
-    }
-}
+// Note: CommissionSettings and RevenueStats moved to AdminManagementTypes.swift

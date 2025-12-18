@@ -19,10 +19,11 @@ struct ManagedUser: Identifiable, Codable, Equatable {
     var isVerified: Bool
     var isSuspended: Bool
     var suspensionReason: String?
+    var isPending: Bool
 
     init(id: UUID = UUID(), name: String, email: String, role: UserRole = .user, status: UserStatus = .active,
          joinDate: Date = Date(), lastActive: Date = Date(), prayerCount: Int = 0, connectionsCount: Int = 0,
-         isVerified: Bool = false, isSuspended: Bool = false, suspensionReason: String? = nil) {
+         isVerified: Bool = false, isSuspended: Bool = false, suspensionReason: String? = nil, isPending: Bool = false) {
         self.id = id
         self.name = name
         self.email = email
@@ -35,11 +36,18 @@ struct ManagedUser: Identifiable, Codable, Equatable {
         self.isVerified = isVerified
         self.isSuspended = isSuspended
         self.suspensionReason = suspensionReason
+        self.isPending = isPending
     }
 
     var initials: String {
         String(name.prefix(2)).uppercased()
     }
+
+    /// Alias for name to support displayName usage
+    var displayName: String { name }
+
+    /// Alias for initials to support profileInitial usage
+    var profileInitial: String { initials }
 }
 
 // MARK: - User Status
@@ -90,6 +98,8 @@ struct CommissionSettings: Codable, Equatable {
         self.payoutSchedule = payoutSchedule
         self.updatedAt = updatedAt
     }
+
+    static let `default` = CommissionSettings()
 }
 
 // MARK: - Payout Schedule

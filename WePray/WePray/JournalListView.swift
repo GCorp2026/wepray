@@ -88,9 +88,9 @@ struct JournalListView: View {
     // MARK: - Stats Row
     private var statsRow: some View {
         HStack(spacing: 12) {
-            StatCard(value: "\(viewModel.stats.totalEntries)", label: "Entries", icon: "book.fill")
-            StatCard(value: "\(viewModel.stats.currentStreak)", label: "Day Streak", icon: "flame.fill")
-            StatCard(value: String(format: "%.1f", viewModel.stats.averageRating), label: "Avg Rating", icon: "star.fill")
+            JournalStatCard(value: "\(viewModel.stats.totalEntries)", label: "Entries", icon: "book.fill")
+            JournalStatCard(value: "\(viewModel.stats.currentStreak)", label: "Day Streak", icon: "flame.fill")
+            JournalStatCard(value: String(format: "%.1f", viewModel.stats.averageRating), label: "Avg Rating", icon: "star.fill")
         }
     }
 
@@ -152,8 +152,8 @@ struct JournalListView: View {
     }
 }
 
-// MARK: - Stat Card
-struct StatCard: View {
+// MARK: - Journal Stat Card
+struct JournalStatCard: View {
     let value: String
     let label: String
     let icon: String
