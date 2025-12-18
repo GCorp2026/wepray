@@ -155,6 +155,11 @@ wepray/
 ├── PrayerProfileComponents.swift (266 lines) - UI components for prayer profile
 ├── PrayerProfileView.swift (286 lines) - Main prayer profile view
 ├── PrayerProfileSheets.swift (94 lines) - Add Scripture and Add Testimony sheets
+├── AdminManagementTypes.swift (232 lines) - Admin models, user status, commission/revenue types
+├── UserManagementView.swift (305 lines) - User management, filter, search, suspend
+├── CommissionSettingsView.swift (165 lines) - Commission rate configuration
+├── RevenueOverviewView.swift (225 lines) - Revenue dashboard, stats, payouts
+├── AdminCustomViews.swift (133 lines) - Add Language and Add Denomination views
 ├── Info.plist - App configuration
 └── project-tasks.mdc - This file
 ```
@@ -916,13 +921,13 @@ From LangTutor project-tasks.mdc:
 
 **PHASE 3: USER ROLES & PERMISSIONS** (Partial)
 
-5. **Super Admin Role** - Complex
+5. **Super Admin Role** - Complex ✅
    - [x] Role defined in UserRole enum with badge
-   - [ ] Full system access
-   - [ ] Manage all users/roles/content
-   - [ ] Set commissions for Premium/Users
-   - [ ] Full oversight over all revenue
-   - [ ] Post/view tweets
+   - [x] Full system access (via Admin Panel)
+   - [x] Manage all users/roles/content (UserManagementView)
+   - [x] Set commissions for Premium/Users (CommissionSettingsView)
+   - [x] Full oversight over all revenue (RevenueOverviewView)
+   - [x] Post/view tweets (Phase 25 Tweet/Timeline)
 
 6. **Admin Role** - Medium ✅
    - [x] Role defined in UserRole enum with badge
@@ -930,7 +935,7 @@ From LangTutor project-tasks.mdc:
    - [x] Permissions: manageEvents, manageMeetings, manageClubs, manageGroups
    - [x] Permissions: managePrayerCircles, managePricing, viewMessages, viewSchedules
    - [x] Permissions: setCommissions, viewRevenue, postTweets
-   - [ ] UI implementation for admin management screens
+   - [x] UI implementation for admin management screens (Phase 32)
 
 7. **Premium Role** - Medium ✅
    - [x] Role defined in UserRole enum with badge
@@ -1279,6 +1284,44 @@ From LangTutor project-tasks.mdc:
 
 **Modified Files:**
 - UserProfileView.swift (323 lines) - Added Prayer Profile navigation link
+
+---
+
+## Phase 32: Admin Management Screens (COMPLETED)
+
+### Admin Management Feature
+- [x] Create AdminManagementTypes.swift with data models (ManagedUser, UserStatus, CommissionSettings, RevenueStats, ContentReport)
+- [x] Create UserManagementView.swift for user account management
+- [x] Create CommissionSettingsView.swift for commission rate configuration
+- [x] Create RevenueOverviewView.swift for revenue statistics
+- [x] Create AdminCustomViews.swift for add language/denomination views
+- [x] Update AdminView.swift with navigation to new admin screens
+
+### Features Implemented
+- [x] User account management: View, search, filter, suspend, verify users
+- [x] User status management: Active, Inactive, Suspended, Pending
+- [x] Role assignment and management
+- [x] Commission settings: Premium, Referral, Event Hosting, Content Creator rates
+- [x] Payout configuration: Minimum payout, payout schedule (Weekly/Bi-weekly/Monthly/Quarterly)
+- [x] Revenue overview dashboard with period selection (Week/Month/Quarter/Year)
+- [x] Revenue breakdown: Subscriptions, Events, Donations
+- [x] Subscriber statistics: Active, New, Churn rate
+- [x] Payout summary: Total paid, Pending payouts
+- [x] Key metrics: ARPU, Monthly revenue, Net revenue
+- [x] Content report system (models ready for future implementation)
+- [x] UserDefaults persistence for settings
+
+### Files Created in Phase 32
+
+**New Files:**
+- AdminManagementTypes.swift (232 lines) - Admin models, user status, commission/revenue types
+- UserManagementView.swift (305 lines) - User management, filter, search, suspend
+- CommissionSettingsView.swift (165 lines) - Commission rate configuration
+- RevenueOverviewView.swift (225 lines) - Revenue dashboard, stats, payouts
+- AdminCustomViews.swift (133 lines) - Add Language and Add Denomination views
+
+**Modified Files:**
+- AdminView.swift (234 lines) - Added navigation to new admin screens, extracted custom views
 
 ---
 
