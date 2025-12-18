@@ -38,7 +38,7 @@ struct ConversationRow: View {
                             .font(.headline)
                             .foregroundColor(AppColors.text)
 
-                        RoleBadgeView(role: other.userRole, style: .compact)
+                        RoleBadgeView(role: other.userRole)
                     }
 
                     Spacer()

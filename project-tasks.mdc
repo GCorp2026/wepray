@@ -1552,6 +1552,33 @@ When a class is marked `@MainActor`, delegate methods from protocols like `AVSpe
 
 ---
 
+## Phase 39: Final RoleBadgeView Style Parameter Fixes (COMPLETED)
+
+### Compilation Error Fixes
+- [x] Fix RoleBadgeView 'style' parameter in MessagingComponents.swift (line 41)
+- [x] Fix RoleBadgeView 'style' parameter in UserManagementView.swift (line 159)
+
+### Files Modified in Phase 39
+
+**MessagingComponents.swift:**
+- Line 41: Changed `RoleBadgeView(role: other.userRole, style: .compact)` to `RoleBadgeView(role: other.userRole)`
+
+**UserManagementView.swift:**
+- Line 159: Changed `RoleBadgeView(role: user.role, style: .compact)` to `RoleBadgeView(role: user.role)`
+
+### Summary of All RoleBadgeView Fixes (Phases 35-39)
+Files fixed across multiple phases:
+- ConnectionComponents.swift (4 occurrences)
+- TweetComponents.swift (1 occurrence)
+- ClubMemberComponents.swift (2 occurrences)
+- TweetTimelineView.swift (1 occurrence)
+- MessagingComponents.swift (1 occurrence)
+- UserManagementView.swift (1 occurrence)
+
+**Total: 10 RoleBadgeView style parameter fixes**
+
+---
+
 ## Build Instructions
 
 1. Open wepray folder in Xcode

@@ -156,7 +156,7 @@ struct UserManagementCard: View {
                                 .foregroundColor(AppColors.primary)
                                 .font(.caption)
                         }
-                        RoleBadgeView(role: user.role, style: .compact)
+                        RoleBadgeView(role: user.role)
                     }
                     Text(user.email)
                         .font(.caption)
