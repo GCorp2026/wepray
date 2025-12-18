@@ -33,7 +33,7 @@ struct AdminUserManagementView: View {
             AddUserView(users: $viewModel.users)
         }
         .sheet(item: $selectedUser) { user in
-            UserDetailSheet(user: user, users: $viewModel.users)
+            AdminUserDetailSheet(user: user, users: $viewModel.users)
         }
         .refreshable {
             viewModel.refresh()
@@ -43,10 +43,10 @@ struct AdminUserManagementView: View {
     // MARK: - Stats Header
     private var statsHeader: some View {
         HStack(spacing: 12) {
-            StatCard(title: "Total", value: "\(viewModel.totalUsers)", icon: "person.3.fill", color: AppColors.primary)
-            StatCard(title: "Admins", value: "\(viewModel.adminCount)", icon: "shield.fill", color: .blue)
-            StatCard(title: "Premium", value: "\(viewModel.premiumCount)", icon: "star.fill", color: .purple)
-            StatCard(title: "Pending", value: "\(viewModel.pendingCount)", icon: "clock.fill", color: .orange)
+            AdminStatCard(title: "Total", value: "\(viewModel.totalUsers)", icon: "person.3.fill", color: AppColors.primary)
+            AdminStatCard(title: "Admins", value: "\(viewModel.adminCount)", icon: "shield.fill", color: .blue)
+            AdminStatCard(title: "Premium", value: "\(viewModel.premiumCount)", icon: "star.fill", color: .purple)
+            AdminStatCard(title: "Pending", value: "\(viewModel.pendingCount)", icon: "clock.fill", color: .orange)
         }
         .padding()
     }
@@ -56,7 +56,7 @@ struct AdminUserManagementView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
                 ForEach(UserFilter.allCases, id: \.self) { filter in
-                    FilterChip(
+                    AdminFilterChip(
                         title: filter.displayName,
                         icon: filter.icon,
                         color: AppColors.accent,

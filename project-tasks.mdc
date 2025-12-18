@@ -1579,6 +1579,30 @@ Files fixed across multiple phases:
 
 ---
 
+## Phase 40: Admin Component References & RoleBadgeView Fix (COMPLETED)
+
+### Compilation Error Fixes
+- [x] Fix AdminUserManagementView.swift - Update renamed component references
+- [x] Fix EventDetailView.swift - Remove RoleBadgeView style parameter
+
+### Files Modified in Phase 40
+
+**AdminUserManagementView.swift:**
+- Line 36: Changed `UserDetailSheet` to `AdminUserDetailSheet`
+- Lines 46-49: Changed `StatCard` to `AdminStatCard` (4 occurrences)
+- Line 59: Changed `FilterChip` to `AdminFilterChip`
+
+**EventDetailView.swift:**
+- Line 125: Changed `RoleBadgeView(role: event.hostRole, style: .compact)` to `RoleBadgeView(role: event.hostRole)`
+
+### Component Renaming Reference (from Phase 34)
+When components were renamed to avoid redeclaration conflicts:
+- `StatCard` → `AdminStatCard` (AdminUserComponents), `JournalStatCard` (JournalListView), `UserMgmtStatCard` (UserManagementView)
+- `FilterChip` → `AdminFilterChip` (AdminUserComponents), `UserMgmtFilterChip` (UserManagementView)
+- `UserDetailSheet` → `AdminUserDetailSheet` (AdminUserComponents), `UserMgmtDetailSheet` (UserManagementView)
+
+---
+
 ## Build Instructions
 
 1. Open wepray folder in Xcode

@@ -122,7 +122,7 @@ struct EventDetailView: View {
                 Text(event.hostName)
                     .font(.caption.bold())
                     .foregroundColor(AppColors.text)
-                RoleBadgeView(role: event.hostRole, style: .compact)
+                RoleBadgeView(role: event.hostRole)
             }
         }
     }
