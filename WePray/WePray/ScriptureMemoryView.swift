@@ -285,7 +285,7 @@ struct ScriptureMemoryView: View {
             FlashcardPracticeView(viewModel: viewModel)
         case .typeVerse:
             TypeVersePracticeView(viewModel: viewModel)
-        case .fillBlanks:
+        case .fillBlank:
             FillBlanksPracticeView(viewModel: viewModel)
         case .listening:
             ScriptureListeningPracticeView(viewModel: viewModel)

@@ -1462,6 +1462,28 @@ From LangTutor project-tasks.mdc:
 
 ---
 
+## Phase 36: Scripture Memory & Tweet Component Fixes (COMPLETED)
+
+### Compilation Error Fixes
+- [x] Add `formattedAccuracy` computed property to `MemoryProgress` struct
+- [x] Fix `PracticeMode` enum - renamed `.reference` to `.listening` to match ScriptureListeningPracticeView
+- [x] Fix ScriptureMemoryView.swift - changed `.fillBlanks` to `.fillBlank`
+- [x] Fix TweetComponents.swift - removed invalid `style: .compact` parameter from RoleBadgeView
+
+### Files Modified in Phase 36
+
+**ScriptureMemoryTypes.swift:**
+- Added `formattedAccuracy` computed property to `MemoryProgress` struct
+- Changed `PracticeMode.reference` to `PracticeMode.listening` with updated icon and description
+
+**ScriptureMemoryView.swift:**
+- Line 288: Changed `.fillBlanks` to `.fillBlank` to match PracticeMode enum case
+
+**TweetComponents.swift:**
+- Line 39: Changed `RoleBadgeView(role: tweet.authorRole, style: .compact)` to `RoleBadgeView(role: tweet.authorRole)`
+
+---
+
 ## Build Instructions
 
 1. Open wepray folder in Xcode

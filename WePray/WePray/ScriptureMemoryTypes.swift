@@ -181,6 +181,10 @@ struct MemoryProgress: Codable {
         return Double(totalCorrect) / Double(totalReviews)
     }
 
+    var formattedAccuracy: String {
+        "\(Int(overallAccuracy * 100))%"
+    }
+
     var streakStatus: String {
         if currentStreak == 0 { return "Start practicing!" }
         if currentStreak == 1 { return "1 day streak" }
@@ -193,14 +197,14 @@ enum PracticeMode: String, CaseIterable {
     case flashcard = "Flashcard"
     case fillBlank = "Fill in Blank"
     case typeVerse = "Type Verse"
-    case reference = "Reference Quiz"
+    case listening = "Listening"
 
     var icon: String {
         switch self {
         case .flashcard: return "rectangle.on.rectangle"
         case .fillBlank: return "text.badge.minus"
         case .typeVerse: return "keyboard"
-        case .reference: return "book.fill"
+        case .listening: return "speaker.wave.2.fill"
         }
     }
 
@@ -209,7 +213,7 @@ enum PracticeMode: String, CaseIterable {
         case .flashcard: return "Flip cards to reveal verse"
         case .fillBlank: return "Fill in missing words"
         case .typeVerse: return "Type the complete verse"
-        case .reference: return "Match verse to reference"
+        case .listening: return "Listen and recall the verse"
         }
     }
 }

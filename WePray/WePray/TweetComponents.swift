@@ -36,7 +36,7 @@ struct TweetCard: View {
                             .font(.headline)
                             .foregroundColor(AppColors.text)
 
-                        RoleBadgeView(role: tweet.authorRole, style: .compact)
+                        RoleBadgeView(role: tweet.authorRole)
                     }
 
                     Text(tweet.timestamp, style: .relative)
