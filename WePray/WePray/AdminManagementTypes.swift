@@ -56,6 +56,7 @@ enum UserStatus: String, CaseIterable, Codable {
     case inactive = "Inactive"
     case suspended = "Suspended"
     case pending = "Pending"
+    case banned = "Banned"
 
     var color: Color {
         switch self {
@@ -63,6 +64,7 @@ enum UserStatus: String, CaseIterable, Codable {
         case .inactive: return Color(hex: "#6B7280")
         case .suspended: return Color(hex: "#EF4444")
         case .pending: return Color(hex: "#F59E0B")
+        case .banned: return Color(hex: "#7F1D1D")
         }
     }
 
@@ -72,6 +74,7 @@ enum UserStatus: String, CaseIterable, Codable {
         case .inactive: return "minus.circle.fill"
         case .suspended: return "xmark.circle.fill"
         case .pending: return "clock.fill"
+        case .banned: return "nosign"
         }
     }
 }

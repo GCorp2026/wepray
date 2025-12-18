@@ -1646,6 +1646,32 @@ If Xcode still shows errors after code fixes, try:
 
 ---
 
+## Phase 43: Add UserStatus.banned Case (COMPLETED)
+
+### Compilation Error Fixes
+- [x] Add `.banned` case to `UserStatus` enum in AdminManagementTypes.swift
+- [x] This resolves references in AdminUserViewModel.swift (lines 82, 134, 177)
+
+### Files Modified in Phase 43
+
+**AdminManagementTypes.swift:**
+- Added `case banned = "Banned"` to `UserStatus` enum
+- Added color for banned: `Color(hex: "#7F1D1D")` (dark red)
+- Added icon for banned: `"nosign"`
+
+### UserStatus Enum (Complete)
+```swift
+enum UserStatus: String, CaseIterable, Codable {
+    case active = "Active"
+    case inactive = "Inactive"
+    case suspended = "Suspended"
+    case pending = "Pending"
+    case banned = "Banned"
+}
+```
+
+---
+
 ## Build Instructions
 
 1. Open wepray folder in Xcode
