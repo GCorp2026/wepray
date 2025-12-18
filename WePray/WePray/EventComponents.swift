@@ -274,7 +274,7 @@ struct AttendeeRow: View {
                     Text(attendee.userName)
                         .font(.subheadline)
                         .foregroundColor(AppColors.text)
-                    RoleBadgeView(role: attendee.userRole, style: .compact)
+                    RoleBadgeView(role: attendee.userRole)
                 }
                 Text("Registered \(attendee.registeredAt, style: .relative)")
                     .font(.caption)
