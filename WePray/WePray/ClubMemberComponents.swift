@@ -28,7 +28,7 @@ struct MemberRequestCard: View {
                         Text(request.userName)
                             .font(.subheadline.weight(.medium))
                             .foregroundColor(AppColors.text)
-                        RoleBadgeView(role: request.userRole, style: .compact)
+                        RoleBadgeView(role: request.userRole)
                     }
                     Text("Requested \(request.requestedAt, style: .relative)")
                         .font(.caption)
@@ -99,7 +99,7 @@ struct ClubMemberRow: View {
                     Text(member.userName)
                         .font(.subheadline)
                         .foregroundColor(AppColors.text)
-                    RoleBadgeView(role: member.userRole, style: .compact)
+                    RoleBadgeView(role: member.userRole)
                 }
 
                 HStack(spacing: 4) {

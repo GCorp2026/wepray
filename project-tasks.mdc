@@ -1527,6 +1527,31 @@ supabase db reset
 
 ---
 
+## Phase 38: RoleBadgeView & Delegate Protocol Fixes (COMPLETED)
+
+### Compilation Error Fixes
+- [x] Fix RoleBadgeView 'style' parameter in ClubMemberComponents.swift (lines 31, 102)
+- [x] Fix RoleBadgeView 'style' parameter in TweetTimelineView.swift (line 237)
+- [x] Fix AVSpeechSynthesizerDelegate protocol conformance in ScriptureListeningPracticeView.swift
+
+### Files Modified in Phase 38
+
+**ClubMemberComponents.swift:**
+- Line 31: Changed `RoleBadgeView(role: request.userRole, style: .compact)` to `RoleBadgeView(role: request.userRole)`
+- Line 102: Changed `RoleBadgeView(role: member.userRole, style: .compact)` to `RoleBadgeView(role: member.userRole)`
+
+**TweetTimelineView.swift:**
+- Line 237: Changed `RoleBadgeView(role: reply.authorRole, style: .compact)` to `RoleBadgeView(role: reply.authorRole)`
+
+**ScriptureListeningPracticeView.swift:**
+- Line 320: Added `nonisolated` to `speechSynthesizer(_:didFinish:)` delegate method
+- Changed `DispatchQueue.main.async` to `Task { @MainActor in }` for Swift 6 compatibility
+
+### Swift 6 Compatibility Note
+When a class is marked `@MainActor`, delegate methods from protocols like `AVSpeechSynthesizerDelegate` need to be marked `nonisolated` to satisfy the protocol requirement. The main actor isolation is then handled inside the method using `Task { @MainActor in }`.
+
+---
+
 ## Build Instructions
 
 1. Open wepray folder in Xcode

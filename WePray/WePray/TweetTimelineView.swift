@@ -234,7 +234,7 @@ struct ReplyCard: View {
                         .font(.subheadline.bold())
                         .foregroundColor(AppColors.text)
 
-                    RoleBadgeView(role: reply.authorRole, style: .compact)
+                    RoleBadgeView(role: reply.authorRole)
 
                     Text(reply.timestamp, style: .relative)
                         .font(.caption)

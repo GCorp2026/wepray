@@ -317,8 +317,8 @@ class SpeechSynthesizerManager: NSObject, ObservableObject, AVSpeechSynthesizerD
         synthesizer.stopSpeaking(at: .immediate)
     }
 
-    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        DispatchQueue.main.async {
+    nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        Task { @MainActor in
             self.completion?()
         }
     }
