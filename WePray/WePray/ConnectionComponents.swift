@@ -33,7 +33,7 @@ struct ConnectionCard: View {
                         .font(.headline)
                         .foregroundColor(AppColors.text)
 
-                    RoleBadgeView(role: connection.userRole, style: .compact)
+                    RoleBadgeView(role: connection.userRole)
                 }
 
                 if connection.status == .accepted, let date = connection.acceptedDate {
@@ -106,7 +106,7 @@ struct ConnectionRequestCard: View {
                             .font(.headline)
                             .foregroundColor(AppColors.text)
 
-                        RoleBadgeView(role: connection.userRole, style: .compact)
+                        RoleBadgeView(role: connection.userRole)
                     }
 
                     Text("Requested \(connection.requestDate, style: .relative)")
@@ -184,7 +184,7 @@ struct SentRequestCard: View {
                         .font(.subheadline.weight(.medium))
                         .foregroundColor(AppColors.text)
 
-                    RoleBadgeView(role: connection.userRole, style: .compact)
+                    RoleBadgeView(role: connection.userRole)
                 }
 
                 Text("Sent \(connection.requestDate, style: .relative)")
@@ -241,7 +241,7 @@ struct UserSearchResultCard: View {
                         .font(.headline)
                         .foregroundColor(AppColors.text)
 
-                    RoleBadgeView(role: user.role, style: .compact)
+                    RoleBadgeView(role: user.role)
                 }
 
                 if let profession = user.profession, !profession.isEmpty {

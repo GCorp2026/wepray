@@ -1445,6 +1445,23 @@ From LangTutor project-tasks.mdc:
 
 ---
 
+## Phase 35: RoleBadgeView Parameter Fix (COMPLETED)
+
+### Compilation Error Fixes
+- [x] Fix RoleBadgeView 'style' parameter errors in ConnectionComponents.swift
+- [x] Removed invalid `style: .compact` parameter from 4 RoleBadgeView calls
+- [x] RoleBadgeView uses `showText` and `size` parameters, not `style`
+
+### Files Modified in Phase 35
+
+**ConnectionComponents.swift:**
+- Line 36: Changed `RoleBadgeView(role: connection.userRole, style: .compact)` to `RoleBadgeView(role: connection.userRole)`
+- Line 109: Changed `RoleBadgeView(role: connection.userRole, style: .compact)` to `RoleBadgeView(role: connection.userRole)`
+- Line 187: Changed `RoleBadgeView(role: connection.userRole, style: .compact)` to `RoleBadgeView(role: connection.userRole)`
+- Line 244: Changed `RoleBadgeView(role: user.role, style: .compact)` to `RoleBadgeView(role: user.role)`
+
+---
+
 ## Build Instructions
 
 1. Open wepray folder in Xcode
