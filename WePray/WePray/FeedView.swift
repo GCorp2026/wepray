@@ -87,7 +87,8 @@ struct PrayerPostCard: View {
     private func getUserProfile() -> UserProfileData {
         UserProfileData.sampleUsers.first { $0.name == post.authorName } ??
         UserProfileData(name: post.authorName, bio: "Prayer warrior.", avatarInitial: String(post.authorName.prefix(1)),
-            followersCount: 0, followingCount: 0, isFollowing: false, prayerCount: 1, joinDate: Date())
+            followersCount: 0, followingCount: 0, connectionsCount: 0, isFollowing: false, isConnected: false,
+            hasPendingRequest: false, prayerCount: 1, joinDate: Date(), role: .user, profession: "", skills: [])
     }
 
     var body: some View {
