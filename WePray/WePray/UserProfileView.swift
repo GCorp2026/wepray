@@ -70,7 +70,7 @@ struct UserProfileView: View {
             ZStack {
                 Circle()
                     .fill(LinearGradient(
-                        colors: [userProfile.role.badgeColor, userProfile.role.badgeColor.opacity(0.7)],
+                        colors: [userProfile.role.badgeColorValue, userProfile.role.badgeColorValue.opacity(0.7)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ))
@@ -80,7 +80,7 @@ struct UserProfileView: View {
                     .font(.system(size: 40, weight: .bold))
                     .foregroundColor(.white)
             }
-            .shadow(color: userProfile.role.badgeColor.opacity(0.3), radius: 10)
+            .shadow(color: userProfile.role.badgeColorValue.opacity(0.3), radius: 10)
 
             // Name with Role Badge
             HStack(spacing: 8) {

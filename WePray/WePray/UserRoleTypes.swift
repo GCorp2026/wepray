@@ -40,6 +40,11 @@ enum UserRole: String, CaseIterable, Codable {
         }
     }
 
+    /// Returns the badge color as a SwiftUI Color
+    var badgeColorValue: Color {
+        Color(hex: badgeColor)
+    }
+
     var permissions: [RolePermission] {
         switch self {
         case .superAdmin:

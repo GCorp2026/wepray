@@ -220,12 +220,12 @@ struct ReplyCard: View {
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             Circle()
-                .fill(reply.authorRole.badgeColor.opacity(0.3))
+                .fill(reply.authorRole.badgeColorValue.opacity(0.3))
                 .frame(width: 32, height: 32)
                 .overlay(
                     Text(String(reply.authorName.prefix(1)))
                         .font(.caption.bold())
-                        .foregroundColor(reply.authorRole.badgeColor)
+                        .foregroundColor(reply.authorRole.badgeColorValue)
                 )
 
             VStack(alignment: .leading, spacing: 4) {

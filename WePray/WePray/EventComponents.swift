@@ -261,7 +261,7 @@ struct AttendeeRow: View {
     var body: some View {
         HStack(spacing: 12) {
             Circle()
-                .fill(attendee.userRole.badgeColor)
+                .fill(attendee.userRole.badgeColorValue)
                 .frame(width: 40, height: 40)
                 .overlay(
                     Text(attendee.userInitials)

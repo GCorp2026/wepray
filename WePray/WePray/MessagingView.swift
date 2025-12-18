@@ -149,7 +149,7 @@ struct ChatView: View {
                     HStack(spacing: 8) {
                         if let other = otherParticipant {
                             Circle()
-                                .fill(other.userRole.badgeColor)
+                                .fill(other.userRole.badgeColorValue)
                                 .frame(width: 32, height: 32)
                                 .overlay(
                                     Text(other.userInitials)

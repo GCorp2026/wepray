@@ -74,7 +74,8 @@ WePray is a Christian prayer tutoring app built with SwiftUI for iOS. It provide
 wepray/
 ├── SharedTypes.swift (316 lines) - Core types, models, PrayerPlan (colors moved to AppTheme)
 ├── AppTheme.swift (52 lines) - App colors and Color hex extension
-├── UserRoleTypes.swift (182 lines) - UserRole, RolePermission, CommissionSettings, RevenueStats
+├── UIHelpers.swift (46 lines) - Shared UI helpers (FlowLayout)
+├── UserRoleTypes.swift (186 lines) - UserRole, RolePermission, CommissionSettings, RevenueStats
 ├── RoleBadgeView.swift (180 lines) - Role badge UI components
 ├── WePrayApp.swift (122 lines) - Main app entry, AppState with isPremium
 ├── ContentView.swift (116 lines) - Root view, tab navigation with Network tab added
@@ -1322,6 +1323,54 @@ From LangTutor project-tasks.mdc:
 
 **Modified Files:**
 - AdminView.swift (234 lines) - Added navigation to new admin screens, extracted custom views
+
+---
+
+## Phase 33: Bug Fixes & Code Cleanup (COMPLETED)
+
+### Compilation Error Fixes
+- [x] Fix PrayerResponse type ambiguity - Renamed PrayerCircleTypes.swift response to CirclePrayerResponse
+- [x] Fix FlowLayout redeclaration - Moved to shared UIHelpers.swift, removed from 3 files
+- [x] Fix Color type conversion errors - Added badgeColorValue computed property to UserRole
+
+### Type Ambiguity Fixes
+- [x] PrayerCircleTypes.swift: Renamed PrayerResponse → CirclePrayerResponse
+- [x] PrayerCircleViewModel.swift: Updated addResponse() to use CirclePrayerResponse
+- [x] PrayerRequestTypes.swift: Kept original PrayerResponse (more detailed version)
+
+### FlowLayout Consolidation
+- [x] Created UIHelpers.swift with shared FlowLayout component
+- [x] Removed duplicate FlowLayout from ScriptureMemoryComponents.swift
+- [x] Removed duplicate FlowLayout from PrayerFriendOnboardingView.swift
+- [x] Removed duplicate FlowLayout from PrayerPlanDetailView.swift
+
+### Color Type Conversion Fixes
+- [x] UserRoleTypes.swift: Added badgeColorValue computed property returning Color
+- [x] Fixed 15+ occurrences of badgeColor String used as Color across:
+  - TweetComponents.swift
+  - ConnectionComponents.swift
+  - TweetTimelineView.swift
+  - EventComponents.swift
+  - UserProfileView.swift
+  - ClubMemberComponents.swift
+  - MessagingComponents.swift
+  - MessagingView.swift
+  - UserManagementView.swift
+  - AdminUserComponents.swift
+
+### Files Created in Phase 33
+
+**New Files:**
+- UIHelpers.swift (46 lines) - Shared FlowLayout component
+
+**Modified Files:**
+- UserRoleTypes.swift - Added badgeColorValue computed property
+- PrayerCircleTypes.swift - Renamed PrayerResponse → CirclePrayerResponse
+- PrayerCircleViewModel.swift - Updated to use CirclePrayerResponse
+- ScriptureMemoryComponents.swift - Removed duplicate FlowLayout
+- PrayerFriendOnboardingView.swift - Removed duplicate FlowLayout
+- PrayerPlanDetailView.swift - Removed duplicate FlowLayout
+- Multiple UI files - Fixed badgeColor → badgeColorValue usage
 
 ---
 

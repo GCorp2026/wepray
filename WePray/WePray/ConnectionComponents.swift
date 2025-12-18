@@ -16,7 +16,7 @@ struct ConnectionCard: View {
             // Avatar
             Circle()
                 .fill(LinearGradient(
-                    colors: [connection.userRole.badgeColor, connection.userRole.badgeColor.opacity(0.7)],
+                    colors: [connection.userRole.badgeColorValue, connection.userRole.badgeColorValue.opacity(0.7)],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 ))
@@ -89,7 +89,7 @@ struct ConnectionRequestCard: View {
                 // Avatar
                 Circle()
                     .fill(LinearGradient(
-                        colors: [connection.userRole.badgeColor, connection.userRole.badgeColor.opacity(0.7)],
+                        colors: [connection.userRole.badgeColorValue, connection.userRole.badgeColorValue.opacity(0.7)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ))
@@ -167,7 +167,7 @@ struct SentRequestCard: View {
             // Avatar
             Circle()
                 .fill(LinearGradient(
-                    colors: [connection.userRole.badgeColor, connection.userRole.badgeColor.opacity(0.7)],
+                    colors: [connection.userRole.badgeColorValue, connection.userRole.badgeColorValue.opacity(0.7)],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 ))
@@ -224,7 +224,7 @@ struct UserSearchResultCard: View {
             // Avatar
             Circle()
                 .fill(LinearGradient(
-                    colors: [user.role.badgeColor, user.role.badgeColor.opacity(0.7)],
+                    colors: [user.role.badgeColorValue, user.role.badgeColorValue.opacity(0.7)],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 ))

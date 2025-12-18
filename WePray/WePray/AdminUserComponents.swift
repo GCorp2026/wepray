@@ -68,9 +68,9 @@ struct UserRow: View {
     var body: some View {
         HStack(spacing: 12) {
             Circle()
-                .fill(user.role.badgeColor.opacity(0.2))
+                .fill(user.role.badgeColorValue.opacity(0.2))
                 .frame(width: 44, height: 44)
-                .overlay(Text(user.profileInitial).font(.headline).foregroundColor(user.role.badgeColor))
+                .overlay(Text(user.profileInitial).font(.headline).foregroundColor(user.role.badgeColorValue))
 
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 6) {
@@ -177,9 +177,9 @@ struct UserDetailSheet: View {
                 Section {
                     HStack {
                         Circle()
-                            .fill(user.role.badgeColor.opacity(0.2))
+                            .fill(user.role.badgeColorValue.opacity(0.2))
                             .frame(width: 60, height: 60)
-                            .overlay(Text(user.profileInitial).font(.title).foregroundColor(user.role.badgeColor))
+                            .overlay(Text(user.profileInitial).font(.title).foregroundColor(user.role.badgeColorValue))
                         VStack(alignment: .leading, spacing: 4) {
                             HStack {
                                 Text(user.displayName).font(.headline)

@@ -137,7 +137,7 @@ struct UserManagementCard: View {
             HStack(spacing: 12) {
                 // Avatar
                 Circle()
-                    .fill(user.role.badgeColor)
+                    .fill(user.role.badgeColorValue)
                     .frame(width: 50, height: 50)
                     .overlay(
                         Text(user.initials)

@@ -16,7 +16,7 @@ struct ConversationRow: View {
             if let other = conversation.otherParticipant(currentUserId: currentUserId) {
                 ZStack {
                     Circle()
-                        .fill(other.userRole.badgeColor)
+                        .fill(other.userRole.badgeColorValue)
                         .frame(width: 50, height: 50)
 
                     Text(other.userInitials)

@@ -210,7 +210,7 @@ struct CirclePrayerRequest: Identifiable, Codable, Equatable {
     var prayerCount: Int
     var hasPrayed: Bool
     let isUrgent: Bool
-    var responses: [PrayerResponse]
+    var responses: [CirclePrayerResponse]
 
     var timeAgo: String {
         let interval = Date().timeIntervalSince(submittedAt)
@@ -271,9 +271,9 @@ enum RequestStatus: String, CaseIterable, Codable {
     }
 }
 
-// MARK: - Prayer Response
+// MARK: - Circle Prayer Response
 
-struct PrayerResponse: Identifiable, Codable, Equatable {
+struct CirclePrayerResponse: Identifiable, Codable, Equatable {
     var id = UUID()
     let authorName: String
     let content: String

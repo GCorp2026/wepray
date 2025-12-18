@@ -19,7 +19,7 @@ struct TweetCard: View {
                 // Avatar
                 Circle()
                     .fill(LinearGradient(
-                        colors: [tweet.authorRole.badgeColor, tweet.authorRole.badgeColor.opacity(0.7)],
+                        colors: [tweet.authorRole.badgeColorValue, tweet.authorRole.badgeColorValue.opacity(0.7)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ))

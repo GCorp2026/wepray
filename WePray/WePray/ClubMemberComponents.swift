@@ -15,7 +15,7 @@ struct MemberRequestCard: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 12) {
                 Circle()
-                    .fill(request.userRole.badgeColor)
+                    .fill(request.userRole.badgeColorValue)
                     .frame(width: 44, height: 44)
                     .overlay(
                         Text(request.userInitials)
@@ -86,7 +86,7 @@ struct ClubMemberRow: View {
     var body: some View {
         HStack(spacing: 12) {
             Circle()
-                .fill(member.userRole.badgeColor)
+                .fill(member.userRole.badgeColorValue)
                 .frame(width: 40, height: 40)
                 .overlay(
                     Text(member.userInitials)

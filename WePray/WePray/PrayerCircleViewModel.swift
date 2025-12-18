@@ -124,7 +124,7 @@ class PrayerCircleViewModel: ObservableObject {
         saveCircles()
     }
 
-    func addResponse(to requestId: UUID, in circleId: UUID, response: PrayerResponse) {
+    func addResponse(to requestId: UUID, in circleId: UUID, response: CirclePrayerResponse) {
         guard let circleIndex = circles.firstIndex(where: { $0.id == circleId }),
               let requestIndex = circles[circleIndex].prayerRequests.firstIndex(where: { $0.id == requestId }) else { return }
 
