@@ -77,7 +77,7 @@ struct UserRow: View {
                     Text(user.displayName)
                         .font(.subheadline.bold())
                         .foregroundColor(AppColors.text)
-                    RoleBadgeView(role: user.role, style: .compact)
+                    RoleBadgeView(role: user.role)
                 }
                 Text(user.email)
                     .font(.caption)
@@ -99,7 +99,7 @@ struct StatusBadge: View {
         HStack(spacing: 4) {
             Image(systemName: status.icon)
                 .font(.caption2)
-            Text(status.displayName)
+            Text(status.rawValue)
                 .font(.caption2)
         }
         .padding(.horizontal, 8)
@@ -150,7 +150,7 @@ struct AddUserView: View {
     }
 
     private func addUser() {
-        let newUser = ManagedUser(email: email, displayName: displayName, role: selectedRole, status: .pending, isPending: true)
+        let newUser = ManagedUser(name: displayName, email: email, role: selectedRole, status: .pending, isPending: true)
         users.append(newUser)
         dismiss()
     }
@@ -183,7 +183,7 @@ struct AdminUserDetailSheet: View {
                         VStack(alignment: .leading, spacing: 4) {
                             HStack {
                                 Text(user.displayName).font(.headline)
-                                RoleBadgeView(role: user.role, style: .compact)
+                                RoleBadgeView(role: user.role)
                             }
                             Text(user.email).font(.subheadline).foregroundColor(.secondary)
                             Text("Joined \(user.joinDate, style: .date)").font(.caption).foregroundColor(.secondary)
@@ -205,7 +205,7 @@ struct AdminUserDetailSheet: View {
                         ForEach(UserStatus.allCases, id: \.self) { status in
                             HStack {
                                 Image(systemName: status.icon)
-                                Text(status.displayName)
+                                Text(status.rawValue)
                             }.tag(status)
                         }
                     }

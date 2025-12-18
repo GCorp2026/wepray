@@ -1711,6 +1711,159 @@ UserProfileData(
 
 ---
 
+## Phase 45: AdminUserViewModel Switch Exhaustiveness Fix (COMPLETED)
+
+### Compilation Error Fixes
+- [x] Fix AdminUserViewModel.swift - Switch must be exhaustive at line 170
+- [x] Added missing `.inactive` case to UserStatus switch statement
+
+### Files Modified in Phase 45
+
+**AdminUserViewModel.swift:**
+- Line 174-176: Added `.inactive` case to handle inactive users in `availableActions(for:)` function
+- Inactive users can now be suspended or banned (same actions as active users)
+
+### UserStatus Switch Reference
+The switch statement in `availableActions(for:)` now handles all UserStatus cases:
+- `.active` → suspend, ban
+- `.inactive` → suspend, ban
+- `.suspended` → unsuspend, ban
+- `.banned` → unban
+- `.pending` → ban
+
+### File Size Check
+- AdminUserViewModel.swift: 218 lines (under 350 limit)
+
+---
+
+## Phase 46: AdminUserComponents Multi-Error Fix (COMPLETED)
+
+### Compilation Error Fixes
+- [x] Fix RoleBadgeView 'style' parameter errors (lines 80, 186)
+- [x] Fix UserStatus.displayName error (lines 102, 208)
+- [x] Fix ManagedUser initialization parameter order (line 153)
+
+### Files Modified in Phase 46
+
+**AdminUserComponents.swift:**
+- Line 80: Removed invalid `style: .compact` from `RoleBadgeView(role: user.role)`
+- Line 102: Changed `status.displayName` to `status.rawValue`
+- Line 153: Changed `ManagedUser(email:, displayName:, ...)` to `ManagedUser(name:, email:, ...)`
+- Line 186: Removed invalid `style: .compact` from `RoleBadgeView(role: user.role)`
+- Line 208: Changed `status.displayName` to `status.rawValue`
+
+### Error Summary
+| Error | Fix Applied |
+|-------|-------------|
+| Extra argument 'style' in call | Removed `style: .compact` parameter |
+| Cannot infer contextual base '.compact' | Removed invalid style parameter |
+| UserStatus has no member 'displayName' | Used `rawValue` property instead |
+| Missing argument for parameter 'name' | Reordered to `name:` first |
+| Extra argument 'displayName' in call | Changed to correct parameter `name:` |
+
+### File Size Check
+- AdminUserComponents.swift: 236 lines (under 350 limit)
+
+---
+
+## Phase 47: ClubDetailView Type-Check Expression Fix (COMPLETED)
+
+### Compilation Error Fixes
+- [x] Fix compiler type-check timeout at line 156 in CreateClubSheet
+- [x] Extracted complex expressions into separate computed properties
+- [x] Extracted nested views into private subviews
+- [x] Created CategoryChipButton helper struct
+
+### Root Cause
+The Swift compiler was unable to type-check a complex expression in reasonable time due to:
+1. Deep nesting of views in the body property
+2. Ternary operator mixing `Color` and `LinearGradient` types
+3. Multiple inline conditional expressions
+
+### Solution Applied
+Broke up the `CreateClubSheet` body into extracted subviews:
+- `createButtonBackground` - Computed property using `Group` to handle Color/LinearGradient
+- `privacyIcon`, `privacyText`, `privacyHelpText` - String computed properties
+- `formContent` - Main scroll view content
+- `nameField`, `descriptionField` - Text input fields
+- `categorySection`, `categoryScrollView` - Category selection
+- `privacyToggle` - Toggle with help text
+- `createButton` - Create action button
+- `CategoryChipButton` - Extracted private struct for category chips
+
+### Files Modified in Phase 47
+
+**ClubDetailView.swift:**
+- Extracted `CreateClubSheet.body` into 10+ smaller computed properties
+- Created `CategoryChipButton` private struct to simplify ForEach loop
+- Used `Group` to resolve Color/LinearGradient type ambiguity
+
+### File Size Check
+- ClubDetailView.swift: 334 lines (under 350 limit)
+
+---
+
+## Phase 48: Light/Dark Mode, Tab Reorder, Prayer AI Enhancement (COMPLETED)
+
+### Features Implemented
+
+#### 1. Light Mode and Dark Mode Support
+**AppTheme.swift:**
+- Added `ThemeMode` enum with `.light`, `.dark`, `.system` options
+- Created `ThemeManager` singleton class with persistence via UserDefaults
+- Added separate color palettes for light and dark modes
+- Dynamic color switching based on theme selection
+- System theme detection support
+
+**ContentView.swift:**
+- Added `@StateObject private var themeManager = ThemeManager.shared`
+- Applied `.preferredColorScheme(themeManager.currentTheme.colorScheme)` to TabView
+
+#### 2. Tab Reorder - Devos and Memory First
+**ContentView.swift:**
+- Moved "Devos" (DevotionalListView) to tag 0 (first position)
+- Moved "Memory" (ScriptureMemoryView) to tag 1 (second position)
+- Moved "Pray" (PrayerChatView) to tag 2
+- Renumbered all subsequent tabs accordingly
+
+#### 3. Pray Tab Input Enhancement
+**PrayerChatView.swift:**
+- Added `.foregroundColor(.white)` to TextField for white text
+- Added `.tint(.white)` for white cursor
+- Added `.onSubmit { sendMessage() }` to allow Enter key to send
+- Added `.submitLabel(.send)` for keyboard send button
+
+#### 4. Claude AI Denomination-Specific Prayers with DB Storage
+**PrayerChatViewModel.swift:**
+- Added `StoredPrayer` model with denomination, userId, category, language fields
+- Added `PrayerStorageService` class for local prayer storage
+- Added default prayers for Catholic, Orthodox, Protestant, Baptist, Pentecostal traditions
+- Enhanced `callClaudeAPI()` to include stored prayers as context examples
+- AI responses now stored for future training/reference
+
+#### 5. Supabase Migration for Prayer Storage
+**supabase/migrations/20241218000000_stored_prayers.sql:**
+- Created `stored_prayers` table with proper schema
+- Added indexes for denomination, language, user_id, category
+- Implemented RLS policies for read/write access
+- Pre-populated with default prayers for 8 denominations
+- Added trigger for updated_at timestamp
+
+### Files Modified in Phase 48
+- AppTheme.swift: 123 lines (added theme management)
+- ContentView.swift: 133 lines (tab reorder + theme)
+- PrayerChatView.swift: 332 lines (input enhancement)
+- PrayerChatViewModel.swift: 332 lines (AI + storage enhancement)
+
+### File Size Check
+- All files under 350 lines
+
+### Database Changes
+- New table: `stored_prayers`
+- Migration pushed to Supabase successfully
+
+---
+
 ## Build Instructions
 
 1. Open wepray folder in Xcode

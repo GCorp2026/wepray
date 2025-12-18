@@ -163,10 +163,14 @@ struct PrayerChatView: View {
             }
 
             TextField("Ask for prayer guidance...", text: $messageText)
+                .foregroundColor(.white)
+                .tint(.white)
                 .padding(12)
                 .background(AppColors.cardBackground)
                 .cornerRadius(20)
                 .overlay(RoundedRectangle(cornerRadius: 20).stroke(AppColors.border, lineWidth: 1))
+                .onSubmit { sendMessage() }
+                .submitLabel(.send)
 
             Button(action: sendMessage) {
                 Image(systemName: "paperplane.fill")

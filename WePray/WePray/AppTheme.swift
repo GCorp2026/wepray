@@ -6,20 +6,91 @@
 import Foundation
 import SwiftUI
 
-// MARK: - App Colors (Cinematic Navy Blue Theme)
+// MARK: - Theme Mode
+enum ThemeMode: String, CaseIterable, Codable {
+    case light = "Light"
+    case dark = "Dark"
+    case system = "System"
+
+    var colorScheme: ColorScheme? {
+        switch self {
+        case .light: return .light
+        case .dark: return .dark
+        case .system: return nil
+        }
+    }
+}
+
+// MARK: - Theme Manager
+class ThemeManager: ObservableObject {
+    @Published var currentTheme: ThemeMode {
+        didSet {
+            UserDefaults.standard.set(currentTheme.rawValue, forKey: "WePrayThemeMode")
+        }
+    }
+
+    static let shared = ThemeManager()
+
+    init() {
+        if let saved = UserDefaults.standard.string(forKey: "WePrayThemeMode"),
+           let theme = ThemeMode(rawValue: saved) {
+            self.currentTheme = theme
+        } else {
+            self.currentTheme = .dark // Default to dark mode
+        }
+    }
+}
+
+// MARK: - App Colors (Dynamic Light/Dark Theme)
 struct AppColors {
-    static let primary = Color(hex: "#1E3A8A")        // Navy Blue
-    static let primaryLight = Color(hex: "#3B82F6")   // Royal Blue
-    static let primaryDark = Color(hex: "#1A237E")    // Deep Navy
-    static let secondary = Color(hex: "#2563EB")      // Bright Blue
-    static let accent = Color(hex: "#60A5FA")         // Sky Blue
-    static let background = Color(hex: "#0F172A")     // Dark Navy
-    static let cardBackground = Color(hex: "#1E293B") // Card Navy
-    static let text = Color(hex: "#F1F5F9")           // Light text for dark bg
-    static let subtext = Color(hex: "#94A3B8")        // Muted blue-gray
-    static let border = Color(hex: "#334155")         // Navy border
-    static let success = Color(hex: "#3B82F6")        // Blue success
-    static let error = Color(hex: "#EF4444")          // Keep red for errors
+    // MARK: - Dark Mode Colors (Cinematic Navy Blue)
+    private static let darkPrimary = Color(hex: "#1E3A8A")
+    private static let darkPrimaryLight = Color(hex: "#3B82F6")
+    private static let darkPrimaryDark = Color(hex: "#1A237E")
+    private static let darkSecondary = Color(hex: "#2563EB")
+    private static let darkAccent = Color(hex: "#60A5FA")
+    private static let darkBackground = Color(hex: "#0F172A")
+    private static let darkCardBackground = Color(hex: "#1E293B")
+    private static let darkText = Color(hex: "#F1F5F9")
+    private static let darkSubtext = Color(hex: "#94A3B8")
+    private static let darkBorder = Color(hex: "#334155")
+
+    // MARK: - Light Mode Colors (Clean Blue Theme)
+    private static let lightPrimary = Color(hex: "#1E40AF")
+    private static let lightPrimaryLight = Color(hex: "#3B82F6")
+    private static let lightPrimaryDark = Color(hex: "#1E3A8A")
+    private static let lightSecondary = Color(hex: "#2563EB")
+    private static let lightAccent = Color(hex: "#3B82F6")
+    private static let lightBackground = Color(hex: "#F8FAFC")
+    private static let lightCardBackground = Color(hex: "#FFFFFF")
+    private static let lightText = Color(hex: "#0F172A")
+    private static let lightSubtext = Color(hex: "#64748B")
+    private static let lightBorder = Color(hex: "#E2E8F0")
+
+    // MARK: - Dynamic Colors (based on current theme)
+    static var primary: Color { isDarkMode ? darkPrimary : lightPrimary }
+    static var primaryLight: Color { isDarkMode ? darkPrimaryLight : lightPrimaryLight }
+    static var primaryDark: Color { isDarkMode ? darkPrimaryDark : lightPrimaryDark }
+    static var secondary: Color { isDarkMode ? darkSecondary : lightSecondary }
+    static var accent: Color { isDarkMode ? darkAccent : lightAccent }
+    static var background: Color { isDarkMode ? darkBackground : lightBackground }
+    static var cardBackground: Color { isDarkMode ? darkCardBackground : lightCardBackground }
+    static var text: Color { isDarkMode ? darkText : lightText }
+    static var subtext: Color { isDarkMode ? darkSubtext : lightSubtext }
+    static var border: Color { isDarkMode ? darkBorder : lightBorder }
+    static var success: Color { Color(hex: "#10B981") }
+    static var error: Color { Color(hex: "#EF4444") }
+
+    // MARK: - Theme Detection
+    private static var isDarkMode: Bool {
+        let theme = ThemeManager.shared.currentTheme
+        switch theme {
+        case .dark: return true
+        case .light: return false
+        case .system:
+            return UITraitCollection.current.userInterfaceStyle == .dark
+        }
+    }
 }
 
 // MARK: - Color Hex Extension

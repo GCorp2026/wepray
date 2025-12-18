@@ -171,6 +171,9 @@ class AdminUserViewModel: ObservableObject {
         case .active:
             actions.append(.suspend)
             actions.append(.ban)
+        case .inactive:
+            actions.append(.suspend)
+            actions.append(.ban)
         case .suspended:
             actions.append(.unsuspend)
             actions.append(.ban)

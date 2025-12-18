@@ -26,28 +26,29 @@ struct ContentView: View {
 // MARK: - Main Tab View
 struct MainTabView: View {
     @EnvironmentObject var appState: AppState
+    @StateObject private var themeManager = ThemeManager.shared
     @State private var selectedTab = 0
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            // Home - Prayer Chat
+            // Daily Devotionals (FIRST)
+            DevotionalListView()
+                .tabItem { Label("Devos", systemImage: "sun.max.fill") }
+                .tag(0)
+
+            // Scripture Memory (SECOND)
+            ScriptureMemoryView()
+                .tabItem { Label("Memory", systemImage: "book.closed.fill") }
+                .tag(1)
+
+            // Prayer Chat
             PrayerChatView()
                 .tabItem { Label("Pray", systemImage: "hands.sparkles.fill") }
-                .tag(0)
+                .tag(2)
 
             // Prayer Plans
             PrayerPlanListView()
                 .tabItem { Label("Plans", systemImage: "calendar.badge.clock") }
-                .tag(1)
-
-            // Daily Devotionals
-            DevotionalListView()
-                .tabItem { Label("Devos", systemImage: "sun.max.fill") }
-                .tag(2)
-
-            // Scripture Memory
-            ScriptureMemoryView()
-                .tabItem { Label("Memory", systemImage: "book.closed.fill") }
                 .tag(3)
 
             // Guided Meditation
@@ -118,6 +119,7 @@ struct MainTabView: View {
             }
         }
         .accentColor(AppColors.accent)
+        .preferredColorScheme(themeManager.currentTheme.colorScheme)
         .fullScreenCover(isPresented: $appState.showPrayerFriendOnboarding) {
             PrayerFriendOnboardingView()
                 .environmentObject(appState)

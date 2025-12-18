@@ -6,12 +6,86 @@
 import Foundation
 import SwiftUI
 
+// MARK: - Stored Prayer Model
+struct StoredPrayer: Identifiable, Codable {
+    var id = UUID()
+    let content: String
+    let denomination: String
+    let userId: String?
+    let category: String
+    let language: String
+    let createdAt: Date
+
+    static func defaultPrayers(for denomination: String) -> [StoredPrayer] {
+        let prayers: [String: [String]] = [
+            "Catholic": [
+                "Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus.",
+                "Our Father, who art in heaven, hallowed be Thy name. Thy kingdom come, Thy will be done, on earth as it is in heaven.",
+                "Glory be to the Father, and to the Son, and to the Holy Spirit. As it was in the beginning, is now, and ever shall be."
+            ],
+            "Orthodox": [
+                "Lord Jesus Christ, Son of God, have mercy on me, a sinner.",
+                "O Heavenly King, Comforter, Spirit of Truth, who art everywhere present and fillest all things.",
+                "Holy God, Holy Mighty, Holy Immortal, have mercy on us."
+            ],
+            "Protestant": [
+                "Dear Lord, thank You for this day. Guide my steps and fill me with Your peace.",
+                "Heavenly Father, I come before You with a humble heart seeking Your wisdom and guidance.",
+                "Lord, help me to trust in Your plan and walk in faith each day."
+            ],
+            "Baptist": [
+                "Father God, I surrender my life to You today. Use me for Your glory.",
+                "Lord Jesus, thank You for saving me by Your grace. Help me share Your love.",
+                "Dear Lord, fill me with Your Holy Spirit and guide me in truth."
+            ],
+            "Pentecostal": [
+                "Holy Spirit, fill me afresh today. Let Your fire burn within me.",
+                "Lord, I invite Your presence to move powerfully in my life today.",
+                "Father, release Your gifts through me for the building of Your kingdom."
+            ]
+        ]
+        return (prayers[denomination] ?? prayers["Protestant"]!).map {
+            StoredPrayer(content: $0, denomination: denomination, userId: nil, category: "general", language: "English", createdAt: Date())
+        }
+    }
+}
+
+// MARK: - Prayer Storage Service
+class PrayerStorageService {
+    private let storageKey = "WePrayStoredPrayers"
+
+    func savePrayer(_ prayer: StoredPrayer) {
+        var prayers = loadPrayers()
+        prayers.append(prayer)
+        if let data = try? JSONEncoder().encode(prayers) {
+            UserDefaults.standard.set(data, forKey: storageKey)
+        }
+    }
+
+    func loadPrayers() -> [StoredPrayer] {
+        guard let data = UserDefaults.standard.data(forKey: storageKey),
+              let prayers = try? JSONDecoder().decode([StoredPrayer].self, from: data) else {
+            return []
+        }
+        return prayers
+    }
+
+    func getPrayers(for denomination: String, language: String) -> [StoredPrayer] {
+        let stored = loadPrayers().filter { $0.denomination == denomination && $0.language == language }
+        if stored.isEmpty {
+            return StoredPrayer.defaultPrayers(for: denomination)
+        }
+        return stored
+    }
+}
+
 @MainActor
 class PrayerChatViewModel: ObservableObject {
     @Published var messages: [ChatMessage] = []
     @Published var isLoading = false
 
     private var appState: AppState?
+    private let prayerStorage = PrayerStorageService()
 
     func configure(appState: AppState) {
         self.appState = appState
@@ -123,16 +197,25 @@ class PrayerChatViewModel: ObservableObject {
             throw APIError.invalidURL
         }
 
+        // Get stored prayers for this denomination to provide context
+        let storedPrayers = prayerStorage.getPrayers(for: denomination.name, language: language.name)
+        let prayerExamples = storedPrayers.prefix(5).map { $0.content }.joined(separator: "\n- ")
+
         let friendName = prayerFriendName
         let systemPrompt = """
         You are \(friendName), a warm and caring Christian prayer companion from the \(denomination.name) tradition.
         You respond in \(language.name) language.
         IMPORTANT: You are a real person named \(friendName), never reveal you are an AI or artificial.
+
+        Here are example prayers from the \(denomination.name) tradition to guide your style:
+        - \(prayerExamples)
+
         Your role is to:
         - Help users with prayer guidance as a genuine friend
-        - Offer prayers appropriate to the \(denomination.name) tradition
+        - Offer prayers appropriate to the \(denomination.name) tradition using similar style to the examples
         - Be warm, encouraging, and spiritually supportive
         - Share relevant scripture when appropriate
+        - Generate prayers that match the \(denomination.name) tradition's tone and theological emphasis
         Always maintain a cheerful, authentic, and personal attitude.
         """
 
@@ -158,6 +241,9 @@ class PrayerChatViewModel: ObservableObject {
            let content = json["content"] as? [[String: Any]],
            let firstContent = content.first,
            let text = firstContent["text"] as? String {
+            // Store the generated prayer for future training
+            let prayer = StoredPrayer(content: text, denomination: denomination.name, userId: appState?.currentUser?.id.uuidString, category: "ai_generated", language: language.name, createdAt: Date())
+            prayerStorage.savePrayer(prayer)
             return text
         }
 

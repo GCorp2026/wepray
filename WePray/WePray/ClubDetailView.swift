@@ -153,99 +153,34 @@ struct CreateClubSheet: View {
     @State private var category: ClubCategory = .prayer
     @State private var isPublic = true
 
+    // MARK: - Computed Properties (extracted to help compiler)
+    private var createButtonBackground: some View {
+        Group {
+            if name.isEmpty {
+                Color.gray
+            } else {
+                LinearGradient(colors: [AppColors.primary, AppColors.primaryLight], startPoint: .leading, endPoint: .trailing)
+            }
+        }
+    }
+
+    private var privacyIcon: String {
+        isPublic ? "globe" : "lock.fill"
+    }
+
+    private var privacyText: String {
+        isPublic ? "Public Club" : "Private Club"
+    }
+
+    private var privacyHelpText: String {
+        isPublic ? "Anyone can discover and join." : "Members must be approved."
+    }
+
     var body: some View {
         NavigationView {
             ZStack {
                 AppColors.background.ignoresSafeArea()
-
-                ScrollView {
-                    VStack(spacing: 20) {
-                        // Name
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Club Name")
-                                .font(.subheadline.weight(.medium))
-                                .foregroundColor(AppColors.text)
-                            TextField("Enter club name", text: $name)
-                                .padding()
-                                .background(AppColors.cardBackground)
-                                .cornerRadius(12)
-                        }
-
-                        // Description
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Description")
-                                .font(.subheadline.weight(.medium))
-                                .foregroundColor(AppColors.text)
-                            TextField("Describe your club", text: $description, axis: .vertical)
-                                .lineLimit(3...5)
-                                .padding()
-                                .background(AppColors.cardBackground)
-                                .cornerRadius(12)
-                        }
-
-                        // Category
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Category")
-                                .font(.subheadline.weight(.medium))
-                                .foregroundColor(AppColors.text)
-
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack(spacing: 8) {
-                                    ForEach(ClubCategory.allCases, id: \.self) { cat in
-                                        Button {
-                                            category = cat
-                                        } label: {
-                                            HStack(spacing: 4) {
-                                                Image(systemName: cat.icon)
-                                                Text(cat.rawValue)
-                                            }
-                                            .font(.caption)
-                                            .padding(.horizontal, 12)
-                                            .padding(.vertical, 8)
-                                            .background(category == cat ? cat.color : AppColors.cardBackground)
-                                            .foregroundColor(category == cat ? .white : AppColors.text)
-                                            .cornerRadius(16)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        // Privacy
-                        Toggle(isOn: $isPublic) {
-                            HStack {
-                                Image(systemName: isPublic ? "globe" : "lock.fill")
-                                    .foregroundColor(AppColors.primary)
-                                Text(isPublic ? "Public Club" : "Private Club")
-                                    .foregroundColor(AppColors.text)
-                            }
-                        }
-                        .padding()
-                        .background(AppColors.cardBackground)
-                        .cornerRadius(12)
-
-                        Text(isPublic ? "Anyone can discover and join." : "Members must be approved.")
-                            .font(.caption)
-                            .foregroundColor(AppColors.subtext)
-
-                        // Create Button
-                        Button {
-                            createClub()
-                        } label: {
-                            Text("Create Club")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(
-                                    name.isEmpty ? Color.gray : LinearGradient(colors: [AppColors.primary, AppColors.primaryLight], startPoint: .leading, endPoint: .trailing)
-                                )
-                                .cornerRadius(12)
-                        }
-                        .disabled(name.isEmpty)
-                    }
-                    .padding()
-                }
+                formContent
             }
             .navigationTitle("Create Club")
             .navigationBarTitleDisplayMode(.inline)
@@ -256,6 +191,101 @@ struct CreateClubSheet: View {
                 }
             }
         }
+    }
+
+    // MARK: - Form Content
+    private var formContent: some View {
+        ScrollView {
+            VStack(spacing: 20) {
+                nameField
+                descriptionField
+                categorySection
+                privacyToggle
+                createButton
+            }
+            .padding()
+        }
+    }
+
+    private var nameField: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Club Name")
+                .font(.subheadline.weight(.medium))
+                .foregroundColor(AppColors.text)
+            TextField("Enter club name", text: $name)
+                .padding()
+                .background(AppColors.cardBackground)
+                .cornerRadius(12)
+        }
+    }
+
+    private var descriptionField: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Description")
+                .font(.subheadline.weight(.medium))
+                .foregroundColor(AppColors.text)
+            TextField("Describe your club", text: $description, axis: .vertical)
+                .lineLimit(3...5)
+                .padding()
+                .background(AppColors.cardBackground)
+                .cornerRadius(12)
+        }
+    }
+
+    private var categorySection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Category")
+                .font(.subheadline.weight(.medium))
+                .foregroundColor(AppColors.text)
+            categoryScrollView
+        }
+    }
+
+    private var categoryScrollView: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                ForEach(ClubCategory.allCases, id: \.self) { cat in
+                    CategoryChipButton(
+                        category: cat,
+                        isSelected: category == cat,
+                        onTap: { category = cat }
+                    )
+                }
+            }
+        }
+    }
+
+    private var privacyToggle: some View {
+        VStack(spacing: 8) {
+            Toggle(isOn: $isPublic) {
+                HStack {
+                    Image(systemName: privacyIcon)
+                        .foregroundColor(AppColors.primary)
+                    Text(privacyText)
+                        .foregroundColor(AppColors.text)
+                }
+            }
+            .padding()
+            .background(AppColors.cardBackground)
+            .cornerRadius(12)
+
+            Text(privacyHelpText)
+                .font(.caption)
+                .foregroundColor(AppColors.subtext)
+        }
+    }
+
+    private var createButton: some View {
+        Button(action: createClub) {
+            Text("Create Club")
+                .font(.headline)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(createButtonBackground)
+                .cornerRadius(12)
+        }
+        .disabled(name.isEmpty)
     }
 
     private func createClub() {
@@ -270,5 +300,35 @@ struct CreateClubSheet: View {
             creatorRole: user.role
         )
         dismiss()
+    }
+}
+
+// MARK: - Category Chip Button (extracted helper)
+private struct CategoryChipButton: View {
+    let category: ClubCategory
+    let isSelected: Bool
+    let onTap: () -> Void
+
+    private var backgroundColor: Color {
+        isSelected ? category.color : AppColors.cardBackground
+    }
+
+    private var textColor: Color {
+        isSelected ? .white : AppColors.text
+    }
+
+    var body: some View {
+        Button(action: onTap) {
+            HStack(spacing: 4) {
+                Image(systemName: category.icon)
+                Text(category.rawValue)
+            }
+            .font(.caption)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(backgroundColor)
+            .foregroundColor(textColor)
+            .cornerRadius(16)
+        }
     }
 }
