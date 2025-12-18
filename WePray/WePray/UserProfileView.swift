@@ -88,7 +88,7 @@ struct UserProfileView: View {
                     .font(.title2.bold())
                     .foregroundColor(AppColors.text)
 
-                RoleBadgeView(role: userProfile.role, style: .standard)
+                RoleBadgeView(role: userProfile.role, showText: true)
             }
 
             // Profession
