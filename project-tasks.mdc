@@ -1484,6 +1484,49 @@ From LangTutor project-tasks.mdc:
 
 ---
 
+## Phase 37: Supabase Migration Verification (COMPLETED)
+
+### Database Migration Status
+- [x] Verified Supabase CLI is installed at `/opt/homebrew/bin/supabase`
+- [x] Confirmed Supabase project is linked (ref: `okxcsqvabwvvgekpsqsb`)
+- [x] Verified migration `20241217000000_initial_schema.sql` is applied
+- [x] Confirmed local and remote databases are in sync
+
+### Supabase Project Structure
+```
+supabase/
+├── config.toml                           - Supabase local config (project_id: wepray)
+├── migrations/
+│   └── 20241217000000_initial_schema.sql - Full database schema (670 lines)
+└── .temp/
+    └── project-ref                       - Remote project reference
+```
+
+### Database Schema Includes
+- **32 ENUM types**: user_role, prayer_frequency, journal_mood, meditation_category, etc.
+- **30+ Tables**: user_profiles, prayer_plans, journal_entries, prayer_requests, meditation_sessions, memory_verses, prayer_circles, subscriptions, etc.
+- **Indexes**: Optimized queries for user_id, created_at, categories
+- **Row Level Security (RLS)**: Policies for all tables
+- **Triggers**: auto-update timestamps, promote first 2 users to admin, increment prayer counts
+- **Seed Data**: Default languages, denominations, admin settings
+
+### Migration Commands Reference
+```bash
+# Check migration status
+supabase migration list
+
+# Push migrations (dry run)
+supabase db push --dry-run
+
+# Push migrations to remote
+supabase db push
+
+# Reset local database
+supabase db reset
+```
+
+---
+
 ## Build Instructions
 
 1. Open wepray folder in Xcode
