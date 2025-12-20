@@ -7,10 +7,17 @@ import SwiftUI
 
 struct DevotionalDetailView: View {
     @ObservedObject var viewModel: DevotionalViewModel
+    @EnvironmentObject var appState: AppState
     let devotional: DailyDevotional
     @Environment(\.dismiss) private var dismiss
     @State private var notes: String = ""
     @State private var showingNotes = false
+
+    // Check if current user is admin or super_admin
+    private var isAdminUser: Bool {
+        guard let role = appState.currentUser?.role else { return false }
+        return role == .admin || role == .superAdmin
+    }
 
     var body: some View {
         NavigationView {
@@ -34,8 +41,10 @@ struct DevotionalDetailView: View {
                         // Application Section
                         sectionCard(title: "Apply Today", icon: "checkmark.circle", content: devotional.application)
 
-                        // Notes Section
-                        notesSection
+                        // Notes Section - Only visible to Admin and Super Admin
+                        if isAdminUser {
+                            notesSection
+                        }
 
                         // Action Buttons
                         actionButtons
@@ -141,16 +150,19 @@ struct DevotionalDetailView: View {
         .cornerRadius(16)
     }
 
-    // MARK: - Notes Section
+    // MARK: - Notes Section (Admin Only)
     private var notesSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Image(systemName: "note.text")
                     .foregroundColor(AppColors.accent)
-                Text("My Notes")
+                Text("User Notes (Admin View)")
                     .font(.headline)
                     .foregroundColor(AppColors.text)
                 Spacer()
+                Label("Admin", systemImage: "shield.fill")
+                    .font(.caption2)
+                    .foregroundColor(.orange)
                 Button { showingNotes.toggle() } label: {
                     Image(systemName: showingNotes ? "chevron.up" : "chevron.down")
                         .foregroundColor(AppColors.subtext)
@@ -172,11 +184,10 @@ struct DevotionalDetailView: View {
                     .foregroundColor(AppColors.subtext)
                     .lineLimit(3)
             } else {
-                Text("Tap to add your reflections...")
+                Text("No user notes for this devotional")
                     .font(.body)
                     .foregroundColor(AppColors.subtext)
                     .italic()
-                    .onTapGesture { showingNotes = true }
             }
         }
         .padding()

@@ -29,6 +29,30 @@ struct MainTabView: View {
     @StateObject private var themeManager = ThemeManager.shared
     @State private var selectedTab = 0
 
+    init() {
+        // Configure tab bar appearance for visibility in light/dark mode
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+
+        // Set tab bar colors based on theme
+        if ThemeManager.shared.currentTheme == .light {
+            appearance.backgroundColor = UIColor(Color(hex: "#F8FAFC"))
+            appearance.stackedLayoutAppearance.selected.iconColor = UIColor(Color(hex: "#1E40AF"))
+            appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor(Color(hex: "#1E40AF"))]
+            appearance.stackedLayoutAppearance.normal.iconColor = UIColor(Color(hex: "#64748B"))
+            appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor(Color(hex: "#64748B"))]
+        } else {
+            appearance.backgroundColor = UIColor(Color(hex: "#1E293B"))
+            appearance.stackedLayoutAppearance.selected.iconColor = UIColor(Color(hex: "#60A5FA"))
+            appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor(Color(hex: "#60A5FA"))]
+            appearance.stackedLayoutAppearance.normal.iconColor = UIColor(Color(hex: "#94A3B8"))
+            appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor(Color(hex: "#94A3B8"))]
+        }
+
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
+    }
+
     var body: some View {
         TabView(selection: $selectedTab) {
             // Daily Devotionals (FIRST)

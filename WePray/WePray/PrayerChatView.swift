@@ -14,6 +14,7 @@ struct PrayerChatView: View {
     @State private var showDenominationPicker = false
     @State private var isRecording = false
     @State private var showPremiumAlert = false
+    @FocusState private var isInputFocused: Bool  // For keyboard dismissal
 
     var body: some View {
         NavigationView {
@@ -152,6 +153,18 @@ struct PrayerChatView: View {
 
     private var inputBar: some View {
         HStack(spacing: 8) {
+            // Keyboard dismiss button - only shows when keyboard is active
+            if isInputFocused {
+                Button(action: { isInputFocused = false }) {
+                    Image(systemName: "keyboard.chevron.compact.down")
+                        .font(.title3)
+                        .foregroundColor(AppColors.subtext)
+                        .padding(10)
+                        .background(AppColors.background)
+                        .clipShape(Circle())
+                }
+            }
+
             // Microphone button (Premium feature)
             Button(action: { appState.isPremium ? startVoiceInput() : (showPremiumAlert = true) }) {
                 Image(systemName: isRecording ? "mic.fill" : "mic")
@@ -169,6 +182,7 @@ struct PrayerChatView: View {
                 .background(AppColors.cardBackground)
                 .cornerRadius(20)
                 .overlay(RoundedRectangle(cornerRadius: 20).stroke(AppColors.border, lineWidth: 1))
+                .focused($isInputFocused)
                 .onSubmit { sendMessage() }
                 .submitLabel(.send)
 

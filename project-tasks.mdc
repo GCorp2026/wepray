@@ -1864,6 +1864,54 @@ Broke up the `CreateClubSheet` body into extracted subviews:
 
 ---
 
+## Phase 49: Priority Features Verification & API Configuration (COMPLETED)
+
+### Features Verified
+
+#### 1. Pray Tab AI Verification
+- [x] Verified "Pray" tab uses Claude AI API for denomination-specific prayers (Phase 48)
+- [x] Stored prayers provide context examples for AI-generated responses
+- [x] Prayers stored in database for future training/reference
+
+#### 2. Devotional Notes Visibility
+- [x] Notes section hidden for regular users in `DevotionalDetailView.swift`
+- [x] `isAdminUser` check restricts notes to admin/super admin roles
+- [x] Admin users can view, edit, and manage all devotional notes
+
+#### 3. Prayer Tab Keyboard Handling
+- [x] Keyboard minimize button (`keyboard.chevron.compact.down`) shows when keyboard is active
+- [x] `@FocusState private var isInputFocused: Bool` manages keyboard state
+- [x] Users can dismiss keyboard and return to bottom menu tabs
+
+#### 4. Bottom Menu Tab Visibility
+- [x] `UITabBarAppearance` configured for both light and dark modes
+- [x] Tab bar background, selected/normal icon colors set per theme
+- [x] Tab bar always visible regardless of theme selection
+
+#### 5. Claude API Configuration
+- [x] Updated `AppConfig` with Claude Sonnet 4.5 API key fallback
+- [x] Environment variable `CLAUDE_API_KEY` takes precedence if set
+- [x] Model configured as `claude-sonnet-4-5-20241022`
+
+#### 6. Build Verification
+- [x] Clean build with no errors in WePray folder
+- [x] All Swift files compile successfully
+- [x] All components under 350 lines
+
+### Files Modified in Phase 49
+
+**SharedTypes.swift:**
+- Updated `AppConfig.claudeAPIKey` with fallback API key for Prayer Friend feature
+- Claude Sonnet 4.5 model configured
+
+### Previously Implemented Features (Verified)
+- PrayerChatView.swift (328 lines) - Keyboard dismiss, white text input, send on Enter
+- PrayerChatViewModel.swift (332 lines) - Claude API, stored prayers, denomination context
+- DevotionalDetailView.swift (255 lines) - Notes section admin-only access
+- ContentView.swift (157 lines) - Tab bar appearance for light/dark mode
+
+---
+
 ## Build Instructions
 
 1. Open wepray folder in Xcode

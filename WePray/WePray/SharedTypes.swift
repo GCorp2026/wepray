@@ -310,8 +310,13 @@ struct PrayerPlan: Identifiable, Codable, Equatable {
 // MARK: - App Configuration
 struct AppConfig {
     static let openAIAPIKey = ProcessInfo.processInfo.environment["OPENAI_API_KEY"] ?? ""
+    // Claude API key for Prayer Friend - Set via environment variable CLAUDE_API_KEY
+    // To set in Xcode: Edit Scheme > Run > Arguments > Environment Variables
     static let claudeAPIKey = ProcessInfo.processInfo.environment["CLAUDE_API_KEY"] ?? ""
     static let deepseekAPIKey = ProcessInfo.processInfo.environment["DEEPSEEK_API_KEY"] ?? ""
     static let supabaseURL = ProcessInfo.processInfo.environment["SUPABASE_URL"] ?? ""
     static let supabaseAnonKey = ProcessInfo.processInfo.environment["SUPABASE_ANON_KEY"] ?? ""
+
+    // Claude model version for Prayer Friend - Claude Sonnet 4.5
+    static let claudeModel = "claude-sonnet-4-5-20241022"
 }
